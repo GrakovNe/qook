@@ -30,12 +30,20 @@ public class Level {
 
         field[1][0] = new Block();
         field[1][1] = new Ball(Color.RED);
+        field[1][2] = new Ball(Color.GREEN);
+        field[1][3] = new Ball(Color.YELLOW);
+        field[1][4] = new Ball(Color.CYAN);
         field[1][5] = new Block();
 
         field[2][0] = new Block();
+        field[2][1] = new Hole(Color.GREEN);
+        field[2][2] = new Hole(Color.YELLOW);
+        field[2][3] = new Hole(Color.PURPLE);
+        field[2][4] = new Hole(Color.CYAN);
         field[2][5] = new Hole(Color.BLUE);
 
         field[3][0] = new Block();
+        field[3][1] = new Ball(Color.PURPLE);
         field[3][5] = new Block();
 
         field[4][0] = new Block();
