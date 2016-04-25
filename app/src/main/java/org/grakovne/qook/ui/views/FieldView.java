@@ -5,18 +5,24 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import org.grakovne.qook.R;
+import org.grakovne.qook.entity.Coordinates;
 import org.grakovne.qook.entity.Field;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Block;
 import org.grakovne.qook.entity.elements.Hole;
 import org.grakovne.qook.entity.elements.Item;
 import org.grakovne.qook.enums.Color;
+import org.grakovne.qook.enums.Direction;
+
+import java.util.List;
 
 public class FieldView extends View {
     private Field field;
+    private int elementSize;
 
     public void setField(Field field) {
         this.field = field;
@@ -38,12 +44,15 @@ public class FieldView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (field == null){
+        if (field == null) {
             return;
         }
 
         int elementXSize = canvas.getWidth() / field.getField()[0].length;
         int elementYSize = canvas.getHeight() / field.getField().length;
+
+        elementSize = elementXSize;
+        Log.d("Real element size", String.valueOf(elementXSize));
 
         for (int i = 0; i < field.getField().length; i++) {
             for (int j = 0; j < field.getField()[0].length; j++) {
@@ -52,6 +61,42 @@ public class FieldView extends View {
                 d.draw(canvas);
             }
         }
+    }
+
+    private double getSwipeLength(float xDistance, float yDistance) {
+        return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+    }
+
+    public Direction getSwipeDirection(float downXCoord, float upXCoord, float downYCoord, float upYCoord) {
+        float xDistance = Math.abs(upXCoord - downXCoord);
+        float yDistance = Math.abs(upYCoord - downYCoord);
+        double swipeLength = getSwipeLength(xDistance, yDistance);
+
+        if (swipeLength < elementSize / 2) {
+            return Direction.NOWHERE;
+        }
+
+        if (xDistance >= yDistance) {
+            if (upXCoord > downXCoord) {
+                return Direction.RIGHT;
+            }
+            return Direction.LEFT;
+        }
+
+        if (yDistance > xDistance) {
+            if (upYCoord > downYCoord) {
+                return Direction.DOWN;
+            }
+            return Direction.UP;
+        }
+
+        return Direction.DOWN;
+    }
+
+    public Coordinates getElementCoords(float xCoords, float yCoords) {
+        float xElCoord = xCoords / elementSize;
+        float yElCoord = yCoords / elementSize;
+        return new Coordinates((int)xElCoord, (int)yElCoord);
     }
 
     private Drawable selectDrawable(Item item) {
@@ -89,7 +134,7 @@ public class FieldView extends View {
         }
 
         if (clazz.equals(Ball.class)) {
-            switch (color){
+            switch (color) {
                 case GREEN:
                     return ContextCompat.getDrawable(getContext(), R.drawable.ball_green);
 
@@ -113,5 +158,9 @@ public class FieldView extends View {
 
         return ContextCompat.getDrawable(getContext(), R.drawable.ball_red);
 
+    }
+
+    public int getElementSize() {
+        return elementSize;
     }
 }

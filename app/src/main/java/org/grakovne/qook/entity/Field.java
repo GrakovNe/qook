@@ -32,14 +32,4 @@ public class Field {
         return ySize;
     }
 
-    public Boolean isFinished(){
-        for (Item[] aField : field) {
-            for (int j = 0; j < field[0].length; j++) {
-                if (aField[j].getClass().equals(Hole.class) && !((Hole) aField[j]).isFilled()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 }
