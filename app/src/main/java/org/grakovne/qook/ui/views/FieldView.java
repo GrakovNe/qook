@@ -38,6 +38,10 @@ public class FieldView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if (field == null){
+            return;
+        }
+
         int elementXSize = canvas.getWidth() / field.getField()[0].length;
         int elementYSize = canvas.getHeight() / field.getField().length;
 
