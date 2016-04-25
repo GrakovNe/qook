@@ -12,10 +12,11 @@
     tools:context=".ui.activities.LogoActivity"
     tools:showIn="@layout/activity_logo">
 
-    <org.grakovne.qook.ui.views.FieldView
-        android:id="@+id/field"
-        android:background="@drawable/field_ground"
-        android:layout_width="700px"
-        android:layout_height="700px" />
+        <org.grakovne.qook.ui.views.FieldView
+            android:id="@+id/field"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/field_ground" />
 
 </LinearLayout>
