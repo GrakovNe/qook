@@ -15,7 +15,7 @@ public class Level {
     }
 
     public Level() {
-        field = new Item[6][7];
+        field = new Item[6][6];
         field[0][0] = new Block();
         field[0][1] = new Block();
         field[0][2] = new Hole(Color.RED);
