@@ -18,8 +18,6 @@ import org.grakovne.qook.entity.elements.Item;
 import org.grakovne.qook.enums.Color;
 import org.grakovne.qook.enums.Direction;
 
-import java.util.List;
-
 public class FieldView extends View {
     private Field field;
     private int elementSize;
@@ -96,7 +94,7 @@ public class FieldView extends View {
     public Coordinates getElementCoords(float xCoords, float yCoords) {
         float xElCoord = xCoords / elementSize;
         float yElCoord = yCoords / elementSize;
-        return new Coordinates((int)xElCoord, (int)yElCoord);
+        return new Coordinates((int) xElCoord, (int) yElCoord);
     }
 
     private Drawable selectDrawable(Item item) {
@@ -160,7 +158,7 @@ public class FieldView extends View {
 
     }
 
-    public int getElementSize() {
-        return elementSize;
+    public Field getField() {
+        return field;
     }
 }

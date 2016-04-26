@@ -1,7 +1,9 @@
 package org.grakovne.qook.entity;
 
-import org.grakovne.qook.entity.elements.Hole;
+import android.util.Log;
+
 import org.grakovne.qook.entity.elements.Item;
+import org.grakovne.qook.enums.Direction;
 
 public class Field {
     private Item[][] field;
@@ -30,6 +32,10 @@ public class Field {
 
     public int getySize() {
         return ySize;
+    }
+
+    public void moveItem(Coordinates itemCoords, Direction direction){
+        Log.d("Moved!", itemCoords.toString() + " " + direction.toString());
     }
 
 }

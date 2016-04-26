@@ -24,10 +24,10 @@ import org.grakovne.qook.ui.views.FieldView;
 public class LogoActivity extends AppCompatActivity {
     private FieldView fieldView;
 
-    float downXCoord;
-    float downYCoord;
-    float upXCoord;
-    float upYCoord;
+    private float downXCoord;
+    private float downYCoord;
+    private float upXCoord;
+    private float upYCoord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +60,10 @@ public class LogoActivity extends AppCompatActivity {
                     upXCoord = event.getX();
                     upYCoord = event.getY();
 
-                    Direction direction = fieldView.getSwipeDirection(downXCoord, upXCoord, downYCoord, upYCoord);
-                    Log.d("Direction", direction.toString());
-                    Coordinates coordinates = fieldView.getElementCoords(downXCoord, downYCoord);
-                    Log.d("Element", coordinates.toString());
+                    fieldView.getField().moveItem(
+                            fieldView.getElementCoords(downXCoord, downYCoord),
+                            fieldView.getSwipeDirection(downXCoord, upXCoord, downYCoord, upYCoord)
+                    );
             }
             return true;
         }
