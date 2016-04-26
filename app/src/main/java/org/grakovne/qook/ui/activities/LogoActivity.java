@@ -40,9 +40,6 @@ public class LogoActivity extends AppCompatActivity {
         Field field = new Field(level);
 
         fieldView = (FieldView) findViewById(R.id.field);
-
-        //fieldView.setFieldSize(fieldView.calcFieldSize());
-
         fieldView.setField(field);
         fieldView.setOnTouchListener(onFieldTouchListener);
     }
@@ -60,12 +57,16 @@ public class LogoActivity extends AppCompatActivity {
                     upXCoord = event.getX();
                     upYCoord = event.getY();
 
-                    fieldView.getField().makeTurn(
+                    boolean isWin = fieldView.getField().makeTurn(
                             fieldView.getElementCoords(downXCoord, downYCoord),
                             fieldView.getSwipeDirection(downXCoord, upXCoord, downYCoord, upYCoord)
                     );
 
                     fieldView.invalidate();
+
+                    if (isWin){
+                        Toast.makeText(getApplicationContext(), "You win!", Toast.LENGTH_LONG).show();
+                    }
             }
             return true;
         }
