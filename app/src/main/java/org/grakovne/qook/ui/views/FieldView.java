@@ -5,8 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.grakovne.qook.R;
 import org.grakovne.qook.entity.Coordinates;
@@ -159,5 +161,30 @@ public class FieldView extends View {
 
     public Field getField() {
         return field;
+    }
+
+    public int calcFieldSize() {
+        DisplayMetrics metrics = this.getResources().getDisplayMetrics();
+        int screenWidth = metrics.widthPixels;
+        int screenHeight = metrics.heightPixels;
+
+        int fieldSize;
+
+        if (screenHeight <= screenWidth) {
+            fieldSize = screenHeight;
+        } else {
+            fieldSize = screenWidth;
+        }
+
+        fieldSize -= (fieldSize / 20) * 2;
+
+        return fieldSize;
+    }
+
+    public void setFieldSize(int size) {
+        ViewGroup.LayoutParams viewParams = this.getLayoutParams();
+        viewParams.width = size;
+        viewParams.height = size;
+        this.setLayoutParams(viewParams);
     }
 }

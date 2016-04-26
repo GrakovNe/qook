@@ -41,7 +41,7 @@ public class LogoActivity extends AppCompatActivity {
 
         fieldView = (FieldView) findViewById(R.id.field);
 
-        setFieldSize(fieldView, calcFieldSize());
+        fieldView.setFieldSize(fieldView.calcFieldSize());
 
         fieldView.setField(field);
         fieldView.setOnTouchListener(onFieldTouchListener);
@@ -74,30 +74,5 @@ public class LogoActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(event);
-    }
-
-    private int calcFieldSize() {
-        DisplayMetrics metrics = this.getResources().getDisplayMetrics();
-        int screenWidth = metrics.widthPixels;
-        int screenHeight = metrics.heightPixels;
-
-        int fieldSize;
-
-        if (screenHeight <= screenWidth) {
-            fieldSize = screenHeight;
-        } else {
-            fieldSize = screenWidth;
-        }
-
-        fieldSize -= (fieldSize / 20) * 2;
-
-        return fieldSize;
-    }
-
-    private void setFieldSize(FieldView fieldView, int size) {
-        ViewGroup.LayoutParams viewParams = fieldView.getLayoutParams();
-        viewParams.width = size;
-        viewParams.height = size;
-        fieldView.setLayoutParams(viewParams);
     }
 }
