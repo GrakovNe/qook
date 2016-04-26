@@ -64,6 +64,8 @@ public class LogoActivity extends AppCompatActivity {
                             fieldView.getElementCoords(downXCoord, downYCoord),
                             fieldView.getSwipeDirection(downXCoord, upXCoord, downYCoord, upYCoord)
                     );
+
+                    fieldView.invalidate();
             }
             return true;
         }
