@@ -26,6 +26,7 @@ public class FieldView extends View {
 
     public void setField(Field field) {
         this.field = field;
+        setFieldSize(calcFieldSize());
     }
 
     public FieldView(Context context) {

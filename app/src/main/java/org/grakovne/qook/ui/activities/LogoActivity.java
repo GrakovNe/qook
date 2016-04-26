@@ -41,7 +41,7 @@ public class LogoActivity extends AppCompatActivity {
 
         fieldView = (FieldView) findViewById(R.id.field);
 
-        fieldView.setFieldSize(fieldView.calcFieldSize());
+        //fieldView.setFieldSize(fieldView.calcFieldSize());
 
         fieldView.setField(field);
         fieldView.setOnTouchListener(onFieldTouchListener);
