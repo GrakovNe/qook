@@ -22,6 +22,7 @@ import org.grakovne.qook.enums.Direction;
 
 public class FieldView extends View {
     private Field field;
+
     private int elementSize;
 
     public void setField(Field field) {
@@ -49,15 +50,12 @@ public class FieldView extends View {
             return;
         }
 
-        int elementXSize = canvas.getWidth() / field.getField()[0].length;
-        int elementYSize = canvas.getHeight() / field.getField().length;
-
-        elementSize = elementXSize;
+       this.elementSize = canvas.getWidth() / field.getField()[0].length;
 
         for (int i = 0; i < field.getField().length; i++) {
             for (int j = 0; j < field.getField()[0].length; j++) {
-                Drawable d = selectDrawable(field.getField()[j][i]);
-                d.setBounds(i * elementXSize, j * elementYSize, (i + 1) * elementXSize, (j + 1) * elementYSize);
+                Drawable d = selectDrawable(field.getField()[i][j]);
+                d.setBounds(j * elementSize, i * elementSize, (j + 1) * elementSize, (i + 1) * elementSize);
                 d.draw(canvas);
             }
         }
@@ -96,6 +94,9 @@ public class FieldView extends View {
     public Coordinates getElementCoords(float xCoords, float yCoords) {
         float xElCoord = xCoords / elementSize;
         float yElCoord = yCoords / elementSize;
+
+        Coordinates coordinates = new Coordinates((int) xElCoord, (int) yElCoord);
+
         return new Coordinates((int) xElCoord, (int) yElCoord);
     }
 
@@ -185,7 +186,7 @@ public class FieldView extends View {
     public void setFieldSize(int size) {
         ViewGroup.LayoutParams viewParams = this.getLayoutParams();
         viewParams.width = size;
-        viewParams.height = size;
+        viewParams.height = (size / field.getField()[0].length) * field.getField().length;
         this.setLayoutParams(viewParams);
     }
 }
