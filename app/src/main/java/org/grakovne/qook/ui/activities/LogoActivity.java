@@ -60,7 +60,7 @@ public class LogoActivity extends AppCompatActivity {
                     upXCoord = event.getX();
                     upYCoord = event.getY();
 
-                    fieldView.getField().moveItem(
+                    fieldView.getField().makeTurn(
                             fieldView.getElementCoords(downXCoord, downYCoord),
                             fieldView.getSwipeDirection(downXCoord, upXCoord, downYCoord, upYCoord)
                     );
@@ -89,7 +89,7 @@ public class LogoActivity extends AppCompatActivity {
             fieldSize = screenWidth;
         }
 
-        fieldSize -= (fieldSize / 24) * 2;
+        fieldSize -= (fieldSize / 20) * 2;
 
         return fieldSize;
     }

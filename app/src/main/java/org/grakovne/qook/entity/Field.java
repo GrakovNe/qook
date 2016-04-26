@@ -27,49 +27,52 @@ public class Field {
         return field;
     }
 
-    public int getxSize() {
-        return xSize;
-    }
-
-    public int getySize() {
-        return ySize;
-    }
-
-    public void moveItem(Coordinates itemCoords, Direction direction) {
+    private Coordinates moveItem(Coordinates itemCoords, Direction direction) {
 
         int xCoord = itemCoords.getxCoord();
         int yCoord = itemCoords.getyCoord();
 
         if (direction.equals(Direction.NOWHERE) || field[yCoord][xCoord] == null) {
-            return;
+            return null;
         }
 
         Class clazz = field[yCoord][xCoord].getClass();
         if (!clazz.equals(Ball.class)) {
-            return;
+            return null;
         }
 
         switch (direction) {
             case RIGHT:
-                moveRight(xCoord, yCoord);
-                break;
+                return moveRight(xCoord, yCoord);
 
             case LEFT:
-                moveLeft(xCoord, yCoord);
-                break;
+                return moveLeft(xCoord, yCoord);
 
             case UP:
-                moveUp(xCoord, yCoord);
-                break;
+                return moveUp(xCoord, yCoord);
 
             case DOWN:
-                moveDown(xCoord, yCoord);
-                break;
+                return moveDown(xCoord, yCoord);
         }
+
+        return null;
+    }
+
+    public void makeTurn(Coordinates coordinates, Direction direction){
+        Coordinates newCoords = moveItem(coordinates, direction);
+
+        if (newCoords == null){
+            return;
+        }
+
+        acceptHole(newCoords, direction);
+    }
+
+    private void acceptHole(Coordinates coordinates, Direction direction){
 
     }
 
-    private void moveRight(int xCoord, int yCoord) {
+    private Coordinates moveRight(int xCoord, int yCoord) {
         try {
             while (field[yCoord][xCoord + 1] == null) {
                 field[yCoord][xCoord + 1] = field[yCoord][xCoord];
@@ -77,40 +80,44 @@ public class Field {
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
+
+        return new Coordinates(xCoord, yCoord);
     }
 
-    private void moveLeft(int xCoord, int yCoord) {
+    private Coordinates moveLeft(int xCoord, int yCoord) {
         try {
             while (field[yCoord][xCoord - 1] == null) {
                 field[yCoord][xCoord - 1] = field[yCoord][xCoord];
                 field[yCoord][xCoord--] = null;
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
-            Log.d("Moved", "Can't move edge element!");
         }
+
+        return new Coordinates(xCoord, yCoord);
     }
 
-    private void moveUp(int xCoord, int yCoord) {
+    private Coordinates moveUp(int xCoord, int yCoord) {
         try {
             while (field[yCoord - 1][xCoord] == null) {
                 field[yCoord - 1][xCoord] = field[yCoord][xCoord];
                 field[yCoord--][xCoord] = null;
-                Log.d("Next", "Next is null");
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
-            Log.d("Moved", "Can't move edge element!");
         }
+
+        return new Coordinates(xCoord, yCoord);
     }
 
-    private void moveDown(int xCoord, int yCoord) {
+    private Coordinates moveDown(int xCoord, int yCoord) {
         try {
             while (field[yCoord + 1][xCoord] == null) {
                 field[yCoord + 1][xCoord] = field[yCoord][xCoord];
                 field[yCoord++][xCoord] = null;
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
-            Log.d("Moved", "Can't move edge element!");
         }
+
+        return new Coordinates(xCoord, yCoord);
     }
 
 }

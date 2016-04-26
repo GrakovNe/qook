@@ -50,7 +50,6 @@ public class FieldView extends View {
         int elementYSize = canvas.getHeight() / field.getField().length;
 
         elementSize = elementXSize;
-        Log.d("Real element size", String.valueOf(elementXSize));
 
         for (int i = 0; i < field.getField().length; i++) {
             for (int j = 0; j < field.getField()[0].length; j++) {
