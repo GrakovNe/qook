@@ -6,11 +6,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
+import org.grakovne.qook.LevelManager;
 import org.grakovne.qook.R;
 import org.grakovne.qook.entity.Field;
 import org.grakovne.qook.entity.Level;
 import org.grakovne.qook.ui.views.FieldView;
+
+import java.io.IOException;
 
 public class LogoActivity extends AppCompatActivity {
     private FieldView fieldView;
@@ -25,11 +29,18 @@ public class LogoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
-        Level level = new Level();
+        Level level = null;
+
+        LevelManager levelManager = LevelManager.build(this).setCurrentLevel(1);
+        try {
+            level = levelManager.parseLevelFromFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         Field field = new Field(level);
-
         fieldView = (FieldView) findViewById(R.id.field);
-
         if (fieldView == null){
             return;
         }
@@ -39,6 +50,7 @@ public class LogoActivity extends AppCompatActivity {
 
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fiel_view_show);
         fieldView.startAnimation(animation);
+
 
     }
 
@@ -63,7 +75,7 @@ public class LogoActivity extends AppCompatActivity {
                     fieldView.invalidate();
 
                     if (isWin){
-                        fieldView.setField(new Field(new Level()));
+                        Toast.makeText(getApplicationContext(), "You Win!", Toast.LENGTH_LONG).show();
                     }
             }
             return true;

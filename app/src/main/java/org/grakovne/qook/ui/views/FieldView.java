@@ -42,7 +42,7 @@ public class FieldView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.d("FieldView", "Redrawn");
+        //Log.d("FieldView", "Redrawn");
 
         if (field == null) {
             return;

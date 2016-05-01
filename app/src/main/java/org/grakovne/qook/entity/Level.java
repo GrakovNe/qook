@@ -14,37 +14,23 @@ public class Level {
         return field;
     }
 
-    public Level() {
-        //field = new Item[13][13];
-        field = new Item[6][6];
-        field[0][0] = new Block();
-        field[0][1] = new Block();
-        field[0][2] = new Hole(Color.RED);
-        field[0][3] = new Block();
-        field[0][4] = new Block();
-        field[0][5] = new Block();
+    public Level(Item[][] field) {
+        this.field = field;
+        this.ballsCount = countBallsOnLevel(field);
+    }
 
-        field[1][0] = new Block();
-        field[1][1] = new Ball(Color.RED);
-        field[1][5] = new Block();
+    private int countBallsOnLevel(Item[][] field){
+        int ballsCount = 0;
 
-        field[2][0] = new Block();
-        field[2][5] = new Block();
+        for (int i = 0; i < field.length; i++){
+            for (int j = 0; j < field[0].length; j++){
+                if (field[i][j] != null && field[i][j].getClass().equals(Ball.class)){
+                    ballsCount++;
+                }
+            }
+        }
 
-        field[3][0] = new Block();
-        field[3][5] = new Hole(Color.BLUE);
-
-        field[4][0] = new Block();
-        field[4][1] = new Block();
-        field[4][3] = new Ball(Color.BLUE);
-        field[4][5] = new Block();
-
-        field[5][1] = new Block();
-        field[5][2] = new Block();
-        field[5][3] = new Block();
-        field[5][4] = new Block();
-
-        ballsCount = 2;
+        return ballsCount;
     }
 
     public int getBallsCount() {
