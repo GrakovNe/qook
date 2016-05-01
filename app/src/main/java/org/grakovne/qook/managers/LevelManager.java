@@ -1,8 +1,7 @@
-package org.grakovne.qook;
+package org.grakovne.qook.managers;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
 
 import org.grakovne.qook.entity.Level;
 import org.grakovne.qook.entity.elements.Ball;
@@ -38,26 +37,20 @@ public class LevelManager {
     private static final int PURPLE_HOLE_CELL = 66;
     private static final int CYAN_HOLE_CELL = 77;
 
-    private static Activity activity;
+    private static Context context;
+    private static SharedSettingsManager sharedSettingsManager;
     private static LevelManager instance;
 
-    private int currentLevel = 1;
     private Stack<Level> snapshot = new Stack<>();
 
     private LevelManager() {
+        //TODO: remove it when release
+        sharedSettingsManager.setCurrentLevel(1);
     }
 
-    public LevelManager setCurrentLevel(int currentLevel) {
-        if (currentLevel <= 0) {
-            throw new RuntimeException("Level can't be negative!");
-        }
-
-        this.currentLevel = currentLevel;
-        return this;
-    }
-
-    public static LevelManager build(Activity currentActivity) {
-        activity = currentActivity;
+    public static LevelManager build(Context currentContext) {
+        context = currentContext;
+        sharedSettingsManager = new SharedSettingsManager(context);
 
         if (instance == null) {
             instance = new LevelManager();
@@ -69,7 +62,7 @@ public class LevelManager {
         snapshot.push(level);
     }
 
-    public Level parseLevelFromFile() throws IOException {
+    public Level getCurrentLevel() throws IOException {
         Scanner scanner = openLevel();
 
         int levelWidth = scanner.nextInt();
@@ -134,9 +127,15 @@ public class LevelManager {
         return null;
     }
 
+    public void finishLevel(){
+        sharedSettingsManager.setCurrentLevel(
+                sharedSettingsManager.getCurrentLevel() + 1
+        );
+    }
+
     private Scanner openLevel() throws IOException {
-        AssetManager assetManager = activity.getAssets();
-        InputStream inputStream = assetManager.open(LEVELS_FOLDER + "05" + LEVEL_FILE_EXTENSION);
+        AssetManager assetManager = context.getAssets();
+        InputStream inputStream = assetManager.open(LEVELS_FOLDER + sharedSettingsManager.getCurrentLevel() + LEVEL_FILE_EXTENSION);
 
         BufferedReader bufferedReader =
                 new BufferedReader

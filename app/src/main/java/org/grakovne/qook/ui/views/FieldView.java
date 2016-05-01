@@ -36,9 +36,7 @@ public class FieldView extends View {
         this.field = field;
     }
 
-    public FieldView(Context context) {
-        super(context);
-    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -217,4 +215,5 @@ public class FieldView extends View {
 
         return new Size(newWidth, newHeight);
     }
+
 }
