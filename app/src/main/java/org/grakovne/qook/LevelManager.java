@@ -75,10 +75,10 @@ public class LevelManager {
         int levelWidth = scanner.nextInt();
         int levelHeight = scanner.nextInt();
 
-        Item levelMatrix[][] = new Item[levelWidth][levelHeight];
+        Item levelMatrix[][] = new Item[levelHeight][levelWidth];
 
-        for (int i = 0; i < levelWidth; i++){
-            for (int j = 0; j < levelHeight; j++){
+        for (int i = 0; i < levelHeight; i++){
+            for (int j = 0; j < levelWidth; j++){
                 levelMatrix[i][j] = convertLegendToItem(scanner.nextInt());
             }
         }
@@ -136,7 +136,7 @@ public class LevelManager {
 
     private Scanner openLevel() throws IOException {
         AssetManager assetManager = activity.getAssets();
-        InputStream inputStream = assetManager.open(LEVELS_FOLDER + "01" + LEVEL_FILE_EXTENSION);
+        InputStream inputStream = assetManager.open(LEVELS_FOLDER + "05" + LEVEL_FILE_EXTENSION);
 
         BufferedReader bufferedReader =
                 new BufferedReader
