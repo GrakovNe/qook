@@ -26,8 +26,8 @@ public class Field {
 
     private Coordinates moveItem(Coordinates itemCoords, Direction direction) {
 
-        int xCoord = itemCoords.getxCoord();
-        int yCoord = itemCoords.getyCoord();
+        int xCoord = itemCoords.getHorizontal();
+        int yCoord = itemCoords.getVertical();
 
         if (direction.equals(Direction.NOWHERE) || field[yCoord][xCoord] == null) {
             return null;
@@ -96,8 +96,8 @@ public class Field {
 
     private boolean acceptUp(Coordinates coordinates) {
         try {
-            int xCoord = coordinates.getxCoord();
-            int yCoord = coordinates.getyCoord();
+            int xCoord = coordinates.getHorizontal();
+            int yCoord = coordinates.getVertical();
 
             Item upItem = field[yCoord - 1][xCoord];
             Item item = field[yCoord][xCoord];
@@ -115,8 +115,8 @@ public class Field {
 
     private boolean acceptDown(Coordinates coordinates) {
         try {
-            int xCoord = coordinates.getxCoord();
-            int yCoord = coordinates.getyCoord();
+            int xCoord = coordinates.getHorizontal();
+            int yCoord = coordinates.getVertical();
 
             Item downItem = field[yCoord + 1][xCoord];
             Item item = field[yCoord][xCoord];
@@ -136,8 +136,8 @@ public class Field {
 
     private boolean acceptRight(Coordinates coordinates) {
         try {
-            int xCoord = coordinates.getxCoord();
-            int yCoord = coordinates.getyCoord();
+            int xCoord = coordinates.getHorizontal();
+            int yCoord = coordinates.getVertical();
 
             Item upItem = field[yCoord][xCoord + 1];
             Item item = field[yCoord][xCoord];
@@ -156,8 +156,8 @@ public class Field {
 
     private boolean acceptLeft(Coordinates coordinates) {
         try {
-            int xCoord = coordinates.getxCoord();
-            int yCoord = coordinates.getyCoord();
+            int xCoord = coordinates.getHorizontal();
+            int yCoord = coordinates.getVertical();
 
             Item upItem = field[yCoord][xCoord - 1];
             Item item = field[yCoord][xCoord];

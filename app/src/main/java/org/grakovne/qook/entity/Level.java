@@ -15,6 +15,7 @@ public class Level {
     }
 
     public Level() {
+        //field = new Item[13][13];
         field = new Item[6][6];
         field[0][0] = new Block();
         field[0][1] = new Block();

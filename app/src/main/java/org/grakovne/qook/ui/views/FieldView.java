@@ -3,12 +3,13 @@ package org.grakovne.qook.ui.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import org.grakovne.qook.R;
 import org.grakovne.qook.entity.Coordinates;
@@ -17,29 +18,22 @@ import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Block;
 import org.grakovne.qook.entity.elements.Hole;
 import org.grakovne.qook.entity.elements.Item;
+import org.grakovne.qook.entity.Size;
 import org.grakovne.qook.enums.Color;
 import org.grakovne.qook.enums.Direction;
 
 public class FieldView extends View {
     private Field field;
-
     private int elementSize;
+    private Size fieldSize;
+    private final double ROUND_RECT_SIZE = 0.15;
 
     public void setField(Field field) {
         this.field = field;
-        setFieldSize(calcFieldSize());
     }
 
     public FieldView(Context context) {
         super(context);
-    }
-
-    public FieldView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public FieldView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
     }
 
     @Override
@@ -50,15 +44,28 @@ public class FieldView extends View {
             return;
         }
 
-       this.elementSize = canvas.getWidth() / field.getField()[0].length;
+        if (fieldSize == null || !fieldSize.equals(countFieldSize())) {
+            this.fieldSize = countFieldSize();
+            setFieldSize(this.fieldSize);
+        }
+
+        int paddingSize = (int) (Math.sqrt(elementSize) / 4);
 
         for (int i = 0; i < field.getField().length; i++) {
             for (int j = 0; j < field.getField()[0].length; j++) {
                 Drawable d = selectDrawable(field.getField()[i][j]);
-                d.setBounds(j * elementSize, i * elementSize, (j + 1) * elementSize, (i + 1) * elementSize);
+                d.setBounds(j * elementSize + paddingSize, i * elementSize + paddingSize, (j + 1) * elementSize - paddingSize, (i + 1) * elementSize - paddingSize);
                 d.draw(canvas);
             }
         }
+    }
+
+    public FieldView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public FieldView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
     private double getSwipeLength(float xDistance, float yDistance) {
@@ -95,98 +102,117 @@ public class FieldView extends View {
         float xElCoord = xCoords / elementSize;
         float yElCoord = yCoords / elementSize;
 
-        Coordinates coordinates = new Coordinates((int) xElCoord, (int) yElCoord);
-
         return new Coordinates((int) xElCoord, (int) yElCoord);
     }
 
     private Drawable selectDrawable(Item item) {
         if (item == null) {
-            return ContextCompat.getDrawable(getContext(), R.drawable.none);
+            GradientDrawable bgShape = new GradientDrawable();
+            bgShape.setColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
+            bgShape.setCornerRadius((float) (elementSize * ROUND_RECT_SIZE));
+            return bgShape;
         }
 
         Class clazz = item.getClass();
         Color color = item.getColor();
 
         if (clazz.equals(Block.class)) {
-            return ContextCompat.getDrawable(getContext(), R.drawable.block_cell);
+            GradientDrawable bgShape = new GradientDrawable();
+            bgShape.setColor(ContextCompat.getColor(getContext(), R.color.gray));
+            bgShape.setCornerRadius((float) (elementSize * ROUND_RECT_SIZE));
+            return bgShape;
         }
 
         if (clazz.equals(Hole.class)) {
+            GradientDrawable bgShape = new GradientDrawable();
+            bgShape.setCornerRadius((float) (elementSize * ROUND_RECT_SIZE));
+
             switch (color) {
                 case GREEN:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.hole_green);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.green));
+                    return bgShape;
 
                 case RED:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.hole_red);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.red));
+                    return bgShape;
 
                 case BLUE:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.hole_blue);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.blue));
+                    return bgShape;
 
                 case YELLOW:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.hole_yellow);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.yellow));
+                    return bgShape;
 
                 case PURPLE:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.hole_purple);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.purple));
+                    return bgShape;
 
                 case CYAN:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.hole_cyan);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.cyan));
+                    return bgShape;
             }
         }
 
         if (clazz.equals(Ball.class)) {
+            GradientDrawable bgShape = new GradientDrawable();
+            bgShape.setColor(ContextCompat.getColor(getContext(), R.color.gray));
+            bgShape.setCornerRadius(elementSize);
+
             switch (color) {
                 case GREEN:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.ball_green);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.green));
+                    return bgShape;
 
                 case RED:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.ball_red);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.red));
+                    return bgShape;
 
                 case BLUE:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.ball_blue);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.blue));
+                    return bgShape;
 
                 case YELLOW:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.ball_yellow);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.yellow));
+                    return bgShape;
 
                 case PURPLE:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.ball_purple);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.purple));
+                    return bgShape;
 
                 case CYAN:
-                    return ContextCompat.getDrawable(getContext(), R.drawable.ball_cyan);
+                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.cyan));
+                    return bgShape;
 
             }
         }
 
-        return ContextCompat.getDrawable(getContext(), R.drawable.ball_red);
-
+        return new GradientDrawable();
     }
 
     public Field getField() {
         return field;
     }
 
-    public int calcFieldSize() {
-        DisplayMetrics metrics = this.getResources().getDisplayMetrics();
-        int screenWidth = metrics.widthPixels;
-        int screenHeight = metrics.heightPixels;
-
-        int fieldSize;
-
-        if (screenHeight <= screenWidth) {
-            fieldSize = screenHeight;
-        } else {
-            fieldSize = screenWidth;
-        }
-
-        fieldSize -= (fieldSize / 20) * 2;
-
-        return fieldSize;
+    public void setFieldSize(Size size) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size.getWidth(), size.getHeight());
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        this.setLayoutParams(params);
     }
 
-    public void setFieldSize(int size) {
-        ViewGroup.LayoutParams viewParams = this.getLayoutParams();
-        viewParams.width = size;
-        viewParams.height = (size / field.getField()[0].length) * field.getField().length;
-        this.setLayoutParams(viewParams);
+    public Size countFieldSize() {
+        int horizontalElementsNum = field.getField()[0].length;
+        int verticalElementsNum = field.getField().length;
+
+        int maxHorizontalElSize = this.getWidth() / horizontalElementsNum;
+        int maxVerticalElSize = this.getHeight() / verticalElementsNum;
+
+        this.elementSize = (maxHorizontalElSize < maxVerticalElSize) ? maxHorizontalElSize : maxVerticalElSize;
+
+        int newWidth = this.elementSize * horizontalElementsNum;
+        int newHeight = this.elementSize * verticalElementsNum;
+
+        return new Size(newWidth, newHeight);
     }
+
 }

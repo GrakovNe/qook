@@ -1,27 +1,27 @@
 package org.grakovne.qook.entity;
 
 public class Coordinates {
-    private int xCoord;
-    private int yCoord;
+    private int horizontal;
+    private int vertical;
 
-    public Coordinates(int xCoord, int yCoord) {
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
+    public Coordinates(int horizontal, int vertical) {
+        this.horizontal = horizontal;
+        this.vertical = vertical;
     }
 
-    public int getxCoord() {
-        return xCoord;
+    public int getHorizontal() {
+        return horizontal;
     }
 
-    public int getyCoord() {
-        return yCoord;
+    public int getVertical() {
+        return vertical;
     }
 
     @Override
     public String toString() {
         return "Coordinates{" +
-                "xCoord=" + xCoord +
-                "; yCoord=" + yCoord +
+                "horizontal=" + horizontal +
+                "; vertical=" + vertical +
                 '}';
     }
 }

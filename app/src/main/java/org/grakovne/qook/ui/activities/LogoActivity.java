@@ -1,8 +1,10 @@
 package org.grakovne.qook.ui.activities;
 
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Path;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,8 +35,6 @@ public class LogoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         Level level = new Level();
         Field field = new Field(level);
@@ -42,6 +42,7 @@ public class LogoActivity extends AppCompatActivity {
         fieldView = (FieldView) findViewById(R.id.field);
         fieldView.setField(field);
         fieldView.setOnTouchListener(onFieldTouchListener);
+
     }
 
     private View.OnTouchListener onFieldTouchListener = new View.OnTouchListener() {
@@ -65,7 +66,7 @@ public class LogoActivity extends AppCompatActivity {
                     fieldView.invalidate();
 
                     if (isWin){
-                        Toast.makeText(getApplicationContext(), "You win!", Toast.LENGTH_LONG).show();
+                        fieldView.setField(new Field(new Level()));
                     }
             }
             return true;
