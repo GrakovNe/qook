@@ -21,36 +21,36 @@ public class Field {
 
     private Coordinates moveItem(Coordinates itemCoords, Direction direction) {
 
-        int xCoord = itemCoords.getHorizontal();
-        int yCoord = itemCoords.getVertical();
+        int horizontal = itemCoords.getHorizontal();
+        int vertical = itemCoords.getVertical();
 
-        if (direction.equals(Direction.NOWHERE) || level.getField()[yCoord][xCoord] == null) {
+        if (direction.equals(Direction.NOWHERE) || level.getField()[vertical][horizontal] == null) {
             return null;
         }
 
-        Class clazz = level.getField()[yCoord][xCoord].getClass();
+        Class clazz = level.getField()[vertical][horizontal].getClass();
         if (!clazz.equals(Ball.class)) {
             return null;
         }
 
         switch (direction) {
             case RIGHT:
-                return moveRight(xCoord, yCoord);
+                return moveRight(horizontal, vertical);
 
             case LEFT:
-                return moveLeft(xCoord, yCoord);
+                return moveLeft(horizontal, vertical);
 
             case UP:
-                return moveUp(xCoord, yCoord);
+                return moveUp(horizontal, vertical);
 
             case DOWN:
-                return moveDown(xCoord, yCoord);
+                return moveDown(horizontal, vertical);
         }
 
         return null;
     }
 
-    private void catchBall(){
+    private void catchBall() {
         ballsCount--;
     }
 
@@ -79,7 +79,7 @@ public class Field {
                 break;
         }
 
-        if (!isAccepted){
+        if (!isAccepted) {
             return false;
         }
 
@@ -91,17 +91,17 @@ public class Field {
 
     private boolean acceptUp(Coordinates coordinates) {
         try {
-            int xCoord = coordinates.getHorizontal();
-            int yCoord = coordinates.getVertical();
+            int horizontal = coordinates.getHorizontal();
+            int vertical = coordinates.getVertical();
 
-            Item upItem = level.getField()[yCoord - 1][xCoord];
-            Item item = level.getField()[yCoord][xCoord];
+            Item upItem = level.getField()[vertical - 1][horizontal];
+            Item item = level.getField()[vertical][horizontal];
 
             if (upItem == null || !upItem.getClass().equals(Hole.class) || !(upItem.getColor().equals(item.getColor()))) {
                 return false;
             }
 
-            level.getField()[yCoord][xCoord] = null;
+            level.getField()[vertical][horizontal] = null;
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
 
@@ -110,17 +110,17 @@ public class Field {
 
     private boolean acceptDown(Coordinates coordinates) {
         try {
-            int xCoord = coordinates.getHorizontal();
-            int yCoord = coordinates.getVertical();
+            int horizontal = coordinates.getHorizontal();
+            int vertical = coordinates.getVertical();
 
-            Item downItem = level.getField()[yCoord + 1][xCoord];
-            Item item = level.getField()[yCoord][xCoord];
+            Item downItem = level.getField()[vertical + 1][horizontal];
+            Item item = level.getField()[vertical][horizontal];
 
             if (downItem == null || !downItem.getClass().equals(Hole.class) || !(downItem.getColor().equals(item.getColor()))) {
                 return false;
             }
 
-            level.getField()[yCoord][xCoord] = null;
+            level.getField()[vertical][horizontal] = null;
 
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
@@ -130,17 +130,17 @@ public class Field {
 
     private boolean acceptRight(Coordinates coordinates) {
         try {
-            int xCoord = coordinates.getHorizontal();
-            int yCoord = coordinates.getVertical();
+            int horizontal = coordinates.getHorizontal();
+            int vertical = coordinates.getVertical();
 
-            Item upItem = level.getField()[yCoord][xCoord + 1];
-            Item item = level.getField()[yCoord][xCoord];
+            Item upItem = level.getField()[vertical][horizontal + 1];
+            Item item = level.getField()[vertical][horizontal];
 
             if (upItem == null || !upItem.getClass().equals(Hole.class) || !(upItem.getColor().equals(item.getColor()))) {
                 return false;
             }
 
-            level.getField()[yCoord][xCoord] = null;
+            level.getField()[vertical][horizontal] = null;
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
 
@@ -149,17 +149,17 @@ public class Field {
 
     private boolean acceptLeft(Coordinates coordinates) {
         try {
-            int xCoord = coordinates.getHorizontal();
-            int yCoord = coordinates.getVertical();
+            int horizontal = coordinates.getHorizontal();
+            int vertical = coordinates.getVertical();
 
-            Item upItem = level.getField()[yCoord][xCoord - 1];
-            Item item = level.getField()[yCoord][xCoord];
+            Item upItem = level.getField()[vertical][horizontal - 1];
+            Item item = level.getField()[vertical][horizontal];
 
             if (upItem == null || !upItem.getClass().equals(Hole.class) || !(upItem.getColor().equals(item.getColor()))) {
                 return false;
             }
 
-            level.getField()[yCoord][xCoord] = null;
+            level.getField()[vertical][horizontal] = null;
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
 
@@ -214,7 +214,7 @@ public class Field {
         return new Coordinates(xCoord, yCoord);
     }
 
-    private boolean checkWin(){
+    private boolean checkWin() {
         return ballsCount == 0;
     }
 }

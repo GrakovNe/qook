@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Qook</string>
     <string name="title_activity_logo">LogoActivity</string>
+    <string name="reset_level_button">Сбросить</string>
+    <string name="undo_level_button">Назад</string>
 </resources>

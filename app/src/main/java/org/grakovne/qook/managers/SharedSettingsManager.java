@@ -7,11 +7,9 @@ public class SharedSettingsManager {
     private static final String APP_PREFS = "qook_Prefs";
     public static final String CURRENT_LEVEL = "current_level";
 
-    private Context context;
     SharedPreferences sharedPreferences;
 
     public SharedSettingsManager(Context context) {
-        this.context = context;
         sharedPreferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE);
     }
 

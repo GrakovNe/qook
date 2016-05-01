@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class LevelManager {
     private static final String LEVELS_FOLDER = "levels/";
@@ -41,8 +40,6 @@ public class LevelManager {
     private static SharedSettingsManager sharedSettingsManager;
     private static LevelManager instance;
 
-    private Stack<Level> snapshot = new Stack<>();
-
     private LevelManager() {
         //TODO: remove it when release
         sharedSettingsManager.setCurrentLevel(1);
@@ -58,10 +55,6 @@ public class LevelManager {
         return instance;
     }
 
-    public void makeSnapshot(Level level) {
-        snapshot.push(level);
-    }
-
     public Level getCurrentLevel() throws IOException {
         Scanner scanner = openLevel();
 
@@ -70,8 +63,8 @@ public class LevelManager {
 
         Item levelMatrix[][] = new Item[levelHeight][levelWidth];
 
-        for (int i = 0; i < levelHeight; i++){
-            for (int j = 0; j < levelWidth; j++){
+        for (int i = 0; i < levelHeight; i++) {
+            for (int j = 0; j < levelWidth; j++) {
                 levelMatrix[i][j] = convertLegendToItem(scanner.nextInt());
             }
         }
@@ -82,7 +75,7 @@ public class LevelManager {
     }
 
     private Item convertLegendToItem(int itemLegend) {
-        switch (itemLegend){
+        switch (itemLegend) {
             case EMPTY_CELL:
                 return null;
 
@@ -129,7 +122,7 @@ public class LevelManager {
         return null;
     }
 
-    public void finishLevel(){
+    public void finishLevel() {
         sharedSettingsManager.setCurrentLevel(
                 sharedSettingsManager.getCurrentLevel() + 1
         );
@@ -139,8 +132,8 @@ public class LevelManager {
         AssetManager assetManager = context.getAssets();
         InputStream inputStream = assetManager.open(
                 LEVELS_FOLDER +
-                sharedSettingsManager.getCurrentLevel() +
-                LEVEL_FILE_EXTENSION);
+                        sharedSettingsManager.getCurrentLevel() +
+                        LEVEL_FILE_EXTENSION);
 
         BufferedReader bufferedReader =
                 new BufferedReader
@@ -149,12 +142,7 @@ public class LevelManager {
         return new Scanner(bufferedReader);
     }
 
-    public Level getLastSnapshot() {
-        return snapshot.pop();
-    }
-
     public Level resetLevel() throws IOException {
-        snapshot.clear();
         return getCurrentLevel();
     }
 }

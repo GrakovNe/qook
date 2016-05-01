@@ -13,19 +13,20 @@
     tools:context=".ui.activities.LogoActivity"
     tools:showIn="@layout/activity_logo">
 
-    <TextView
-        android:layout_weight="0"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        <org.grakovne.qook.ui.views.FieldView
+            android:id="@+id/field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/field_ground"
+            android:foregroundGravity="center" />
 
-    <org.grakovne.qook.ui.views.FieldView
-        android:id="@+id/field"
-        android:background="@drawable/field_ground"
-        android:padding="10dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+    <Button
+        android:id="@+id/reset_level_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:foregroundGravity="center"
-        android:layout_width="match_parent"/>
+        android:text="@string/reset_level_button" />
+
 
 </LinearLayout>

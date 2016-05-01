@@ -1,10 +1,9 @@
 package org.grakovne.qook.entity;
 
 import org.grakovne.qook.entity.elements.Ball;
-import org.grakovne.qook.entity.elements.Block;
-import org.grakovne.qook.entity.elements.Hole;
 import org.grakovne.qook.entity.elements.Item;
-import org.grakovne.qook.enums.Color;
+
+import java.util.Arrays;
 
 public class Level {
     private Item[][] field;
@@ -19,12 +18,12 @@ public class Level {
         this.ballsCount = countBallsOnLevel(field);
     }
 
-    private int countBallsOnLevel(Item[][] field){
+    private int countBallsOnLevel(Item[][] field) {
         int ballsCount = 0;
 
-        for (int i = 0; i < field.length; i++){
-            for (int j = 0; j < field[0].length; j++){
-                if (field[i][j] != null && field[i][j].getClass().equals(Ball.class)){
+        for (Item[] aField : field) {
+            for (int j = 0; j < field[0].length; j++) {
+                if (aField[j] != null && aField[j].getClass().equals(Ball.class)) {
                     ballsCount++;
                 }
             }
@@ -35,5 +34,22 @@ public class Level {
 
     public int getBallsCount() {
         return ballsCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Level level = (Level) o;
+        return ballsCount == level.ballsCount && Arrays.deepEquals(field, level.field);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.deepHashCode(field);
+        result = 31 * result + ballsCount;
+        return result;
     }
 }

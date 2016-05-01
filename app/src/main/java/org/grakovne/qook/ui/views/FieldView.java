@@ -6,15 +6,14 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import org.grakovne.qook.R;
 import org.grakovne.qook.dimensionality.Coordinates;
-import org.grakovne.qook.entity.Field;
 import org.grakovne.qook.dimensionality.Size;
+import org.grakovne.qook.entity.Field;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Block;
 import org.grakovne.qook.entity.elements.Hole;
