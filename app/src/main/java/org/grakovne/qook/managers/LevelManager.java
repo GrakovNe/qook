@@ -135,7 +135,10 @@ public class LevelManager {
 
     private Scanner openLevel() throws IOException {
         AssetManager assetManager = context.getAssets();
-        InputStream inputStream = assetManager.open(LEVELS_FOLDER + sharedSettingsManager.getCurrentLevel() + LEVEL_FILE_EXTENSION);
+        InputStream inputStream = assetManager.open(
+                LEVELS_FOLDER +
+                sharedSettingsManager.getCurrentLevel() +
+                LEVEL_FILE_EXTENSION);
 
         BufferedReader bufferedReader =
                 new BufferedReader

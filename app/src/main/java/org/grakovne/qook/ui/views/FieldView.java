@@ -36,12 +36,8 @@ public class FieldView extends View {
         this.field = field;
     }
 
-
-
     @Override
     protected void onDraw(Canvas canvas) {
-        //Log.d("FieldView", "Redrawn");
-
         if (field == null) {
             return;
         }
@@ -63,10 +59,6 @@ public class FieldView extends View {
 
     public FieldView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public FieldView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
     }
 
     private double getSwipeLength(float horizontalDistance, float verticalDistance) {
@@ -99,11 +91,11 @@ public class FieldView extends View {
         return Direction.DOWN;
     }
 
-    public Coordinates getElementCoord(float horizontal, float vertical) {
-        float xElCoord = horizontal / elementSize;
-        float yElCoord = vertical / elementSize;
+    public Coordinates getElementCoordinates(float horizontal, float vertical) {
+        float xElCoordinate = horizontal / elementSize;
+        float yElCoordinate = vertical / elementSize;
 
-        return new Coordinates((int) xElCoord, (int) yElCoord);
+        return new Coordinates((int) xElCoordinate, (int) yElCoordinate);
     }
 
     private Drawable selectDrawable(Item item) {

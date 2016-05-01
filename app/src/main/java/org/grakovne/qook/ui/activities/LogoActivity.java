@@ -14,6 +14,8 @@ import org.grakovne.qook.ui.views.FieldView;
 
 import java.io.IOException;
 
+import static android.view.View.*;
+
 public class LogoActivity extends AppCompatActivity {
     private FieldView fieldView = null;
     private LevelManager levelManager = null;
@@ -51,7 +53,7 @@ public class LogoActivity extends AppCompatActivity {
         fieldView.setField(field);
     }
 
-    private View.OnTouchListener onFieldTouchListener = new View.OnTouchListener() {
+    private OnTouchListener onFieldTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
@@ -65,7 +67,7 @@ public class LogoActivity extends AppCompatActivity {
                     upVertical = event.getY();
 
                     boolean isWin = fieldView.getField().makeTurn(
-                            fieldView.getElementCoord(downHorizontal, downVertical),
+                            fieldView.getElementCoordinates(downHorizontal, downVertical),
                             fieldView.getSwipeDirection(downHorizontal, upHorizontal, downVertical, upVertical)
                     );
 
