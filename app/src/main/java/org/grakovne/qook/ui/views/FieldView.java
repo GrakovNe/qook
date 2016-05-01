@@ -14,19 +14,23 @@ import android.widget.LinearLayout;
 import org.grakovne.qook.R;
 import org.grakovne.qook.entity.Coordinates;
 import org.grakovne.qook.entity.Field;
+import org.grakovne.qook.entity.Size;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Block;
 import org.grakovne.qook.entity.elements.Hole;
 import org.grakovne.qook.entity.elements.Item;
-import org.grakovne.qook.entity.Size;
 import org.grakovne.qook.enums.Color;
 import org.grakovne.qook.enums.Direction;
 
 public class FieldView extends View {
-    private Field field;
+    int paddingSize = 0;
     private int elementSize;
+
+    private Field field;
     private Size fieldSize;
+
     private final double ROUND_RECT_SIZE = 0.15;
+    private final int PADDING_DIVIDER = 4;
 
     public void setField(Field field) {
         this.field = field;
@@ -38,7 +42,7 @@ public class FieldView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+        Log.d("FieldView", "Redrawn");
 
         if (field == null) {
             return;
@@ -47,9 +51,8 @@ public class FieldView extends View {
         if (fieldSize == null || !fieldSize.equals(countFieldSize())) {
             this.fieldSize = countFieldSize();
             setFieldSize(this.fieldSize);
+            paddingSize = (int) (Math.sqrt(elementSize) / PADDING_DIVIDER);
         }
-
-        int paddingSize = (int) (Math.sqrt(elementSize) / 4);
 
         for (int i = 0; i < field.getField().length; i++) {
             for (int j = 0; j < field.getField()[0].length; j++) {
@@ -68,13 +71,13 @@ public class FieldView extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    private double getSwipeLength(float xDistance, float yDistance) {
-        return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+    private double getSwipeLength(float horizontalDistance, float verticalDistance) {
+        return Math.sqrt(Math.pow(horizontalDistance, 2) + Math.pow(verticalDistance, 2));
     }
 
-    public Direction getSwipeDirection(float downXCoord, float upXCoord, float downYCoord, float upYCoord) {
-        float xDistance = Math.abs(upXCoord - downXCoord);
-        float yDistance = Math.abs(upYCoord - downYCoord);
+    public Direction getSwipeDirection(float downHorizontal, float upHorizontal, float downVertical, float upVertical) {
+        float xDistance = Math.abs(upHorizontal - downHorizontal);
+        float yDistance = Math.abs(upVertical - downVertical);
         double swipeLength = getSwipeLength(xDistance, yDistance);
 
         if (swipeLength < elementSize / 2) {
@@ -82,14 +85,14 @@ public class FieldView extends View {
         }
 
         if (xDistance >= yDistance) {
-            if (upXCoord > downXCoord) {
+            if (upHorizontal > downHorizontal) {
                 return Direction.RIGHT;
             }
             return Direction.LEFT;
         }
 
         if (yDistance > xDistance) {
-            if (upYCoord > downYCoord) {
+            if (upVertical > downVertical) {
                 return Direction.DOWN;
             }
             return Direction.UP;
@@ -98,9 +101,9 @@ public class FieldView extends View {
         return Direction.DOWN;
     }
 
-    public Coordinates getElementCoords(float xCoords, float yCoords) {
-        float xElCoord = xCoords / elementSize;
-        float yElCoord = yCoords / elementSize;
+    public Coordinates getElementCoord(float horizontal, float vertical) {
+        float xElCoord = horizontal / elementSize;
+        float yElCoord = vertical / elementSize;
 
         return new Coordinates((int) xElCoord, (int) yElCoord);
     }
@@ -214,5 +217,4 @@ public class FieldView extends View {
 
         return new Size(newWidth, newHeight);
     }
-
 }

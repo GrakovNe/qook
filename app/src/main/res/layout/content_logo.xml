@@ -21,6 +21,7 @@
     <org.grakovne.qook.ui.views.FieldView
         android:id="@+id/field"
         android:background="@drawable/field_ground"
+        android:padding="10dp"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="center_horizontal"
