@@ -83,6 +83,9 @@ public class LevelManager {
 
     private Item convertLegendToItem(int itemLegend) {
         switch (itemLegend){
+            case EMPTY_CELL:
+                return null;
+
             case BLOCK_CELL:
                 return new Block();
 
@@ -123,7 +126,6 @@ public class LevelManager {
                 return new Hole(Color.CYAN);
         }
 
-
         return null;
     }
 
@@ -149,5 +151,10 @@ public class LevelManager {
 
     public Level getLastSnapshot() {
         return snapshot.pop();
+    }
+
+    public Level resetLevel() throws IOException {
+        snapshot.clear();
+        return getCurrentLevel();
     }
 }
