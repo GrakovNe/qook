@@ -1,27 +1,22 @@
 package org.grakovne.qook.entity;
 
-import android.util.Log;
-
+import org.grakovne.qook.dimensionality.Coordinates;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Hole;
 import org.grakovne.qook.entity.elements.Item;
 import org.grakovne.qook.enums.Direction;
 
 public class Field {
-    private Item[][] field;
+    private Level level;
     private int ballsCount;
 
-    public Field(int xSize, int ySize) {
-        this.field = new Item[xSize][ySize];
-    }
-
     public Field(Level level) {
-        this.field = level.getField();
+        this.level = level;
         this.ballsCount = level.getBallsCount();
     }
 
     public Item[][] getField() {
-        return field;
+        return level.getField();
     }
 
     private Coordinates moveItem(Coordinates itemCoords, Direction direction) {
@@ -29,11 +24,11 @@ public class Field {
         int xCoord = itemCoords.getHorizontal();
         int yCoord = itemCoords.getVertical();
 
-        if (direction.equals(Direction.NOWHERE) || field[yCoord][xCoord] == null) {
+        if (direction.equals(Direction.NOWHERE) || level.getField()[yCoord][xCoord] == null) {
             return null;
         }
 
-        Class clazz = field[yCoord][xCoord].getClass();
+        Class clazz = level.getField()[yCoord][xCoord].getClass();
         if (!clazz.equals(Ball.class)) {
             return null;
         }
@@ -99,14 +94,14 @@ public class Field {
             int xCoord = coordinates.getHorizontal();
             int yCoord = coordinates.getVertical();
 
-            Item upItem = field[yCoord - 1][xCoord];
-            Item item = field[yCoord][xCoord];
+            Item upItem = level.getField()[yCoord - 1][xCoord];
+            Item item = level.getField()[yCoord][xCoord];
 
             if (upItem == null || !upItem.getClass().equals(Hole.class) || !(upItem.getColor().equals(item.getColor()))) {
                 return false;
             }
 
-            field[yCoord][xCoord] = null;
+            level.getField()[yCoord][xCoord] = null;
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
 
@@ -118,15 +113,14 @@ public class Field {
             int xCoord = coordinates.getHorizontal();
             int yCoord = coordinates.getVertical();
 
-            Item downItem = field[yCoord + 1][xCoord];
-            Item item = field[yCoord][xCoord];
+            Item downItem = level.getField()[yCoord + 1][xCoord];
+            Item item = level.getField()[yCoord][xCoord];
 
             if (downItem == null || !downItem.getClass().equals(Hole.class) || !(downItem.getColor().equals(item.getColor()))) {
                 return false;
             }
 
-            field[yCoord][xCoord] = null;
-            Log.d("catched hole", "down");
+            level.getField()[yCoord][xCoord] = null;
 
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
@@ -139,15 +133,14 @@ public class Field {
             int xCoord = coordinates.getHorizontal();
             int yCoord = coordinates.getVertical();
 
-            Item upItem = field[yCoord][xCoord + 1];
-            Item item = field[yCoord][xCoord];
+            Item upItem = level.getField()[yCoord][xCoord + 1];
+            Item item = level.getField()[yCoord][xCoord];
 
             if (upItem == null || !upItem.getClass().equals(Hole.class) || !(upItem.getColor().equals(item.getColor()))) {
                 return false;
             }
 
-            Log.d("catched hole", "right");
-            field[yCoord][xCoord] = null;
+            level.getField()[yCoord][xCoord] = null;
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
 
@@ -159,15 +152,14 @@ public class Field {
             int xCoord = coordinates.getHorizontal();
             int yCoord = coordinates.getVertical();
 
-            Item upItem = field[yCoord][xCoord - 1];
-            Item item = field[yCoord][xCoord];
+            Item upItem = level.getField()[yCoord][xCoord - 1];
+            Item item = level.getField()[yCoord][xCoord];
 
             if (upItem == null || !upItem.getClass().equals(Hole.class) || !(upItem.getColor().equals(item.getColor()))) {
                 return false;
             }
 
-            Log.d("catched hole", "left");
-            field[yCoord][xCoord] = null;
+            level.getField()[yCoord][xCoord] = null;
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
 
@@ -176,9 +168,9 @@ public class Field {
 
     private Coordinates moveRight(int xCoord, int yCoord) {
         try {
-            while (field[yCoord][xCoord + 1] == null) {
-                field[yCoord][xCoord + 1] = field[yCoord][xCoord];
-                field[yCoord][xCoord++] = null;
+            while (level.getField()[yCoord][xCoord + 1] == null) {
+                level.getField()[yCoord][xCoord + 1] = level.getField()[yCoord][xCoord];
+                level.getField()[yCoord][xCoord++] = null;
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
@@ -188,9 +180,9 @@ public class Field {
 
     private Coordinates moveLeft(int xCoord, int yCoord) {
         try {
-            while (field[yCoord][xCoord - 1] == null) {
-                field[yCoord][xCoord - 1] = field[yCoord][xCoord];
-                field[yCoord][xCoord--] = null;
+            while (level.getField()[yCoord][xCoord - 1] == null) {
+                level.getField()[yCoord][xCoord - 1] = level.getField()[yCoord][xCoord];
+                level.getField()[yCoord][xCoord--] = null;
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
@@ -200,9 +192,9 @@ public class Field {
 
     private Coordinates moveUp(int xCoord, int yCoord) {
         try {
-            while (field[yCoord - 1][xCoord] == null) {
-                field[yCoord - 1][xCoord] = field[yCoord][xCoord];
-                field[yCoord--][xCoord] = null;
+            while (level.getField()[yCoord - 1][xCoord] == null) {
+                level.getField()[yCoord - 1][xCoord] = level.getField()[yCoord][xCoord];
+                level.getField()[yCoord--][xCoord] = null;
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
@@ -212,9 +204,9 @@ public class Field {
 
     private Coordinates moveDown(int xCoord, int yCoord) {
         try {
-            while (field[yCoord + 1][xCoord] == null) {
-                field[yCoord + 1][xCoord] = field[yCoord][xCoord];
-                field[yCoord++][xCoord] = null;
+            while (level.getField()[yCoord + 1][xCoord] == null) {
+                level.getField()[yCoord + 1][xCoord] = level.getField()[yCoord][xCoord];
+                level.getField()[yCoord++][xCoord] = null;
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
         }

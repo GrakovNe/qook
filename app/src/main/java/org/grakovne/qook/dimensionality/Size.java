@@ -1,4 +1,4 @@
-package org.grakovne.qook.entity;
+package org.grakovne.qook.dimensionality;
 
 public class Size {
     private int width;
