@@ -2,6 +2,7 @@ package org.grakovne.qook.managers;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import org.grakovne.qook.entity.Level;
 import org.grakovne.qook.entity.elements.Ball;
@@ -17,7 +18,7 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class LevelManager {
-    private static final String LEVELS_FOLDER = "levels/";
+    private static final String LEVELS_FOLDER = "levels";
     private static final String LEVEL_FILE_EXTENSION = ".lev";
 
     private static final int EMPTY_CELL = 0;
@@ -42,7 +43,7 @@ public class LevelManager {
 
     private LevelManager() {
         //TODO: remove it when release
-        sharedSettingsManager.setCurrentLevel(1);
+        //sharedSettingsManager.setCurrentLevel(1);
     }
 
     public static LevelManager build(Context currentContext) {
@@ -122,6 +123,15 @@ public class LevelManager {
         return null;
     }
 
+    public int getLevelsNumber() throws IOException {
+        AssetManager assetManager = context.getAssets();
+        return assetManager.list(LEVELS_FOLDER).length;
+    }
+
+    public int getCurrentLevelNumber() {
+        return sharedSettingsManager.getCurrentLevel();
+    }
+
     public void finishLevel() {
         sharedSettingsManager.setCurrentLevel(
                 sharedSettingsManager.getCurrentLevel() + 1
@@ -132,6 +142,7 @@ public class LevelManager {
         AssetManager assetManager = context.getAssets();
         InputStream inputStream = assetManager.open(
                 LEVELS_FOLDER +
+                        "/" +
                         sharedSettingsManager.getCurrentLevel() +
                         LEVEL_FILE_EXTENSION);
 

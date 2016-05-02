@@ -53,4 +53,9 @@ public class MenuActivity extends BaseActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
+
+    @OnClick(R.id.exit_button)
+    public void onExitClick(){
+        this.moveTaskToBack(true);
+    }
 }
