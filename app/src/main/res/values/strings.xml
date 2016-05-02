@@ -3,4 +3,10 @@
     <string name="title_activity_logo">LogoActivity</string>
     <string name="reset_level_button">Сбросить</string>
     <string name="undo_level_button">Назад</string>
+    <string name="continue_game_button_text">Продолжить</string>
+    <string name="select_level_button_text">Выбор уровня</string>
+    <string name="setting_button_text">Настройки</string>
+    <string name="about_button_text">Об авторе</string>
+    <string name="help_button_text">Помощь</string>
+    <string name="exit_button_text">Выход</string>
 </resources>

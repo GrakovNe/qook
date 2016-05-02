@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.grakovne.qook.R;
-import org.grakovne.qook.entity.Level;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -25,18 +25,19 @@ public class LogoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_logo);
         ButterKnife.inject(this);
 
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.logo_picture_show);
-        authorIcon.startAnimation(animation);
-        animation.setAnimationListener(new Animation.AnimationListener() {
+        Animation logoAnimation = AnimationUtils.loadAnimation(this, R.anim.logo_picture_show);
+
+        authorIcon.startAnimation(logoAnimation);
+        logoAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 authorIcon.setVisibility(View.INVISIBLE);
-                Intent intent = new Intent(getApplicationContext(), LevelActivity.class);
+                Intent intent = new Intent(getBaseContext(), MenuActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
 
