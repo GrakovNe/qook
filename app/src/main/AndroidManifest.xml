@@ -12,6 +12,7 @@
         <activity
             android:name=".ui.activities.LevelActivity"
             android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity

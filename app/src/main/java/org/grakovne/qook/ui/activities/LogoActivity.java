@@ -14,7 +14,7 @@ import org.grakovne.qook.R;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class LogoActivity extends AppCompatActivity {
+public class LogoActivity extends BaseActivity {
 
     @InjectView(R.id.author_icon)
     ImageView authorIcon;
@@ -22,6 +22,11 @@ public class LogoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null){
+            openMenuActivity();
+        }
+
         setContentView(R.layout.activity_logo);
         ButterKnife.inject(this);
 
@@ -35,10 +40,7 @@ public class LogoActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                authorIcon.setVisibility(View.INVISIBLE);
-                Intent intent = new Intent(getBaseContext(), MenuActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+                openMenuActivity();
             }
 
             @Override
@@ -46,5 +48,12 @@ public class LogoActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void openMenuActivity(){
+        authorIcon.setVisibility(View.INVISIBLE);
+        Intent intent = new Intent(getBaseContext(), MenuActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 }

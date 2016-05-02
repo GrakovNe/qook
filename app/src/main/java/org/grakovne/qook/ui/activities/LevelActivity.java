@@ -1,7 +1,10 @@
 package org.grakovne.qook.ui.activities;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +24,7 @@ import butterknife.OnClick;
 
 import static android.view.View.OnTouchListener;
 
-public class LevelActivity extends AppCompatActivity {
+public class LevelActivity extends BaseActivity {
     @InjectView(R.id.field)
     FieldView fieldView;
     @InjectView(R.id.reset_level_button)
@@ -41,11 +44,20 @@ public class LevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level);
         ButterKnife.inject(this);
 
-        levelManager = LevelManager.build(this);
-        fieldView.setOnTouchListener(onFieldTouchListener);
-        openLevel();
+        if (savedInstanceState == null) {
+            levelManager = LevelManager.build(this);
+            fieldView.setOnTouchListener(onFieldTouchListener);
+            openLevel();
+        }
+
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MenuActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+    }
 
     private void openLevel() {
         try {
@@ -87,6 +99,12 @@ public class LevelActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        overridePendingTransition(0,0);
+    }
 
     @OnClick(R.id.reset_level_button)
     public void onResetClick() {
