@@ -3,6 +3,8 @@ package org.grakovne.qook.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +44,9 @@ public class MenuActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ButterKnife.inject(this);
+
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.menu_coming_anim);
+        animation.start();
 
     }
 
