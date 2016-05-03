@@ -8,12 +8,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.grakovne.qook.R;
+import org.grakovne.qook.managers.SharedSettingsManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class MenuActivity extends BaseActivity {
+
+    private SharedSettingsManager sharedSettingsManager;
 
     @InjectView(R.id.title_text)
     TextView titleText;
@@ -35,8 +38,16 @@ public class MenuActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedSettingsManager = new SharedSettingsManager(this);
         setContentView(R.layout.activity_menu);
         ButterKnife.inject(this);
+
+        if (sharedSettingsManager.getMaxOpenedLevel() == 1){
+            continueGameButton.setText(this.getString(R.string.new_game_button_text));
+        } else {
+            continueGameButton.setText(this.getString(R.string.continue_game_button_text));
+        }
     }
 
     @Override

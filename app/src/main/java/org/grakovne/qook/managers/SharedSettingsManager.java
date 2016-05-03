@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 public class SharedSettingsManager {
     private static final String APP_PREFS = "qook_Prefs";
     public static final String CURRENT_LEVEL = "current_level";
+    public static final String MAX_OPENED_LEVEL = "max opened level";
 
     SharedPreferences sharedPreferences;
 
@@ -21,5 +22,15 @@ public class SharedSettingsManager {
 
     public int getCurrentLevel(){
         return sharedPreferences.getInt(CURRENT_LEVEL, 1);
+    }
+
+    public void setMaxOpenedLevel(int maxOpenedLevel){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(MAX_OPENED_LEVEL, maxOpenedLevel);
+        editor.apply();
+    }
+
+    public int getMaxOpenedLevel(){
+        return sharedPreferences.getInt(MAX_OPENED_LEVEL, 1);
     }
 }
