@@ -26,8 +26,6 @@ public class MenuActivity extends BaseActivity {
     Button continueGameButton;
     @InjectView(R.id.select_level_button)
     Button selectLevelButton;
-    @InjectView(R.id.settings_button)
-    Button settingsButton;
     @InjectView(R.id.help_button)
     Button helpButton;
     @InjectView(R.id.about_button)
@@ -80,6 +78,7 @@ public class MenuActivity extends BaseActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
+
 
     @OnClick(R.id.about_button)
     public void onAboutButton(){

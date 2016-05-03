@@ -45,6 +45,7 @@ public class LevelSelectorActivity extends BaseActivity {
         LevelGridAdapter adapter = new LevelGridAdapter(this, R.layout.level_item, getListOfLevelNumbers(), manager.getMaximalLevelNumber(), levelClick);
         adapter.setNotifyOnChange(false);
         levelGrid.setAdapter(adapter);
+        levelGrid.setVerticalScrollBarEnabled(false);
     }
 
 

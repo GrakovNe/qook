@@ -6,8 +6,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import org.grakovne.qook.exceptions.GameException;
 import org.grakovne.qook.R;
 import org.grakovne.qook.entity.Field;
 import org.grakovne.qook.entity.Level;
@@ -102,7 +102,11 @@ public class LevelActivity extends BaseActivity {
 
                     if (isWin) {
                         //TODO: add animation
-                        levelManager.finishLevel();
+                        try {
+                            levelManager.finishLevel();
+                        } catch (GameException ex){
+                            onBackPressed();
+                        }
                         openLevel(levelManager.getCurrentLevelNumber());
                     }
 

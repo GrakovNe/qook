@@ -7,13 +7,14 @@
     <string name="new_game_button_text">Начать</string>
     <string name="select_level_button_text">Выбор уровня</string>
     <string name="setting_button_text">Настройки</string>
-    <string name="about_button_text">Об авторе</string>
+    <string name="about_button_text">О нас</string>
     <string name="help_button_text">Помощь</string>
     <string name="exit_button_text">Выход</string>
     <string name="levels_hint">Уровни</string>
-    <string name="app_name_about">QOOK v1.00</string>
+    <string name="app_name_about">Qook v1.00</string>
     <string name="author_nick_about">Author: GrakovNe</string>
     <string name="author_name_about">(Maksim Grakov)</string>
     <string name="author_address_about">Omsk, Russia</string>
     <string name="app_year_about">2016</string>
+    <string name="sound_is_need">Включить звук</string>
 </resources>

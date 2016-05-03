@@ -2,8 +2,9 @@ package org.grakovne.qook.managers;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
 
+import org.grakovne.qook.exceptions.GameException;
+import org.grakovne.qook.exceptions.GameExceptionCodes;
 import org.grakovne.qook.entity.Level;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Block;
@@ -142,6 +143,10 @@ public class LevelManager {
         sharedSettingsManager.setCurrentLevel(
                 sharedSettingsManager.getCurrentLevel() + 1
         );
+
+        if (sharedSettingsManager.getCurrentLevel() > sharedSettingsManager.getMaxLevel()){
+            throw new GameException(GameExceptionCodes.INCORRECT_LEVEL);
+        }
     }
 
     private Scanner openLevel(int levelNumber) throws IOException {
