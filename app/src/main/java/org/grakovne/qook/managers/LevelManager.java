@@ -3,14 +3,14 @@ package org.grakovne.qook.managers;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import org.grakovne.qook.exceptions.GameException;
-import org.grakovne.qook.exceptions.GameExceptionCodes;
 import org.grakovne.qook.entity.Level;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Block;
 import org.grakovne.qook.entity.elements.Hole;
 import org.grakovne.qook.entity.elements.Item;
 import org.grakovne.qook.enums.Color;
+import org.grakovne.qook.enums.GameExceptionCodes;
+import org.grakovne.qook.exceptions.GameException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -135,7 +135,7 @@ public class LevelManager {
         return sharedSettingsManager.getCurrentLevel();
     }
 
-    public int getMaximalLevelNumber(){
+    public int getMaximalLevelNumber() {
         return sharedSettingsManager.getMaxLevel();
     }
 
@@ -144,7 +144,7 @@ public class LevelManager {
                 sharedSettingsManager.getCurrentLevel() + 1
         );
 
-        if (sharedSettingsManager.getCurrentLevel() > sharedSettingsManager.getMaxLevel()){
+        if (sharedSettingsManager.getCurrentLevel() > sharedSettingsManager.getMaxLevel()) {
             throw new GameException(GameExceptionCodes.INCORRECT_LEVEL);
         }
     }

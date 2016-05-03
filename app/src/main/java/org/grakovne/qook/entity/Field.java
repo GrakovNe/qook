@@ -19,10 +19,10 @@ public class Field {
         return level.getField();
     }
 
-    private Coordinates moveItem(Coordinates itemCoords, Direction direction) {
+    private Coordinates moveItem(Coordinates coordinates, Direction direction) {
 
-        int horizontal = itemCoords.getHorizontal();
-        int vertical = itemCoords.getVertical();
+        int horizontal = coordinates.getHorizontal();
+        int vertical = coordinates.getVertical();
 
         if (direction.equals(Direction.NOWHERE) || level.getField()[vertical][horizontal] == null) {
             return null;
@@ -55,8 +55,8 @@ public class Field {
     }
 
     public boolean makeTurn(Coordinates coordinates, Direction direction) {
-        Coordinates newCoords = moveItem(coordinates, direction);
-        return newCoords != null && acceptHole(newCoords, direction);
+        Coordinates newCoordinates = moveItem(coordinates, direction);
+        return newCoordinates != null && acceptHole(newCoordinates, direction);
     }
 
     private boolean acceptHole(Coordinates coordinates, Direction direction) {
