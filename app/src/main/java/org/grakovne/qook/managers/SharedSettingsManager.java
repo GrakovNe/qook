@@ -26,6 +26,12 @@ public class SharedSettingsManager {
         editor.apply();
     }
 
+    public void removeRan(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(WAS_RAN_BEFORE);
+        editor.apply();
+    }
+
     public boolean isRanBefore(){
         return sharedPreferences.getBoolean(WAS_RAN_BEFORE, false);
     }

@@ -61,13 +61,19 @@ public class MenuActivity extends BaseActivity {
     @OnClick(R.id.continue_game_button)
     public void onContinueClick() {
         int maxLevel = sharedSettingsManager.getCurrentLevel();
-        openLevelActivity(maxLevel);
+        Intent intent = new Intent(this, LevelActivity.class);
+        intent.putExtra(DESIRED_LEVEL, maxLevel);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 
     @OnClick(R.id.select_level_button)
     public void onSelectLevelButton() {
-        int desiredLevel = 1;
-        openLevelActivity(desiredLevel);
+        Intent intent = new Intent(this, LevelSelectorActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 
 
@@ -76,12 +82,4 @@ public class MenuActivity extends BaseActivity {
         this.moveTaskToBack(true);
     }
 
-    private void openLevelActivity(int levelNumber) {
-        Intent intent = new Intent(this, LevelActivity.class);
-        Log.d("Desired", String.valueOf(levelNumber));
-        intent.putExtra(DESIRED_LEVEL, levelNumber);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-    }
 }

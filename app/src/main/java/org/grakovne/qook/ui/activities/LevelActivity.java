@@ -2,7 +2,6 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -34,7 +33,7 @@ public class LevelActivity extends BaseActivity {
     @InjectView(R.id.back_level_button)
     ImageButton backLevelButton;
 
-    private int currentLevelNumer;
+    private int currentLevelNumber;
 
     private LevelManager levelManager = null;
     private Level level = null;
@@ -54,8 +53,6 @@ public class LevelActivity extends BaseActivity {
             levelManager = LevelManager.build(this);
             fieldView.setOnTouchListener(onFieldTouchListener);
         }
-
-
     }
 
     @Override
@@ -122,9 +119,9 @@ public class LevelActivity extends BaseActivity {
         Intent intent = getIntent();
         int levelNumber = intent.getIntExtra(DESIRED_LEVEL, 1);
 
-        if (levelNumber != currentLevelNumer) {
+        if (levelNumber != currentLevelNumber) {
             openLevel(levelNumber);
-            currentLevelNumer = levelNumber;
+            currentLevelNumber = levelNumber;
         }
     }
 

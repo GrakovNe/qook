@@ -42,8 +42,6 @@ public class LevelManager {
     private static LevelManager instance;
 
     private LevelManager() {
-        //TODO: remove it when release
-        sharedSettingsManager.setCurrentLevel(1);
     }
 
     public static LevelManager build(Context currentContext) {
@@ -134,6 +132,10 @@ public class LevelManager {
 
     public int getCurrentLevelNumber() {
         return sharedSettingsManager.getCurrentLevel();
+    }
+
+    public int getMaximalLevelNumber(){
+        return sharedSettingsManager.getMaxLevel();
     }
 
     public void finishLevel() {

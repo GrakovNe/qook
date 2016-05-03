@@ -10,4 +10,5 @@
     <string name="about_button_text">Об авторе</string>
     <string name="help_button_text">Помощь</string>
     <string name="exit_button_text">Выход</string>
+    <string name="levels_hint">Уровни</string>
 </resources>
