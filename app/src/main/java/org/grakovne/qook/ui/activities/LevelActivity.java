@@ -101,7 +101,7 @@ public class LevelActivity extends BaseActivity {
                     fieldView.invalidate();
 
                     if (isWin) {
-                        Toast.makeText(getApplicationContext(), "You Win!", Toast.LENGTH_LONG).show();
+                        //TODO: add animation
                         levelManager.finishLevel();
                         openLevel(levelManager.getCurrentLevelNumber());
                     }
@@ -123,6 +123,8 @@ public class LevelActivity extends BaseActivity {
             openLevel(levelNumber);
             currentLevelNumber = levelNumber;
         }
+
+        fieldView.invalidate();
     }
 
     @Override

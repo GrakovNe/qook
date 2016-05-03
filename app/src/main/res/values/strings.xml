@@ -11,4 +11,9 @@
     <string name="help_button_text">Помощь</string>
     <string name="exit_button_text">Выход</string>
     <string name="levels_hint">Уровни</string>
+    <string name="app_name_about">QOOK v1.00</string>
+    <string name="author_nick_about">Author: GrakovNe</string>
+    <string name="author_name_about">(Maksim Grakov)</string>
+    <string name="author_address_about">Omsk, Russia</string>
+    <string name="app_year_about">2016</string>
 </resources>

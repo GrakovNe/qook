@@ -1,4 +1,4 @@
-package org.grakovne.qook;
+package org.grakovne.qook.adapters;
 
 import android.content.Context;
 import android.util.AttributeSet;
