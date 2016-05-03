@@ -2,6 +2,7 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,7 +16,6 @@ import org.grakovne.qook.managers.LevelManager;
 import org.grakovne.qook.ui.views.FieldView;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.Locale;
 
 import butterknife.ButterKnife;
@@ -34,6 +34,8 @@ public class LevelActivity extends BaseActivity {
     @InjectView(R.id.back_level_button)
     ImageButton backLevelButton;
 
+    private int currentLevelNumer;
+
     private LevelManager levelManager = null;
     private Level level = null;
 
@@ -51,8 +53,8 @@ public class LevelActivity extends BaseActivity {
         if (savedInstanceState == null) {
             levelManager = LevelManager.build(this);
             fieldView.setOnTouchListener(onFieldTouchListener);
-            openLevel();
         }
+
 
     }
 
@@ -63,16 +65,15 @@ public class LevelActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private void openLevel() {
+    private void openLevel(int levelNumber) {
         try {
-            level = levelManager.getCurrentLevel();
+            level = levelManager.getLevel(levelNumber);
             Field field = new Field(level);
             fieldView.setField(field);
 
-
             StringBuilder builder = new StringBuilder();
             builder
-                    .append(String.format(Locale.getDefault(), "%02d", levelManager.getCurrentLevelNumber()))
+                    .append(String.format(Locale.getDefault(), "%02d", levelNumber))
                     .append(" / ")
                     .append(String.format(Locale.getDefault(), "%02d", levelManager.getLevelsNumber()));
             levelCounter.setText(builder.toString());
@@ -105,7 +106,7 @@ public class LevelActivity extends BaseActivity {
                     if (isWin) {
                         Toast.makeText(getApplicationContext(), "You Win!", Toast.LENGTH_LONG).show();
                         levelManager.finishLevel();
-                        openLevel();
+                        openLevel(levelManager.getCurrentLevelNumber());
                     }
 
             }
@@ -117,6 +118,20 @@ public class LevelActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
         overridePendingTransition(0, 0);
+
+        Intent intent = getIntent();
+        int levelNumber = intent.getIntExtra(DESIRED_LEVEL, 1);
+
+        if (levelNumber != currentLevelNumer) {
+            openLevel(levelNumber);
+            currentLevelNumer = levelNumber;
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     @OnClick(R.id.reset_level_button)

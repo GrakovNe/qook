@@ -2,7 +2,7 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,36 +37,51 @@ public class MenuActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        sharedSettingsManager = new SharedSettingsManager(getBaseContext());
 
-        sharedSettingsManager = new SharedSettingsManager(this);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ButterKnife.inject(this);
 
-        if (sharedSettingsManager.getMaxOpenedLevel() == 1){
-            continueGameButton.setText(this.getString(R.string.new_game_button_text));
-        } else {
-            continueGameButton.setText(this.getString(R.string.continue_game_button_text));
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        overridePendingTransition(0,0);
+        if (sharedSettingsManager.isRanBefore()) {
+            continueGameButton.setText(getString(R.string.continue_game_button_text));
+        } else {
+            continueGameButton.setText(getString(R.string.new_game_button_text));
+        }
+
+        sharedSettingsManager.setRanBefore();
+        overridePendingTransition(0, 0);
     }
 
     @OnClick(R.id.continue_game_button)
     public void onContinueClick() {
+        int maxLevel = sharedSettingsManager.getCurrentLevel();
+        openLevelActivity(maxLevel);
+    }
+
+    @OnClick(R.id.select_level_button)
+    public void onSelectLevelButton() {
+        int desiredLevel = 1;
+        openLevelActivity(desiredLevel);
+    }
+
+
+    @OnClick(R.id.exit_button)
+    public void onExitClick() {
+        this.moveTaskToBack(true);
+    }
+
+    private void openLevelActivity(int levelNumber) {
         Intent intent = new Intent(this, LevelActivity.class);
-        intent.putExtra(CONTINUE_GAME_INTENT, 1);
+        Log.d("Desired", String.valueOf(levelNumber));
+        intent.putExtra(DESIRED_LEVEL, levelNumber);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
-    }
-
-    @OnClick(R.id.exit_button)
-    public void onExitClick(){
-        this.moveTaskToBack(true);
     }
 }

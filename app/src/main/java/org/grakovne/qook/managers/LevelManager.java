@@ -43,7 +43,7 @@ public class LevelManager {
 
     private LevelManager() {
         //TODO: remove it when release
-        //sharedSettingsManager.setCurrentLevel(1);
+        sharedSettingsManager.setCurrentLevel(1);
     }
 
     public static LevelManager build(Context currentContext) {
@@ -56,8 +56,8 @@ public class LevelManager {
         return instance;
     }
 
-    public Level getCurrentLevel() throws IOException {
-        Scanner scanner = openLevel();
+    public Level getLevel(int levelNumber) throws IOException {
+        Scanner scanner = openLevel(levelNumber);
 
         int levelWidth = scanner.nextInt();
         int levelHeight = scanner.nextInt();
@@ -71,8 +71,12 @@ public class LevelManager {
         }
 
         Level level = new Level(levelMatrix);
-
+        sharedSettingsManager.setCurrentLevel(levelNumber);
         return level;
+    }
+
+    public Level getCurrentLevel() throws IOException {
+        return getLevel(getCurrentLevelNumber());
     }
 
     private Item convertLegendToItem(int itemLegend) {
@@ -138,12 +142,12 @@ public class LevelManager {
         );
     }
 
-    private Scanner openLevel() throws IOException {
+    private Scanner openLevel(int levelNumber) throws IOException {
         AssetManager assetManager = context.getAssets();
         InputStream inputStream = assetManager.open(
                 LEVELS_FOLDER +
                         "/" +
-                        sharedSettingsManager.getCurrentLevel() +
+                        String.valueOf(levelNumber) +
                         LEVEL_FILE_EXTENSION);
 
         BufferedReader bufferedReader =
