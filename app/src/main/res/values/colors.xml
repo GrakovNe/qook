@@ -10,4 +10,5 @@
     <color name="yellow">#FF5722</color>
     <color name="gray">#BDBDBD</color>
     <color name="red">#D81B60</color>
+    <color name="background">#eeeeee</color>
 </resources>

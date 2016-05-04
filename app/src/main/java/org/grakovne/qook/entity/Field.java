@@ -6,7 +6,9 @@ import org.grakovne.qook.entity.elements.Hole;
 import org.grakovne.qook.entity.elements.Item;
 import org.grakovne.qook.enums.Direction;
 
-public class Field {
+import java.io.Serializable;
+
+public class Field implements Serializable {
     private Level level;
     private int ballsCount;
 
@@ -17,6 +19,11 @@ public class Field {
 
     public Item[][] getField() {
         return level.getField();
+    }
+
+
+    public Level getLevel() {
+        return level;
     }
 
     private Coordinates moveItem(Coordinates coordinates, Direction direction) {

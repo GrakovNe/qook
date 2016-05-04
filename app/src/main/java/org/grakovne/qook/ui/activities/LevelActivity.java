@@ -117,6 +117,7 @@ public class LevelActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
+        overridePendingTransition(0, 0);
 
         Intent intent = getIntent();
         int levelNumber = intent.getIntExtra(DESIRED_LEVEL, 1);
@@ -127,7 +128,6 @@ public class LevelActivity extends BaseActivity {
         }
 
         fieldView.invalidate();
-        overridePendingTransition(0, 0);
     }
 
     @Override

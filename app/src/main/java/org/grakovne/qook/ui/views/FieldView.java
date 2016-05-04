@@ -22,17 +22,16 @@ import org.grakovne.qook.enums.Color;
 import org.grakovne.qook.enums.Direction;
 
 public class FieldView extends View {
-    int paddingSize = 0;
-    private int elementSize;
-
-    private Field field;
-    private Size fieldSize;
-
     private final double ROUND_RECT_SIZE = 0.15;
     private final int PADDING_DIVIDER = 4;
+    int paddingSize = 0;
+    private int elementSize;
+    private Field field;
+    private Size fieldSize;
+    private Size maxViewSize;
 
-    public void setField(Field field) {
-        this.field = field;
+    public FieldView(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     @Override
@@ -41,8 +40,9 @@ public class FieldView extends View {
             return;
         }
 
-        if (fieldSize == null || !fieldSize.equals(countFieldSize())) {
-            this.fieldSize = countFieldSize();
+        Size countedFieldSize = countFieldSize();
+        if (fieldSize == null || !fieldSize.equals(countedFieldSize)) {
+            this.fieldSize = countedFieldSize;
             setFieldSize(this.fieldSize);
             paddingSize = (int) (Math.sqrt(elementSize) / PADDING_DIVIDER);
         }
@@ -54,10 +54,6 @@ public class FieldView extends View {
                 d.draw(canvas);
             }
         }
-    }
-
-    public FieldView(Context context, AttributeSet attrs) {
-        super(context, attrs);
     }
 
     private double getSwipeLength(float horizontalDistance, float verticalDistance) {
@@ -186,6 +182,10 @@ public class FieldView extends View {
         return field;
     }
 
+    public void setField(Field field) {
+        this.field = field;
+    }
+
     public void setFieldSize(Size size) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size.getWidth(), size.getHeight());
         params.gravity = Gravity.CENTER_HORIZONTAL;
@@ -193,11 +193,15 @@ public class FieldView extends View {
     }
 
     public Size countFieldSize() {
+        if (maxViewSize == null) {
+            maxViewSize = new Size(this.getWidth(), this.getHeight());
+        }
+
         int horizontalElementsNum = field.getField()[0].length;
         int verticalElementsNum = field.getField().length;
 
-        int maxHorizontalElSize = this.getWidth() / horizontalElementsNum;
-        int maxVerticalElSize = this.getHeight() / verticalElementsNum;
+        int maxHorizontalElSize = maxViewSize.getWidth() / horizontalElementsNum;
+        int maxVerticalElSize = maxViewSize.getHeight() / verticalElementsNum;
 
         this.elementSize = (maxHorizontalElSize < maxVerticalElSize) ? maxHorizontalElSize : maxVerticalElSize;
 

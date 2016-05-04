@@ -28,8 +28,6 @@ public class MenuActivity extends BaseActivity {
     Button helpButton;
     @InjectView(R.id.about_button)
     Button aboutButton;
-    @InjectView(R.id.exit_button)
-    Button exitButton;
     @InjectView(R.id.menu_list)
     LinearLayout menuList;
     private SharedSettingsManager sharedSettingsManager;
@@ -74,7 +72,6 @@ public class MenuActivity extends BaseActivity {
         switchActivity(LevelSelectorActivity.class);
     }
 
-
     @OnClick(R.id.about_button)
     public void onAboutButton(){
         switchActivity(AboutActivity.class);
@@ -83,11 +80,6 @@ public class MenuActivity extends BaseActivity {
     @OnClick(R.id.help_button)
     public void onHelpButton() {
         switchActivity(HelpActivity.class);
-    }
-
-    @OnClick(R.id.exit_button)
-    public void onExitClick() {
-        this.moveTaskToBack(true);
     }
 
     private void switchActivity(Class<? extends Activity> activity) {

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Qook</string>
+    <string name="reset_level_button">Сбросить</string>
+    <string name="undo_level_button">Назад</string>
+    <string name="continue_game_button_text">Продолжить</string>
+    <string name="new_game_button_text">Начать</string>
+    <string name="select_level_button_text">Выбор уровня</string>
+    <string name="about_button_text">О нас</string>
+    <string name="help_button_text">Помощь</string>
+    <string name="exit_button_text">Выход</string>
+    <string name="app_name_about">Qook v1.00</string>
+    <string name="author_nick_about">Author: GrakovNe</string>
+    <string name="author_name_about">(Maksim Grakov)</string>
+    <string name="author_address_about">Omsk, Russia</string>
+    <string name="app_year_about">2016</string>
+    <string name="levels_hint">Уровни</string>
+    <string name="game_task">Ваша задача - забросить все фишки на поле в свои лунки</string>
+    <string name="game_description">Qook - Невероятно сложная логическая игра, в которой от вас требуется очистить игровое поле от цветных фишек, загоняя их в лунки того же цвета.</string>
+    <string name="game_rules">По игровому полю, перемещаются фишки разных цветов. Они могут двигаться вверх, вниз, вправо или влево до первого препятствия. Как только фишка попадает в лунку того же цвета, она исчезает с игрового поля</string>
+</resources>

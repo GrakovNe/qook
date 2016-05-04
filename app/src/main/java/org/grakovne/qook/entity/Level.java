@@ -3,19 +3,20 @@ package org.grakovne.qook.entity;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Item;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Level {
+public class Level implements Serializable {
     private Item[][] field;
     private int ballsCount;
-
-    public Item[][] getField() {
-        return field;
-    }
 
     public Level(Item[][] field) {
         this.field = field;
         this.ballsCount = countBallsOnLevel(field);
+    }
+
+    public Item[][] getField() {
+        return field;
     }
 
     private int countBallsOnLevel(Item[][] field) {
