@@ -1,24 +1,20 @@
 <resources>
     <string name="app_name">Qook</string>
-    <string name="title_activity_logo">LogoActivity</string>
-    <string name="reset_level_button">Сбросить</string>
-    <string name="undo_level_button">Назад</string>
-    <string name="continue_game_button_text">Продолжить</string>
-    <string name="new_game_button_text">Начать</string>
-    <string name="select_level_button_text">Выбор уровня</string>
-    <string name="setting_button_text">Настройки</string>
-    <string name="about_button_text">О нас</string>
-    <string name="help_button_text">Помощь</string>
-    <string name="exit_button_text">Выход</string>
-    <string name="levels_hint">Уровни</string>
+    <string name="reset_level_button">Reset</string>
+    <string name="undo_level_button">Back</string>
+    <string name="continue_game_button_text">Continue</string>
+    <string name="new_game_button_text">Start</string>
+    <string name="select_level_button_text">Levels</string>
+    <string name="about_button_text">About</string>
+    <string name="help_button_text">Help</string>
+    <string name="exit_button_text">Quit</string>
+    <string name="levels_hint">Levels</string>
     <string name="app_name_about">Qook v1.00</string>
     <string name="author_nick_about">Author: GrakovNe</string>
     <string name="author_name_about">(Maksim Grakov)</string>
     <string name="author_address_about">Omsk, Russia</string>
     <string name="app_year_about">2016</string>
-    <string name="sound_is_need">Включить звук</string>
-    <string name="game_task">Ваша задача - забросить все фишки на поле в свои лунки</string>
-    <string name="game_description">Qook - Невероятно сложная логическая игра, в которой от вас требуется очистить игровое поле от цветных фишек, загоняя их в лунки того же цвета.</string>
-    <string name="game_rules">По игровому полю, перемещаются фишки разных цветов. Они могут двигаться вверх, вниз, вправо или влево до любого препятствия. Как только фишка попадает в лунку того же цвета, она исчезает с игрового поля</string>
-
+    <string name="game_task">Your task is to throw all the chips on the field in their wells</string>
+    <string name="game_description">Qook is extremely difficult puzzle game in which you have to clear the playing field from the colored chips, throwing them into the wells of the same color.</string>
+    <string name="game_rules">Chips of different colors moving on the playing field. They can move up, down, left or right to the first obstacle. Once the chip falls into the hole of the same color, it disappears from the game board</string>
 </resources>

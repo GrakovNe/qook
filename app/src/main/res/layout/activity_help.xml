@@ -34,7 +34,8 @@
             android:gravity="bottom"
             android:orientation="vertical">
 
-            <TextView
+
+            <com.uncopt.android.widget.text.justify.JustifiedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -49,7 +50,7 @@
                 android:fontFamily="serif"
                 android:gravity="center"
                 android:text="@string/game_task"
-                android:textAlignment="justify"
+                android:textAlignment="center"
                 android:textSize="16dp" />
 
         </LinearLayout>
