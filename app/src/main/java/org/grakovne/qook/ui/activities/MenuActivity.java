@@ -2,7 +2,6 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -18,8 +17,6 @@ import butterknife.OnClick;
 
 public class MenuActivity extends BaseActivity {
 
-    private SharedSettingsManager sharedSettingsManager;
-
     @InjectView(R.id.title_text)
     TextView titleText;
     @InjectView(R.id.continue_game_button)
@@ -34,6 +31,7 @@ public class MenuActivity extends BaseActivity {
     Button exitButton;
     @InjectView(R.id.menu_list)
     LinearLayout menuList;
+    private SharedSettingsManager sharedSettingsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,6 @@ public class MenuActivity extends BaseActivity {
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.menu_coming_anim);
         animation.start();
-
     }
 
     @Override

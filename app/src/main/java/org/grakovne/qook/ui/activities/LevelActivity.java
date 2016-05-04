@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.grakovne.qook.exceptions.GameException;
 import org.grakovne.qook.R;
 import org.grakovne.qook.entity.Field;
 import org.grakovne.qook.entity.Level;
+import org.grakovne.qook.exceptions.GameException;
 import org.grakovne.qook.managers.LevelManager;
 import org.grakovne.qook.ui.views.FieldView;
 
@@ -42,6 +42,40 @@ public class LevelActivity extends BaseActivity {
     private float downVertical;
     private float upHorizontal;
     private float upVertical;
+    private OnTouchListener onFieldTouchListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    downHorizontal = event.getX();
+                    downVertical = event.getY();
+                    break;
+
+                case MotionEvent.ACTION_UP:
+                    upHorizontal = event.getX();
+                    upVertical = event.getY();
+
+                    boolean isWin = fieldView.getField().makeTurn(
+                            fieldView.getElementCoordinates(downHorizontal, downVertical),
+                            fieldView.getSwipeDirection(downHorizontal, upHorizontal, downVertical, upVertical)
+                    );
+
+                    fieldView.invalidate();
+
+                    if (isWin) {
+                        //TODO: add animation
+                        try {
+                            levelManager.finishLevel();
+                        } catch (GameException ex) {
+                            onBackPressed();
+                        }
+                        openLevel(levelManager.getCurrentLevelNumber());
+                    }
+
+            }
+            return true;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,41 +113,6 @@ public class LevelActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
-
-    private OnTouchListener onFieldTouchListener = new OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    downHorizontal = event.getX();
-                    downVertical = event.getY();
-                    break;
-
-                case MotionEvent.ACTION_UP:
-                    upHorizontal = event.getX();
-                    upVertical = event.getY();
-
-                    boolean isWin = fieldView.getField().makeTurn(
-                            fieldView.getElementCoordinates(downHorizontal, downVertical),
-                            fieldView.getSwipeDirection(downHorizontal, upHorizontal, downVertical, upVertical)
-                    );
-
-                    fieldView.invalidate();
-
-                    if (isWin) {
-                        //TODO: add animation
-                        try {
-                            levelManager.finishLevel();
-                        } catch (GameException ex){
-                            onBackPressed();
-                        }
-                        openLevel(levelManager.getCurrentLevelNumber());
-                    }
-
-            }
-            return true;
-        }
-    };
 
     @Override
     public void onResume() {
