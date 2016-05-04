@@ -17,4 +17,8 @@
     <string name="author_address_about">Omsk, Russia</string>
     <string name="app_year_about">2016</string>
     <string name="sound_is_need">Включить звук</string>
+    <string name="game_task">Ваша задача - забросить все фишки на поле в свои лунки</string>
+    <string name="game_description">Qook - Невероятно сложная логическая игра, в которой от вас требуется очистить игровое поле от цветных фишек, загоняя их в лунки того же цвета.</string>
+    <string name="game_rules">По игровому полю, перемещаются фишки разных цветов. Они могут двигаться вверх, вниз, вправо или влево до любого препятствия. Как только фишка попадает в лунку того же цвета, она исчезает с игрового поля</string>
+
 </resources>

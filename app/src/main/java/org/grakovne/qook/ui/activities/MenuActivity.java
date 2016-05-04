@@ -1,5 +1,6 @@
 package org.grakovne.qook.ui.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
@@ -70,24 +71,30 @@ public class MenuActivity extends BaseActivity {
 
     @OnClick(R.id.select_level_button)
     public void onSelectLevelButton() {
-        Intent intent = new Intent(this, LevelSelectorActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
+        switchActivity(LevelSelectorActivity.class);
     }
 
 
     @OnClick(R.id.about_button)
     public void onAboutButton(){
-        Intent intent = new Intent(this, AboutActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
+        switchActivity(AboutActivity.class);
+    }
+
+    @OnClick(R.id.help_button)
+    public void onHelpButton() {
+        switchActivity(HelpActivity.class);
     }
 
     @OnClick(R.id.exit_button)
     public void onExitClick() {
         this.moveTaskToBack(true);
+    }
+
+    private void switchActivity(Class<? extends Activity> activity) {
+        Intent intent = new Intent(this, activity);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 
 }

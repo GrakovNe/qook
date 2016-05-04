@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
 
-import org.grakovne.qook.adapters.LevelGridAdapter;
 import org.grakovne.qook.R;
+import org.grakovne.qook.adapters.LevelGridAdapter;
 import org.grakovne.qook.managers.LevelManager;
 
 import java.io.IOException;
@@ -28,6 +28,13 @@ public class LevelSelectorActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_selector);
         ButterKnife.inject(this);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        overridePendingTransition(0, 0);
 
         manager = LevelManager.build(getBaseContext());
 
@@ -46,13 +53,6 @@ public class LevelSelectorActivity extends BaseActivity {
         adapter.setNotifyOnChange(false);
         levelGrid.setAdapter(adapter);
         levelGrid.setVerticalScrollBarEnabled(false);
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        overridePendingTransition(0, 0);
     }
 
     private List<Integer> getListOfLevelNumbers() {
