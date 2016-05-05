@@ -3,40 +3,26 @@
     package="org.grakovne.qook">
 
     <application
-        android:name=".Qook"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".ui.activities.LevelActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".ui.activities.LevelActivity"/>
 
         <activity
-            android:name=".ui.activities.MenuActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".ui.activities.MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.activities.LevelSelectorActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activities.LevelSelectorActivity"/>
 
-        <activity
-            android:name=".ui.activities.AboutActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activities.AboutActivity"/>
 
-        <activity
-            android:name=".ui.activities.HelpActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activities.HelpActivity"/>
     </application>
 
 </manifest>

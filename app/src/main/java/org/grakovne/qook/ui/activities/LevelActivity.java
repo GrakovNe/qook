@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -45,6 +47,7 @@ public class LevelActivity extends BaseActivity {
     private float downVertical;
     private float upHorizontal;
     private float upVertical;
+
     private OnTouchListener onFieldTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -66,11 +69,14 @@ public class LevelActivity extends BaseActivity {
                     fieldView.invalidate();
 
                     if (isWin) {
+                        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.field_changes_anim);
+                        fieldView.startAnimation(animation);
                         try {
                             levelManager.finishLevel();
                             getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
+                            fieldView.layout(0,0,0,0);
                         } catch (GameException ex) {
-                            onBackPressed();
+                            onMenuClick();
                         }
                         openLevel(levelManager.getCurrentLevelNumber());
                     }
@@ -113,7 +119,7 @@ public class LevelActivity extends BaseActivity {
     }
 
     private void restoreLevel() {
-        Field field = (Field) savedData.getSerializable(LEVEL_OBJECT);
+        Field field = (Field) savedData.getSerializable(FIELD);
 
         fieldView.setField(field);
         setLevelCounterText(savedData.getInt(LEVEL_NUMBER));
@@ -138,8 +144,7 @@ public class LevelActivity extends BaseActivity {
 
         overridePendingTransition(0, 0);
 
-        Intent intent = getIntent();
-        int levelNumber = intent.getIntExtra(DESIRED_LEVEL, 1);
+        int levelNumber = getIntent().getIntExtra(DESIRED_LEVEL, 1);
 
         if (savedData != null && savedData.getInt(LEVEL_NUMBER) == levelNumber) {
             restoreLevel();
@@ -147,7 +152,8 @@ public class LevelActivity extends BaseActivity {
             openLevel(levelNumber);
         }
 
-        fieldView.layout(0, 0, 0, 0);
+        fieldView.layout(0,0,0,0);
+
         currentLevelNumber = levelNumber;
 
         fieldView.invalidate();
@@ -155,7 +161,7 @@ public class LevelActivity extends BaseActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(LEVEL_OBJECT, fieldView.getField());
+        outState.putSerializable(FIELD, fieldView.getField());
         outState.putInt(LEVEL_NUMBER, currentLevelNumber);
         super.onSaveInstanceState(outState);
     }
@@ -166,6 +172,12 @@ public class LevelActivity extends BaseActivity {
         setIntent(intent);
     }
 
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Qook", "restarted");
+    }
 
     @OnClick(R.id.reset_level_button)
     public void onResetClick() {
@@ -179,6 +191,8 @@ public class LevelActivity extends BaseActivity {
 
     @OnClick(R.id.back_level_button)
     public void onMenuClick() {
-        onBackPressed();
+        Intent intent = new Intent(this, MenuActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
     }
 }

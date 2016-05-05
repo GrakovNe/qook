@@ -11,6 +11,7 @@ import org.grakovne.qook.managers.LevelManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -57,6 +58,7 @@ public class LevelSelectorActivity extends BaseActivity {
 
     private List<Integer> getListOfLevelNumbers() {
         List<Integer> integers = new ArrayList<>();
+
         int maximalLevel = 0;
         try {
             maximalLevel = manager.getLevelsNumber();

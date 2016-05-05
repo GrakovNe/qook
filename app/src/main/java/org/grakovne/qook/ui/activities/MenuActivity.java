@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.grakovne.qook.R;
@@ -31,6 +32,8 @@ public class MenuActivity extends BaseActivity {
     Button aboutButton;
     @InjectView(R.id.menu_list)
     LinearLayout menuList;
+    @InjectView(R.id.menu_buttons_panel)
+    ScrollView menuButtonsPanel;
     private SharedSettingsManager sharedSettingsManager;
 
     @Override
@@ -40,6 +43,8 @@ public class MenuActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ButterKnife.inject(this);
+
+        menuButtonsPanel.setVerticalScrollBarEnabled(false);
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.menu_coming_anim);
         animation.start();
