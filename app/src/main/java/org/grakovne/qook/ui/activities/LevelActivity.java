@@ -114,11 +114,10 @@ public class LevelActivity extends BaseActivity {
 
     private void restoreLevel() {
         Field field = (Field) savedData.getSerializable(LEVEL_OBJECT);
-        fieldView.setField(field);
 
+        fieldView.setField(field);
         setLevelCounterText(savedData.getInt(LEVEL_NUMBER));
     }
-
 
     private void setLevelCounterText(int levelNumber) {
         StringBuilder builder = new StringBuilder();
@@ -140,9 +139,7 @@ public class LevelActivity extends BaseActivity {
         overridePendingTransition(0, 0);
 
         Intent intent = getIntent();
-        int levelNumber = intent.getIntExtra(DESIRED_LEVEL, -1);
-
-        Log.d("LevelNum", String.valueOf(levelNumber));
+        int levelNumber = intent.getIntExtra(DESIRED_LEVEL, 1);
 
         if (savedData != null && savedData.getInt(LEVEL_NUMBER) == levelNumber) {
             restoreLevel();
