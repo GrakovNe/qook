@@ -2,7 +2,6 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -144,8 +143,6 @@ public class LevelActivity extends BaseActivity {
         Intent intent = getIntent();
         int levelNumber = intent.getIntExtra(DESIRED_LEVEL, 1);
 
-        Log.d("Desired level", String.valueOf(levelNumber));
-
         if (savedData != null && savedData.getInt(LEVEL_NUMBER) == levelNumber) {
             restoreLevel();
         } else {
@@ -154,7 +151,9 @@ public class LevelActivity extends BaseActivity {
             }
         }
 
+        fieldView.layout(0, 0, 0, 0);
         currentLevelNumber = levelNumber;
+
         fieldView.invalidate();
     }
 
