@@ -59,9 +59,9 @@ public class MenuActivity extends BaseActivity {
 
     @OnClick(R.id.continue_game_button)
     public void onContinueClick() {
-        int maxLevel = sharedSettingsManager.getCurrentLevel();
+        int currentLevel = sharedSettingsManager.getMaxLevel();
         Intent intent = new Intent(this, LevelActivity.class);
-        intent.putExtra(DESIRED_LEVEL, maxLevel);
+        intent.putExtra(DESIRED_LEVEL, currentLevel);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);

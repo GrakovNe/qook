@@ -2,6 +2,7 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -34,6 +35,8 @@ public class LevelActivity extends BaseActivity {
     ImageButton backLevelButton;
 
     private int currentLevelNumber;
+
+    private Bundle savedData;
 
     private LevelManager levelManager = null;
     private Level level = null;
@@ -83,10 +86,10 @@ public class LevelActivity extends BaseActivity {
         setContentView(R.layout.activity_level);
         ButterKnife.inject(this);
 
-        if (savedInstanceState == null) {
-            levelManager = LevelManager.build(this);
-            fieldView.setOnTouchListener(onFieldTouchListener);
-        }
+        levelManager = LevelManager.build(this);
+        fieldView.setOnTouchListener(onFieldTouchListener);
+
+        savedData = savedInstanceState;
     }
 
     @Override
@@ -99,35 +102,67 @@ public class LevelActivity extends BaseActivity {
     private void openLevel(int levelNumber) {
         try {
             level = levelManager.getLevel(levelNumber);
-            Field field = new Field(level);
-            fieldView.setField(field);
-
-            StringBuilder builder = new StringBuilder();
-            builder
-                    .append(String.format(Locale.getDefault(), "%02d", levelNumber))
-                    .append(" / ")
-                    .append(String.format(Locale.getDefault(), "%02d", levelManager.getLevelsNumber()));
-            levelCounter.setText(builder.toString());
+            applyLevel(level, levelNumber);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void restoreLevel() {
+        try {
+            level = (Level) savedData.getSerializable(LEVEL_OBJECT);
+
+            Field field = new Field(level);
+            fieldView.setField(field);
+
+            applyLevel(level, savedData.getInt(LEVEL_NUMBER));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void applyLevel(Level level, int levelNumber) throws IOException {
+        Field field = new Field(level);
+        fieldView.setField(field);
+
+        StringBuilder builder = new StringBuilder();
+        builder
+                .append(String.format(Locale.getDefault(), "%02d", levelNumber))
+                .append(" / ")
+                .append(String.format(Locale.getDefault(), "%02d", levelManager.getLevelsNumber()));
+        levelCounter.setText(builder.toString());
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+
         overridePendingTransition(0, 0);
 
         Intent intent = getIntent();
         int levelNumber = intent.getIntExtra(DESIRED_LEVEL, 1);
 
-        if (levelNumber != currentLevelNumber) {
-            openLevel(levelNumber);
-            currentLevelNumber = levelNumber;
+        Log.d("Desired level", String.valueOf(levelNumber));
+
+        if (savedData != null && savedData.getInt(LEVEL_NUMBER) == levelNumber) {
+            restoreLevel();
+        } else {
+            if (levelNumber != currentLevelNumber) {
+                openLevel(levelNumber);
+            }
         }
 
+        currentLevelNumber = levelNumber;
         fieldView.invalidate();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(LEVEL_OBJECT, level);
+        outState.putInt(LEVEL_NUMBER, currentLevelNumber);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -135,6 +170,7 @@ public class LevelActivity extends BaseActivity {
         super.onNewIntent(intent);
         setIntent(intent);
     }
+
 
     @OnClick(R.id.reset_level_button)
     public void onResetClick() {
