@@ -35,17 +35,18 @@ public class FieldView extends View {
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    protected void onDraw(Canvas canvas) {
+        if (field == null) {
+            return;
+        }
+
         Size countedFieldSize = countFieldSize();
         if (fieldSize == null || !fieldSize.equals(countedFieldSize)) {
             this.fieldSize = countedFieldSize;
             setFieldSize(this.fieldSize);
             paddingSize = (int) (Math.sqrt(elementSize) / PADDING_DIVIDER);
         }
-    }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
         for (int i = 0; i < field.getField().length; i++) {
             for (int j = 0; j < field.getField()[0].length; j++) {
                 Drawable d = selectDrawable(field.getField()[i][j]);

@@ -3,6 +3,7 @@ package org.grakovne.qook.ui.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -34,7 +35,7 @@ public class MenuActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sharedSettingsManager = new SharedSettingsManager(getBaseContext());
+        sharedSettingsManager = SharedSettingsManager.build(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
@@ -59,7 +60,8 @@ public class MenuActivity extends BaseActivity {
 
     @OnClick(R.id.continue_game_button)
     public void onContinueClick() {
-        int currentLevel = sharedSettingsManager.getMaxLevel();
+        int currentLevel = sharedSettingsManager.getCurrentLevel();
+        Log.d("Current Level for send", String.valueOf(currentLevel));
         Intent intent = new Intent(this, LevelActivity.class);
         intent.putExtra(DESIRED_LEVEL, currentLevel);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

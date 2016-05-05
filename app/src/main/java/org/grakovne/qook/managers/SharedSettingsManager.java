@@ -2,17 +2,30 @@ package org.grakovne.qook.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class SharedSettingsManager {
     public static final String LAST_LEVEL = "current_level";
     public static final String MAX_LEVEL = "max_level";
     public static final String WAS_RAN_BEFORE = "was_ran_before";
     private static final String APP_PREFS = "qook_prefs";
+    public static Context context;
+    public static SharedSettingsManager instance;
     SharedPreferences sharedPreferences;
 
-    public SharedSettingsManager(Context context) {
+    private SharedSettingsManager() {
         sharedPreferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE);
         setCurrentLevel(getMaxLevel());
+        Log.d("Shared", "Constructor call");
+    }
+
+    public static SharedSettingsManager build(Context currentContext) {
+        context = currentContext;
+
+        if (instance == null) {
+            instance = new SharedSettingsManager();
+        }
+        return instance;
     }
 
     public int getMaxLevel() {

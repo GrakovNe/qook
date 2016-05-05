@@ -26,6 +26,14 @@ public class Field implements Serializable {
         return level;
     }
 
+    public int getBallsCount() {
+        return ballsCount;
+    }
+
+    public void setBallsCount(int ballsCount) {
+        this.ballsCount = ballsCount;
+    }
+
     private Coordinates moveItem(Coordinates coordinates, Direction direction) {
 
         int horizontal = coordinates.getHorizontal();

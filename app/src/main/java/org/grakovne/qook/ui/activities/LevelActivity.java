@@ -2,6 +2,7 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -65,9 +66,9 @@ public class LevelActivity extends BaseActivity {
                     fieldView.invalidate();
 
                     if (isWin) {
-                        //TODO: add animation
                         try {
                             levelManager.finishLevel();
+                            getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
                         } catch (GameException ex) {
                             onBackPressed();
                         }
@@ -101,7 +102,10 @@ public class LevelActivity extends BaseActivity {
     private void openLevel(int levelNumber) {
         try {
             level = levelManager.getLevel(levelNumber);
-            applyLevel(level, levelNumber);
+            Field field = new Field(level);
+            fieldView.setField(field);
+            setLevelCounterText(levelNumber);
+            currentLevelNumber = levelNumber;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -109,28 +113,23 @@ public class LevelActivity extends BaseActivity {
     }
 
     private void restoreLevel() {
+        Field field = (Field) savedData.getSerializable(LEVEL_OBJECT);
+        fieldView.setField(field);
+
+        setLevelCounterText(savedData.getInt(LEVEL_NUMBER));
+    }
+
+
+    private void setLevelCounterText(int levelNumber) {
+        StringBuilder builder = new StringBuilder();
         try {
-            level = (Level) savedData.getSerializable(LEVEL_OBJECT);
-
-            Field field = new Field(level);
-            fieldView.setField(field);
-
-            applyLevel(level, savedData.getInt(LEVEL_NUMBER));
-
+            builder
+                    .append(String.format(Locale.getDefault(), "%02d", levelNumber))
+                    .append(" / ")
+                    .append(String.format(Locale.getDefault(), "%02d", levelManager.getLevelsNumber()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void applyLevel(Level level, int levelNumber) throws IOException {
-        Field field = new Field(level);
-        fieldView.setField(field);
-
-        StringBuilder builder = new StringBuilder();
-        builder
-                .append(String.format(Locale.getDefault(), "%02d", levelNumber))
-                .append(" / ")
-                .append(String.format(Locale.getDefault(), "%02d", levelManager.getLevelsNumber()));
         levelCounter.setText(builder.toString());
     }
 
@@ -141,14 +140,14 @@ public class LevelActivity extends BaseActivity {
         overridePendingTransition(0, 0);
 
         Intent intent = getIntent();
-        int levelNumber = intent.getIntExtra(DESIRED_LEVEL, 1);
+        int levelNumber = intent.getIntExtra(DESIRED_LEVEL, -1);
+
+        Log.d("LevelNum", String.valueOf(levelNumber));
 
         if (savedData != null && savedData.getInt(LEVEL_NUMBER) == levelNumber) {
             restoreLevel();
         } else {
-            if (levelNumber != currentLevelNumber) {
-                openLevel(levelNumber);
-            }
+            openLevel(levelNumber);
         }
 
         fieldView.layout(0, 0, 0, 0);
@@ -159,7 +158,7 @@ public class LevelActivity extends BaseActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(LEVEL_OBJECT, level);
+        outState.putSerializable(LEVEL_OBJECT, fieldView.getField());
         outState.putInt(LEVEL_NUMBER, currentLevelNumber);
         super.onSaveInstanceState(outState);
     }

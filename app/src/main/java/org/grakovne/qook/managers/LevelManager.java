@@ -47,7 +47,7 @@ public class LevelManager {
 
     public static LevelManager build(Context currentContext) {
         context = currentContext;
-        sharedSettingsManager = new SharedSettingsManager(context);
+        sharedSettingsManager = SharedSettingsManager.build(currentContext);
 
         if (instance == null) {
             instance = new LevelManager();
