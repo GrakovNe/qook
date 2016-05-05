@@ -73,7 +73,7 @@ public class MenuActivity extends BaseActivity {
     }
 
     @OnClick(R.id.about_button)
-    public void onAboutButton(){
+    public void onAboutButton() {
         switchActivity(AboutActivity.class);
     }
 
