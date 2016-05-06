@@ -70,11 +70,11 @@ public class LevelActivity extends BaseActivity {
 
                     if (isWin) {
                         animateView(fieldView);
-                        getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
 
                         try {
                             levelManager.finishLevel();
                             openLevel(levelManager.getCurrentLevelNumber());
+                            getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
                             fieldView.layout(0,0,0,0);
                         } catch (GameException ex) {
                             onMenuClick();
@@ -105,6 +105,7 @@ public class LevelActivity extends BaseActivity {
         }
 
         currentLevelNumber = levelNumber;
+        Log.d("Current level", String.valueOf(currentLevelNumber));
     }
 
     @Override
