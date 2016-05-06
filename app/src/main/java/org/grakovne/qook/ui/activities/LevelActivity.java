@@ -69,18 +69,17 @@ public class LevelActivity extends BaseActivity {
                     fieldView.invalidate();
 
                     if (isWin) {
-                        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.field_changes_anim);
-                        fieldView.startAnimation(animation);
+                        animateView(fieldView);
+                        getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
+
                         try {
                             levelManager.finishLevel();
-                            getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
+                            openLevel(levelManager.getCurrentLevelNumber());
                             fieldView.layout(0,0,0,0);
                         } catch (GameException ex) {
                             onMenuClick();
                         }
-                        openLevel(levelManager.getCurrentLevelNumber());
                     }
-
             }
             return true;
         }
@@ -96,6 +95,18 @@ public class LevelActivity extends BaseActivity {
         fieldView.setOnTouchListener(onFieldTouchListener);
 
         savedData = savedInstanceState;
+
+        int levelNumber = getIntent().getIntExtra(DESIRED_LEVEL, 1);
+
+        if (savedData != null && savedData.getInt(LEVEL_NUMBER) == levelNumber) {
+            restoreLevel();
+        } else {
+            openLevel(levelNumber);
+        }
+
+        currentLevelNumber = levelNumber;
+
+        fieldView.invalidate();
     }
 
     @Override
@@ -108,8 +119,7 @@ public class LevelActivity extends BaseActivity {
     private void openLevel(int levelNumber) {
         try {
             level = levelManager.getLevel(levelNumber);
-            Field field = new Field(level);
-            fieldView.setField(field);
+            fieldView.setField(new Field(level));
             setLevelCounterText(levelNumber);
             currentLevelNumber = levelNumber;
 
@@ -138,25 +148,16 @@ public class LevelActivity extends BaseActivity {
         levelCounter.setText(builder.toString());
     }
 
+    private void animateView(View view) {
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.field_changes_anim);
+        view.startAnimation(animation);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
 
         overridePendingTransition(0, 0);
-
-        int levelNumber = getIntent().getIntExtra(DESIRED_LEVEL, 1);
-
-        if (savedData != null && savedData.getInt(LEVEL_NUMBER) == levelNumber) {
-            restoreLevel();
-        } else {
-            openLevel(levelNumber);
-        }
-
-        fieldView.layout(0,0,0,0);
-
-        currentLevelNumber = levelNumber;
-
-        fieldView.invalidate();
     }
 
     @Override
@@ -164,6 +165,7 @@ public class LevelActivity extends BaseActivity {
         outState.putSerializable(FIELD, fieldView.getField());
         outState.putInt(LEVEL_NUMBER, currentLevelNumber);
         super.onSaveInstanceState(outState);
+
     }
 
     @Override
@@ -172,12 +174,6 @@ public class LevelActivity extends BaseActivity {
         setIntent(intent);
     }
 
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("Qook", "restarted");
-    }
 
     @OnClick(R.id.reset_level_button)
     public void onResetClick() {

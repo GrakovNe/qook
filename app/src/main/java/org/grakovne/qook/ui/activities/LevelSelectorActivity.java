@@ -44,7 +44,6 @@ public class LevelSelectorActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), LevelActivity.class);
                 intent.putExtra(DESIRED_LEVEL, v.getId());
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
