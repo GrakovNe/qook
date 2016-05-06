@@ -16,7 +16,6 @@ public class SharedSettingsManager {
     private SharedSettingsManager() {
         sharedPreferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE);
         setCurrentLevel(getMaxLevel());
-        Log.d("Shared", "Constructor call");
     }
 
     public static SharedSettingsManager build(Context currentContext) {

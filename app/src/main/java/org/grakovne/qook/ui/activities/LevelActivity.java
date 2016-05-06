@@ -105,8 +105,6 @@ public class LevelActivity extends BaseActivity {
         }
 
         currentLevelNumber = levelNumber;
-
-        fieldView.invalidate();
     }
 
     @Override
