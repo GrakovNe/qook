@@ -16,5 +16,6 @@ public class AboutActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
         overridePendingTransition(0, 0);
+
     }
 }

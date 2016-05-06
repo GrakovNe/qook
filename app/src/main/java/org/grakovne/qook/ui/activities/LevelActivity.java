@@ -75,7 +75,7 @@ public class LevelActivity extends BaseActivity {
                             levelManager.finishLevel();
                             openLevel(levelManager.getCurrentLevelNumber());
                             getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
-                            fieldView.layout(0,0,0,0);
+                            fieldView.layout(0, 0, 0, 0);
                         } catch (GameException ex) {
                             onMenuClick();
                         }
@@ -105,7 +105,6 @@ public class LevelActivity extends BaseActivity {
         }
 
         currentLevelNumber = levelNumber;
-        Log.d("Current level", String.valueOf(currentLevelNumber));
     }
 
     @Override
@@ -155,15 +154,14 @@ public class LevelActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         overridePendingTransition(0, 0);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putSerializable(FIELD, fieldView.getField());
         outState.putInt(LEVEL_NUMBER, currentLevelNumber);
-        super.onSaveInstanceState(outState);
 
     }
 
@@ -176,12 +174,8 @@ public class LevelActivity extends BaseActivity {
 
     @OnClick(R.id.reset_level_button)
     public void onResetClick() {
-        try {
-            fieldView.setField(new Field(levelManager.resetLevel()));
-            fieldView.invalidate();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        fieldView.layout(0, 0, 0, 0);
+        openLevel(levelManager.getCurrentLevelNumber());
     }
 
     @OnClick(R.id.back_level_button)

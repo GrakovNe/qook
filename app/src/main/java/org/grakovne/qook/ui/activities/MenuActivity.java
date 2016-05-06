@@ -38,9 +38,10 @@ public class MenuActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         sharedSettingsManager = SharedSettingsManager.build(this);
 
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ButterKnife.inject(this);
 
@@ -66,7 +67,6 @@ public class MenuActivity extends BaseActivity {
     @OnClick(R.id.continue_game_button)
     public void onContinueClick() {
         int currentLevel = sharedSettingsManager.getCurrentLevel();
-        Log.d("Current Level for send", String.valueOf(currentLevel));
         Intent intent = new Intent(this, LevelActivity.class);
         intent.putExtra(DESIRED_LEVEL, currentLevel);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
