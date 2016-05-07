@@ -14,7 +14,8 @@ public class SharedSettingsManager {
 
     private SharedSettingsManager() {
         sharedPreferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE);
-        setCurrentLevel(getMaxLevel());
+        //// TODO: 07.05.2016 remove before release
+        //setMaxLevel(60);
     }
 
     public static SharedSettingsManager build(Context currentContext) {
