@@ -2,8 +2,6 @@ package org.grakovne.qook.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import org.grakovne.qook.R;
 

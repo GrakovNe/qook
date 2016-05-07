@@ -11,7 +11,6 @@ import org.grakovne.qook.managers.LevelManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.ButterKnife;

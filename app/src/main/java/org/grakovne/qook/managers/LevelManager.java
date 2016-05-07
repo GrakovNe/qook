@@ -164,7 +164,7 @@ public class LevelManager {
         return new Scanner(bufferedReader);
     }
 
-    public Level resetLevel() throws IOException {
-        return getCurrentLevel();
+    public void openAllLevels(){
+        sharedSettingsManager.setCurrentLevel(getMaximalLevelNumber());
     }
 }

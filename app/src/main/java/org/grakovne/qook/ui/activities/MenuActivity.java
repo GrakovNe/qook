@@ -3,7 +3,6 @@ package org.grakovne.qook.ui.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -62,6 +61,12 @@ public class MenuActivity extends BaseActivity {
 
         sharedSettingsManager.setRanBefore();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
     }
 
     @OnClick(R.id.continue_game_button)
