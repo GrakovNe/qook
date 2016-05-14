@@ -5,7 +5,7 @@ import org.grakovne.qook.enums.Color;
 
 import java.io.Serializable;
 
-public abstract class Item implements Serializable {
+public abstract class Item implements Serializable, Cloneable {
     private Color color;
 
     public Item(Color color) {
@@ -25,5 +25,10 @@ public abstract class Item implements Serializable {
         return "Item{" +
                 "color=" + color +
                 '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

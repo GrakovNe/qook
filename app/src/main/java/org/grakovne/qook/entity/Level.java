@@ -6,14 +6,9 @@ import org.grakovne.qook.entity.elements.Item;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Level implements Serializable {
+public class Level implements Serializable, Cloneable {
     private Item[][] field;
     private int ballsCount;
-
-    public Level(Level oldLevel){
-        this.field = Arrays.copyOf(oldLevel.getField(), oldLevel.getField().length);
-        this.ballsCount = oldLevel.ballsCount;
-    }
 
     public Level(Item[][] field) {
         this.field = field;
@@ -57,5 +52,10 @@ public class Level implements Serializable {
         int result = Arrays.deepHashCode(field);
         result = 31 * result + ballsCount;
         return result;
+    }
+
+    @Override
+    public Level clone() throws CloneNotSupportedException {
+        return (Level) super.clone();
     }
 }

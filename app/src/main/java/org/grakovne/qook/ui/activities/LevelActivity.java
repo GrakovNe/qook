@@ -40,6 +40,7 @@ public class LevelActivity extends BaseActivity {
     private Bundle savedData;
 
     private LevelManager levelManager = null;
+
     private Level level = null;
 
     private float downHorizontal;
@@ -183,4 +184,5 @@ public class LevelActivity extends BaseActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
+
 }

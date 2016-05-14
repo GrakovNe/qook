@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -48,6 +49,7 @@ public class FieldView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
         if (field == null) {
             return;
         }

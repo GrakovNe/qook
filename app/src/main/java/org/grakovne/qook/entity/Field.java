@@ -18,11 +18,6 @@ public class Field implements Serializable {
         this.ballsCount = level.getBallsCount();
     }
 
-    public Field(Field oldField){
-        this.level = new Level(Arrays.copyOf(level.getField(), level.getField().length));
-        this.ballsCount = this.level.getBallsCount();
-    }
-
     public Item[][] getField() {
         return level.getField();
     }
