@@ -10,6 +10,11 @@ public class Level implements Serializable {
     private Item[][] field;
     private int ballsCount;
 
+    public Level(Level oldLevel){
+        this.field = Arrays.copyOf(oldLevel.getField(), oldLevel.getField().length);
+        this.ballsCount = oldLevel.ballsCount;
+    }
+
     public Level(Item[][] field) {
         this.field = field;
         this.ballsCount = countBallsOnLevel(field);

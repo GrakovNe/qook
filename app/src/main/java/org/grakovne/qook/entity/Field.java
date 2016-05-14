@@ -7,6 +7,7 @@ import org.grakovne.qook.entity.elements.Item;
 import org.grakovne.qook.enums.Direction;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Field implements Serializable {
     private Level level;
@@ -15,6 +16,11 @@ public class Field implements Serializable {
     public Field(Level level) {
         this.level = level;
         this.ballsCount = level.getBallsCount();
+    }
+
+    public Field(Field oldField){
+        this.level = new Level(Arrays.copyOf(level.getField(), level.getField().length));
+        this.ballsCount = this.level.getBallsCount();
     }
 
     public Item[][] getField() {
