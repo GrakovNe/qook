@@ -6,5 +6,4 @@ public class Block extends Item {
     public Block() {
         super(Color.GRAY);
     }
-
 }

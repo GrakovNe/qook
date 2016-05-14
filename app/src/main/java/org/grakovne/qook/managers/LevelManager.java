@@ -18,7 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class LevelManager {
+public class  LevelManager {
     private static final String LEVELS_FOLDER = "levels";
     private static final String LEVEL_FILE_EXTENSION = ".lev";
 
@@ -164,7 +164,4 @@ public class LevelManager {
         return new Scanner(bufferedReader);
     }
 
-    public void openAllLevels(){
-        sharedSettingsManager.setCurrentLevel(getMaximalLevelNumber());
-    }
 }

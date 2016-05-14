@@ -21,7 +21,6 @@ public class Field implements Serializable {
         return level.getField();
     }
 
-
     public Level getLevel() {
         return level;
     }
