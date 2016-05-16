@@ -19,6 +19,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/version_text_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -29,6 +30,7 @@
             android:textSize="28sp" />
 
         <TextView
+            android:id="@+id/author_text_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif-monospace"
@@ -37,6 +39,7 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/author_name_text_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -46,6 +49,7 @@
             android:textSize="24dp" />
 
     <TextView
+        android:id="@+id/address_text_about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif-monospace"
@@ -54,6 +58,7 @@
         android:textSize="24dp" />
 
     <TextView
+        android:id="@+id/year_text_about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif-monospace"

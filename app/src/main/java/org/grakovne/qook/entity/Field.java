@@ -7,7 +7,6 @@ import org.grakovne.qook.entity.elements.Item;
 import org.grakovne.qook.enums.Direction;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 public class Field implements Serializable {
     private Level level;
@@ -24,14 +23,6 @@ public class Field implements Serializable {
 
     public Level getLevel() {
         return level;
-    }
-
-    public int getBallsCount() {
-        return ballsCount;
-    }
-
-    public void setBallsCount(int ballsCount) {
-        this.ballsCount = ballsCount;
     }
 
     private Coordinates moveItem(Coordinates coordinates, Direction direction) {
@@ -117,7 +108,7 @@ public class Field implements Serializable {
             }
 
             level.getField()[vertical][horizontal] = null;
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return true;
@@ -137,7 +128,7 @@ public class Field implements Serializable {
 
             level.getField()[vertical][horizontal] = null;
 
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return true;
@@ -156,7 +147,7 @@ public class Field implements Serializable {
             }
 
             level.getField()[vertical][horizontal] = null;
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return true;
@@ -175,7 +166,7 @@ public class Field implements Serializable {
             }
 
             level.getField()[vertical][horizontal] = null;
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return true;
@@ -187,7 +178,7 @@ public class Field implements Serializable {
                 level.getField()[yCoord][xCoord + 1] = level.getField()[yCoord][xCoord];
                 level.getField()[yCoord][xCoord++] = null;
             }
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return new Coordinates(xCoord, yCoord);
@@ -199,7 +190,7 @@ public class Field implements Serializable {
                 level.getField()[yCoord][xCoord - 1] = level.getField()[yCoord][xCoord];
                 level.getField()[yCoord][xCoord--] = null;
             }
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return new Coordinates(xCoord, yCoord);
@@ -211,7 +202,7 @@ public class Field implements Serializable {
                 level.getField()[yCoord - 1][xCoord] = level.getField()[yCoord][xCoord];
                 level.getField()[yCoord--][xCoord] = null;
             }
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return new Coordinates(xCoord, yCoord);
@@ -223,7 +214,7 @@ public class Field implements Serializable {
                 level.getField()[yCoord + 1][xCoord] = level.getField()[yCoord][xCoord];
                 level.getField()[yCoord++][xCoord] = null;
             }
-        } catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
         return new Coordinates(xCoord, yCoord);
