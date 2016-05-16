@@ -1,6 +1,9 @@
-package org.grakovne.qook.entity;
+package org.grakovne.qook.engine;
 
 import org.grakovne.qook.dimensionality.Coordinates;
+import org.grakovne.qook.engine.listeners.FieldUpdatingListener;
+import org.grakovne.qook.engine.listeners.LevelCompleteListener;
+import org.grakovne.qook.entity.Level;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Hole;
 import org.grakovne.qook.entity.elements.Item;
@@ -12,6 +15,12 @@ public class Field implements Serializable {
     private Level level;
     private int ballsCount;
 
+    private static final int SLEEP_LATENCY = 55;
+    private static final boolean isAnimation = true;
+
+    transient private LevelCompleteListener completeListener;
+    transient private FieldUpdatingListener updatingListener;
+
     public Field(Level level) {
         this.level = level;
         this.ballsCount = level.getBallsCount();
@@ -21,8 +30,12 @@ public class Field implements Serializable {
         return level.getField();
     }
 
-    public Level getLevel() {
-        return level;
+    public void setCompleteListener(LevelCompleteListener completeListener){
+        this.completeListener = completeListener;
+    }
+
+    public void setUpdatingListener(FieldUpdatingListener updatingListener) {
+        this.updatingListener = updatingListener;
     }
 
     private Coordinates moveItem(Coordinates coordinates, Direction direction) {
@@ -60,9 +73,33 @@ public class Field implements Serializable {
         ballsCount--;
     }
 
-    public boolean makeTurn(Coordinates coordinates, Direction direction) {
-        Coordinates newCoordinates = moveItem(coordinates, direction);
-        return newCoordinates != null && acceptHole(newCoordinates, direction);
+    public void makeTurn(final Coordinates coordinates, final Direction direction) {
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                if (updatingListener != null){
+                    updatingListener.startUpdate();
+                }
+
+                Coordinates newCoordinates = moveItem(coordinates, direction);
+                if (newCoordinates != null) {
+                    acceptHole(newCoordinates, direction);
+                }
+
+                if (updatingListener != null){
+                    updatingListener.finishUpdate();
+                }
+
+                if (completeListener != null && checkWin()) {
+                    completeListener.levelComplete();
+                }
+            }
+        };
+
+        new Thread(runnable).start();
+
+
     }
 
     private boolean acceptHole(Coordinates coordinates, Direction direction) {
@@ -108,6 +145,7 @@ public class Field implements Serializable {
             }
 
             level.getField()[vertical][horizontal] = null;
+
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
@@ -147,6 +185,7 @@ public class Field implements Serializable {
             }
 
             level.getField()[vertical][horizontal] = null;
+
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
@@ -166,6 +205,7 @@ public class Field implements Serializable {
             }
 
             level.getField()[vertical][horizontal] = null;
+
         } catch (ArrayIndexOutOfBoundsException ignored) {
         }
 
@@ -177,8 +217,14 @@ public class Field implements Serializable {
             while (level.getField()[yCoord][xCoord + 1] == null) {
                 level.getField()[yCoord][xCoord + 1] = level.getField()[yCoord][xCoord];
                 level.getField()[yCoord][xCoord++] = null;
+
+                if (isAnimation) {
+                    Thread.sleep(SLEEP_LATENCY);
+                }
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         return new Coordinates(xCoord, yCoord);
@@ -189,8 +235,14 @@ public class Field implements Serializable {
             while (level.getField()[yCoord][xCoord - 1] == null) {
                 level.getField()[yCoord][xCoord - 1] = level.getField()[yCoord][xCoord];
                 level.getField()[yCoord][xCoord--] = null;
+
+                if (isAnimation) {
+                    Thread.sleep(SLEEP_LATENCY);
+                }
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         return new Coordinates(xCoord, yCoord);
@@ -201,8 +253,15 @@ public class Field implements Serializable {
             while (level.getField()[yCoord - 1][xCoord] == null) {
                 level.getField()[yCoord - 1][xCoord] = level.getField()[yCoord][xCoord];
                 level.getField()[yCoord--][xCoord] = null;
+
+                if (isAnimation) {
+                    Thread.sleep(SLEEP_LATENCY);
+                }
+
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         return new Coordinates(xCoord, yCoord);
@@ -213,8 +272,15 @@ public class Field implements Serializable {
             while (level.getField()[yCoord + 1][xCoord] == null) {
                 level.getField()[yCoord + 1][xCoord] = level.getField()[yCoord][xCoord];
                 level.getField()[yCoord++][xCoord] = null;
+
+                if (isAnimation) {
+                    Thread.sleep(SLEEP_LATENCY);
+                }
+
             }
         } catch (ArrayIndexOutOfBoundsException ignored) {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         return new Coordinates(xCoord, yCoord);

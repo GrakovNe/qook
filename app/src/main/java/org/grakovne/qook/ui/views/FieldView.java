@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import org.grakovne.qook.R;
 import org.grakovne.qook.dimensionality.Coordinates;
 import org.grakovne.qook.dimensionality.Size;
-import org.grakovne.qook.entity.Field;
+import org.grakovne.qook.engine.Field;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Block;
 import org.grakovne.qook.entity.elements.Hole;

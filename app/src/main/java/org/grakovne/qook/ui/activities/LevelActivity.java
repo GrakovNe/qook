@@ -2,6 +2,8 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -10,7 +12,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.grakovne.qook.R;
-import org.grakovne.qook.entity.Field;
+import org.grakovne.qook.engine.Field;
+import org.grakovne.qook.engine.listeners.FieldUpdatingListener;
+import org.grakovne.qook.engine.listeners.LevelCompleteListener;
 import org.grakovne.qook.entity.Level;
 import org.grakovne.qook.exceptions.GameException;
 import org.grakovne.qook.managers.LevelManager;
@@ -18,6 +22,8 @@ import org.grakovne.qook.ui.views.FieldView;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -47,10 +53,18 @@ public class LevelActivity extends BaseActivity {
     private float upHorizontal;
     private float upVertical;
 
+    private Handler handler;
+
+    private Timer timer;
+    private TimerTask task;
+
+    private static final int FRAME_DELAY = 17;
+
     private OnTouchListener onFieldTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
+
                 case MotionEvent.ACTION_DOWN:
                     downHorizontal = event.getX();
                     downVertical = event.getY();
@@ -60,35 +74,24 @@ public class LevelActivity extends BaseActivity {
                     upHorizontal = event.getX();
                     upVertical = event.getY();
 
-                    boolean isWin = fieldView.getField().makeTurn(
+                    fieldView.getField().makeTurn(
                             fieldView.getElementCoordinates(downHorizontal, downVertical),
                             fieldView.getSwipeDirection(downHorizontal, upHorizontal, downVertical, upVertical)
                     );
 
-                    fieldView.invalidate();
-
-                    if (isWin) {
-                        animateView(fieldView);
-
-                        try {
-                            levelManager.finishLevel();
-                            openLevel(levelManager.getCurrentLevelNumber());
-                            getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
-                            fieldView.layout(0, 0, 0, 0);
-                        } catch (GameException ex) {
-                            onMenuClick();
-                        }
-                    }
             }
             return true;
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
         ButterKnife.inject(this);
+
+        handler = new Handler();
 
         levelManager = LevelManager.build(this);
         fieldView.setOnTouchListener(onFieldTouchListener);
@@ -104,6 +107,7 @@ public class LevelActivity extends BaseActivity {
         }
 
         currentLevelNumber = levelNumber;
+
     }
 
     @Override
@@ -113,10 +117,69 @@ public class LevelActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    private void setListeners(Field field) {
+
+        field.setUpdatingListener(new FieldUpdatingListener() {
+            @Override
+            public void startUpdate() {
+                timer = new Timer();
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                fieldView.invalidate();
+                            }
+                        });
+                    }
+                };
+
+                timer.scheduleAtFixedRate(task, 0, FRAME_DELAY);
+            }
+
+            @Override
+            public void finishUpdate() {
+                timer.cancel();
+            }
+        });
+
+        field.setCompleteListener(new LevelCompleteListener() {
+            @Override
+            public void levelComplete() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        fieldView.invalidate();
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        animateView(fieldView);
+
+                        try {
+                            levelManager.finishLevel();
+                            openLevel(levelManager.getCurrentLevelNumber());
+                            getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
+                            fieldView.layout(0, 0, 0, 0);
+                        } catch (GameException ex) {
+                            onMenuClick();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     private void openLevel(int levelNumber) {
         try {
             level = levelManager.getLevel(levelNumber);
-            fieldView.setField(new Field(level));
+            final Field field = new Field(level);
+
+            setListeners(field);
+
+            fieldView.setField(field);
             setLevelCounterText(levelNumber);
             currentLevelNumber = levelNumber;
 
@@ -128,6 +191,7 @@ public class LevelActivity extends BaseActivity {
     private void restoreLevel() {
         Field field = (Field) savedData.getSerializable(FIELD);
 
+        setListeners(field);
         fieldView.setField(field);
         setLevelCounterText(savedData.getInt(LEVEL_NUMBER));
     }
