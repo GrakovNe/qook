@@ -15,7 +15,7 @@ public class Field implements Serializable {
     private Level level;
     private int ballsCount;
 
-    private static final int SLEEP_LATENCY = 55;
+    private static final int SLEEP_LATENCY = 60;
     private static final boolean isAnimation = true;
 
     transient private LevelCompleteListener completeListener;

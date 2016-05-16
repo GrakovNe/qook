@@ -3,7 +3,6 @@ package org.grakovne.qook.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -58,7 +57,14 @@ public class LevelActivity extends BaseActivity {
     private Timer timer;
     private TimerTask task;
 
-    private static final int FRAME_DELAY = 17;
+    private Runnable invalidateView = new Runnable() {
+        @Override
+        public void run() {
+            fieldView.invalidate();
+        }
+    };
+
+    private static final int FRAME_DELAY = 1;
 
     private OnTouchListener onFieldTouchListener = new OnTouchListener() {
         @Override
@@ -126,12 +132,7 @@ public class LevelActivity extends BaseActivity {
                 task = new TimerTask() {
                     @Override
                     public void run() {
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                fieldView.invalidate();
-                            }
-                        });
+                        handler.post(invalidateView);
                     }
                 };
 
@@ -141,6 +142,7 @@ public class LevelActivity extends BaseActivity {
             @Override
             public void finishUpdate() {
                 timer.cancel();
+                handler.post(invalidateView);
             }
         });
 

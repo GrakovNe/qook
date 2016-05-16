@@ -30,6 +30,11 @@ public class FieldView extends View {
     private Size fieldSize;
     private Size maxViewSize;
 
+    private GradientDrawable holeDrawableHolder;
+    private GradientDrawable ballDrawableHolder;
+    private GradientDrawable blockDrawableHolder;
+    private GradientDrawable nullDrawableHolder;
+
     public FieldView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -37,6 +42,7 @@ public class FieldView extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        this.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         Size countedFieldSize = countFieldSize();
         if (fieldSize == null || !fieldSize.equals(countedFieldSize)) {
             this.fieldSize = countedFieldSize;
@@ -44,6 +50,15 @@ public class FieldView extends View {
             paddingSize = (int) (Math.sqrt(elementSize) / PADDING_DIVIDER);
         }
 
+        deleteDrawableHolders();
+
+    }
+
+    private void deleteDrawableHolders(){
+        nullDrawableHolder = null;
+        blockDrawableHolder = null;
+        holeDrawableHolder = null;
+        ballDrawableHolder = null;
     }
 
     @Override
@@ -100,82 +115,94 @@ public class FieldView extends View {
 
     private Drawable selectDrawable(Item item) {
         if (item == null) {
-            GradientDrawable bgShape = new GradientDrawable();
-            bgShape.setColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
-            bgShape.setCornerRadius((float) (elementSize * ROUND_RECT_SIZE));
-            return bgShape;
+            if (nullDrawableHolder == null) {
+                GradientDrawable bgShape = new GradientDrawable();
+                bgShape.setColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
+                bgShape.setCornerRadius((float) (elementSize * ROUND_RECT_SIZE));
+                nullDrawableHolder = bgShape;
+            }
+            return nullDrawableHolder;
         }
 
         Class clazz = item.getClass();
         Color color = item.getColor();
 
         if (clazz.equals(Block.class)) {
-            GradientDrawable bgShape = new GradientDrawable();
-            bgShape.setColor(ContextCompat.getColor(getContext(), R.color.gray));
-            bgShape.setCornerRadius((float) (elementSize * ROUND_RECT_SIZE));
-            return bgShape;
+            if (blockDrawableHolder == null) {
+                GradientDrawable bgShape = new GradientDrawable();
+                bgShape.setColor(ContextCompat.getColor(getContext(), R.color.gray));
+                bgShape.setCornerRadius((float) (elementSize * ROUND_RECT_SIZE));
+                blockDrawableHolder = bgShape;
+            }
+            return blockDrawableHolder;
         }
 
         if (clazz.equals(Hole.class)) {
-            GradientDrawable bgShape = new GradientDrawable();
-            bgShape.setCornerRadius((float) (elementSize * ROUND_RECT_SIZE));
+            if (holeDrawableHolder == null) {
+                GradientDrawable bgShape = new GradientDrawable();
+                bgShape.setCornerRadius((float) (elementSize * ROUND_RECT_SIZE));
+                holeDrawableHolder = bgShape;
+            }
 
             switch (color) {
                 case GREEN:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.green));
-                    return bgShape;
+                    holeDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.green));
+                    return holeDrawableHolder;
 
                 case RED:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.red));
-                    return bgShape;
+                    holeDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.red));
+                    return holeDrawableHolder;
 
                 case BLUE:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.blue));
-                    return bgShape;
+                    holeDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.blue));
+                    return holeDrawableHolder;
 
                 case YELLOW:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.yellow));
-                    return bgShape;
+                    holeDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.yellow));
+                    return holeDrawableHolder;
 
                 case PURPLE:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.purple));
-                    return bgShape;
+                    holeDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.purple));
+                    return holeDrawableHolder;
 
                 case CYAN:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.cyan));
-                    return bgShape;
+                    holeDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.cyan));
+                    return holeDrawableHolder;
             }
         }
 
         if (clazz.equals(Ball.class)) {
-            GradientDrawable bgShape = new GradientDrawable();
-            bgShape.setColor(ContextCompat.getColor(getContext(), R.color.gray));
-            bgShape.setCornerRadius(elementSize);
+            if (ballDrawableHolder == null) {
+                GradientDrawable bgShape = new GradientDrawable();
+                bgShape.setColor(ContextCompat.getColor(getContext(), R.color.gray));
+                bgShape.setCornerRadius(elementSize);
+                ballDrawableHolder = bgShape;
+            }
 
             switch (color) {
                 case GREEN:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.green));
-                    return bgShape;
+                    ballDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.green));
+                    return ballDrawableHolder;
 
                 case RED:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.red));
-                    return bgShape;
+                    ballDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.red));
+                    return ballDrawableHolder;
 
                 case BLUE:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.blue));
-                    return bgShape;
+                    ballDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.blue));
+                    return ballDrawableHolder;
 
                 case YELLOW:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.yellow));
-                    return bgShape;
+                    ballDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.yellow));
+                    return ballDrawableHolder;
 
                 case PURPLE:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.purple));
-                    return bgShape;
+                    ballDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.purple));
+                    return ballDrawableHolder;
 
                 case CYAN:
-                    bgShape.setColor(ContextCompat.getColor(getContext(), R.color.cyan));
-                    return bgShape;
+                    ballDrawableHolder.setColor(ContextCompat.getColor(getContext(), R.color.cyan));
+                    return ballDrawableHolder;
 
             }
         }
