@@ -54,7 +54,7 @@ public class FieldView extends View {
 
     }
 
-    private void deleteDrawableHolders(){
+    private void deleteDrawableHolders() {
         nullDrawableHolder = null;
         blockDrawableHolder = null;
         holeDrawableHolder = null;
