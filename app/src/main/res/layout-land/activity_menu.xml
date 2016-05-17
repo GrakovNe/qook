@@ -63,14 +63,6 @@
                 android:text="@string/additional_button_text" />
 
             <Button
-                android:id="@+id/help_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_normal"
-                android:text="@string/help_button_text" />
-
-            <Button
                 android:id="@+id/about_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
