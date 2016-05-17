@@ -25,14 +25,14 @@ public class MenuActivity extends BaseActivity {
     Button continueGameButton;
     @InjectView(R.id.select_level_button)
     Button selectLevelButton;
-    @InjectView(R.id.help_button)
-    Button helpButton;
     @InjectView(R.id.about_button)
     Button aboutButton;
     @InjectView(R.id.menu_list)
     LinearLayout menuList;
     @InjectView(R.id.menu_buttons_panel)
     ScrollView menuButtonsPanel;
+    @InjectView(R.id.additional_button)
+    Button additionalButton;
     private SharedSettingsManager sharedSettingsManager;
 
     @Override
@@ -89,11 +89,6 @@ public class MenuActivity extends BaseActivity {
         switchActivity(AboutActivity.class);
     }
 
-    @OnClick(R.id.help_button)
-    public void onHelpButton() {
-        switchActivity(HelpActivity.class);
-    }
-
     private void switchActivity(Class<? extends Activity> activity) {
         Intent intent = new Intent(this, activity);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -101,4 +96,7 @@ public class MenuActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.additional_button)
+    public void onAdditionalButton() {
+    }
 }

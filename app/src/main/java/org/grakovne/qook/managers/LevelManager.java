@@ -3,7 +3,7 @@ package org.grakovne.qook.managers;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import org.grakovne.qook.entity.Level;
+import org.grakovne.qook.engine.Level;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Block;
 import org.grakovne.qook.entity.elements.Hole;

@@ -17,4 +17,5 @@
     <string name="game_task">Your task is to throw all the chips on the field in their wells</string>
     <string name="game_description">Qook is extremely difficult puzzle game in which you have to clear the playing field from the colored chips, throwing them into the wells of the same color.</string>
     <string name="game_rules">Chips of different colors moving on the playing field. They can move up, down, left or right to the first obstacle. Once the chip falls into the hole of the same color, it disappears from the game board</string>
+    <string name="additional_button_text">Additional</string>
 </resources>

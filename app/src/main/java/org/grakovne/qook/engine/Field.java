@@ -3,7 +3,6 @@ package org.grakovne.qook.engine;
 import org.grakovne.qook.dimensionality.Coordinates;
 import org.grakovne.qook.engine.listeners.FieldUpdatingListener;
 import org.grakovne.qook.engine.listeners.LevelCompleteListener;
-import org.grakovne.qook.entity.Level;
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Hole;
 import org.grakovne.qook.entity.elements.Item;
@@ -15,7 +14,7 @@ public class Field implements Serializable {
     private Level level;
     private int ballsCount;
 
-    private static final int SLEEP_LATENCY = 60;
+    private static final int SLEEP_LATENCY = 35;
     private static final boolean isAnimation = true;
 
     transient private LevelCompleteListener completeListener;
@@ -215,8 +214,10 @@ public class Field implements Serializable {
     private Coordinates moveRight(int xCoord, int yCoord) {
         try {
             while (level.getField()[yCoord][xCoord + 1] == null) {
-                level.getField()[yCoord][xCoord + 1] = level.getField()[yCoord][xCoord];
-                level.getField()[yCoord][xCoord++] = null;
+                synchronized (level.getField()) {
+                    level.getField()[yCoord][xCoord + 1] = level.getField()[yCoord][xCoord];
+                    level.getField()[yCoord][xCoord++] = null;
+                }
 
                 if (isAnimation) {
                     Thread.sleep(SLEEP_LATENCY);
@@ -233,8 +234,10 @@ public class Field implements Serializable {
     private Coordinates moveLeft(int xCoord, int yCoord) {
         try {
             while (level.getField()[yCoord][xCoord - 1] == null) {
-                level.getField()[yCoord][xCoord - 1] = level.getField()[yCoord][xCoord];
-                level.getField()[yCoord][xCoord--] = null;
+                synchronized (level.getField()) {
+                    level.getField()[yCoord][xCoord - 1] = level.getField()[yCoord][xCoord];
+                    level.getField()[yCoord][xCoord--] = null;
+                }
 
                 if (isAnimation) {
                     Thread.sleep(SLEEP_LATENCY);
@@ -251,8 +254,11 @@ public class Field implements Serializable {
     private Coordinates moveUp(int xCoord, int yCoord) {
         try {
             while (level.getField()[yCoord - 1][xCoord] == null) {
-                level.getField()[yCoord - 1][xCoord] = level.getField()[yCoord][xCoord];
-                level.getField()[yCoord--][xCoord] = null;
+
+                synchronized (level.getField()) {
+                    level.getField()[yCoord - 1][xCoord] = level.getField()[yCoord][xCoord];
+                    level.getField()[yCoord--][xCoord] = null;
+                }
 
                 if (isAnimation) {
                     Thread.sleep(SLEEP_LATENCY);
@@ -270,8 +276,10 @@ public class Field implements Serializable {
     private Coordinates moveDown(int xCoord, int yCoord) {
         try {
             while (level.getField()[yCoord + 1][xCoord] == null) {
-                level.getField()[yCoord + 1][xCoord] = level.getField()[yCoord][xCoord];
-                level.getField()[yCoord++][xCoord] = null;
+                synchronized (level.getField()) {
+                    level.getField()[yCoord + 1][xCoord] = level.getField()[yCoord][xCoord];
+                    level.getField()[yCoord++][xCoord] = null;
+                }
 
                 if (isAnimation) {
                     Thread.sleep(SLEEP_LATENCY);

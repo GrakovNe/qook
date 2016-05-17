@@ -1,4 +1,4 @@
-package org.grakovne.qook.entity;
+package org.grakovne.qook.engine;
 
 import org.grakovne.qook.entity.elements.Ball;
 import org.grakovne.qook.entity.elements.Item;

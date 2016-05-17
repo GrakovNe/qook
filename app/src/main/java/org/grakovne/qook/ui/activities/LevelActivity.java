@@ -14,7 +14,7 @@ import org.grakovne.qook.R;
 import org.grakovne.qook.engine.Field;
 import org.grakovne.qook.engine.listeners.FieldUpdatingListener;
 import org.grakovne.qook.engine.listeners.LevelCompleteListener;
-import org.grakovne.qook.entity.Level;
+import org.grakovne.qook.engine.Level;
 import org.grakovne.qook.exceptions.GameException;
 import org.grakovne.qook.managers.LevelManager;
 import org.grakovne.qook.ui.views.FieldView;
