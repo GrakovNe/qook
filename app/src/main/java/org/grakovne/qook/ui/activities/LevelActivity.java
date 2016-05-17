@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import org.grakovne.qook.R;
 import org.grakovne.qook.engine.Field;
+import org.grakovne.qook.engine.Level;
 import org.grakovne.qook.engine.listeners.FieldUpdatingListener;
 import org.grakovne.qook.engine.listeners.LevelCompleteListener;
-import org.grakovne.qook.engine.Level;
 import org.grakovne.qook.exceptions.GameException;
 import org.grakovne.qook.managers.LevelManager;
 import org.grakovne.qook.ui.views.FieldView;
@@ -82,10 +82,14 @@ public class LevelActivity extends BaseActivity {
                     upHorizontal = event.getX();
                     upVertical = event.getY();
 
+                    fieldView.setClickable(false);
+
                     fieldView.getField().makeTurn(
                             fieldView.getElementCoordinates(downHorizontal, downVertical),
                             fieldView.getSwipeDirection(downHorizontal, upHorizontal, downVertical, upVertical)
                     );
+
+                    fieldView.setClickable(false);
 
             }
             return true;
@@ -100,7 +104,7 @@ public class LevelActivity extends BaseActivity {
         ButterKnife.inject(this);
 
         handler = new Handler();
-         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.field_changes_anim);
+        animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.field_changes_anim);
 
         levelManager = LevelManager.build(this);
         fieldView.setOnTouchListener(onFieldTouchListener);
@@ -195,7 +199,6 @@ public class LevelActivity extends BaseActivity {
 
     private void restoreLevel() {
         Field field = (Field) savedData.getSerializable(FIELD);
-
         setListeners(field);
         fieldView.setField(field);
         setLevelCounterText(savedData.getInt(LEVEL_NUMBER));
@@ -241,7 +244,6 @@ public class LevelActivity extends BaseActivity {
 
     @OnClick(R.id.reset_level_button)
     public void onResetClick() {
-        animateView(fieldView);
         fieldView.layout(0, 0, 0, 0);
         openLevel(levelManager.getCurrentLevelNumber());
     }

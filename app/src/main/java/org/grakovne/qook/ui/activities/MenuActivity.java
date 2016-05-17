@@ -89,14 +89,8 @@ public class MenuActivity extends BaseActivity {
         switchActivity(AboutActivity.class);
     }
 
-    private void switchActivity(Class<? extends Activity> activity) {
-        Intent intent = new Intent(this, activity);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-    }
-
     @OnClick(R.id.additional_button)
     public void onAdditionalButton() {
+        switchActivity(AdvancedActivity.class);
     }
 }

@@ -8,19 +8,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activities.LevelActivity" />
-
         <activity android:name=".ui.activities.MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.activities.LevelSelectorActivity" />
-
         <activity android:name=".ui.activities.AboutActivity" />
-
         <activity android:name=".ui.activities.HelpActivity" />
+        <activity android:name=".ui.activities.AdvancedActivity"></activity>
     </application>
 
 </manifest>
