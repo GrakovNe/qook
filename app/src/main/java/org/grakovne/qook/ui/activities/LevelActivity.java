@@ -206,14 +206,12 @@ public class LevelActivity extends BaseActivity {
 
     private void setLevelCounterText(int levelNumber) {
         StringBuilder builder = new StringBuilder();
-        try {
-            builder
-                    .append(String.format(Locale.getDefault(), "%02d", levelNumber))
-                    .append(" / ")
-                    .append(String.format(Locale.getDefault(), "%02d", levelManager.getLevelsNumber()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        builder
+                .append(String.format(Locale.getDefault(), "%02d", levelNumber))
+                .append(" / ")
+                .append(String.format(Locale.getDefault(), "%02d", levelManager.getLevelsNumber()));
+
         levelCounter.setText(builder.toString());
     }
 

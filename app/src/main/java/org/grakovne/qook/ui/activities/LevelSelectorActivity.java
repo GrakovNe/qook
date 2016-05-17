@@ -9,7 +9,6 @@ import org.grakovne.qook.R;
 import org.grakovne.qook.adapters.LevelGridAdapter;
 import org.grakovne.qook.managers.LevelManager;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,11 +57,8 @@ public class LevelSelectorActivity extends BaseActivity {
         List<Integer> integers = new ArrayList<>();
 
         int maximalLevel = 0;
-        try {
-            maximalLevel = manager.getLevelsNumber();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        maximalLevel = manager.getLevelsNumber();
+
         for (int i = 1; i < maximalLevel + 1; i++) {
             integers.add(i);
         }

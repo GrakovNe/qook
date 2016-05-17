@@ -18,10 +18,6 @@ public class SharedSettingsManager {
         //setMaxLevel(60);
     }
 
-    public void openAllLevels(){
-        setMaxLevel(getMaxLevel());
-    }
-
     public static SharedSettingsManager build(Context currentContext) {
         context = currentContext;
 

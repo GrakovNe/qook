@@ -18,7 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class  LevelManager {
+public class LevelManager {
     private static final String LEVELS_FOLDER = "levels";
     private static final String LEVEL_FILE_EXTENSION = ".lev";
 
@@ -53,6 +53,10 @@ public class  LevelManager {
             instance = new LevelManager();
         }
         return instance;
+    }
+
+    public void openAllLevels() {
+        sharedSettingsManager.setCurrentLevel(getLevelsNumber());
     }
 
     public Level getLevel(int levelNumber) throws IOException {
@@ -126,9 +130,15 @@ public class  LevelManager {
         return null;
     }
 
-    public int getLevelsNumber() throws IOException {
+    public int getLevelsNumber() {
         AssetManager assetManager = context.getAssets();
-        return assetManager.list(LEVELS_FOLDER).length;
+        try {
+            return assetManager.list(LEVELS_FOLDER).length;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return 1;
     }
 
     public int getCurrentLevelNumber() {

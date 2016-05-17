@@ -47,15 +47,6 @@
                 android:text="@string/open_all_levels_button_text" />
 
             <Button
-                android:id="@+id/cancel_turn_buy_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_normal"
-                android:text="@string/cancel_turn_button_text" />
-
-
-            <Button
                 android:id="@+id/help_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
