@@ -57,6 +57,8 @@ public class LevelActivity extends BaseActivity {
     private Timer timer;
     private TimerTask task;
 
+    Animation animation;
+
     private Runnable invalidateView = new Runnable() {
         @Override
         public void run() {
@@ -98,6 +100,7 @@ public class LevelActivity extends BaseActivity {
         ButterKnife.inject(this);
 
         handler = new Handler();
+         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.field_changes_anim);
 
         levelManager = LevelManager.build(this);
         fieldView.setOnTouchListener(onFieldTouchListener);
@@ -212,7 +215,6 @@ public class LevelActivity extends BaseActivity {
     }
 
     private void animateView(View view) {
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.field_changes_anim);
         view.startAnimation(animation);
     }
 
@@ -239,6 +241,7 @@ public class LevelActivity extends BaseActivity {
 
     @OnClick(R.id.reset_level_button)
     public void onResetClick() {
+        animateView(fieldView);
         fieldView.layout(0, 0, 0, 0);
         openLevel(levelManager.getCurrentLevelNumber());
     }
