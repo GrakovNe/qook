@@ -31,7 +31,7 @@ public class SharedSettingsManager {
         return sharedPreferences.getInt(MAX_LEVEL, 1);
     }
 
-    private void setMaxLevel(int maxLevel) {
+    public void setMaxLevel(int maxLevel) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(MAX_LEVEL, maxLevel);
         editor.apply();

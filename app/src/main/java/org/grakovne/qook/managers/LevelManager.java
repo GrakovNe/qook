@@ -82,6 +82,11 @@ public class LevelManager {
         return getLevel(getCurrentLevelNumber());
     }
 
+    public void dropProgress(){
+        sharedSettingsManager.setCurrentLevel(1);
+        sharedSettingsManager.setMaxLevel(1);
+    }
+
     private Item convertLegendToItem(int itemLegend) {
         switch (itemLegend) {
             case EMPTY_CELL:
