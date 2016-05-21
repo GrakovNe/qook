@@ -16,6 +16,7 @@
 package org.grakovne.qook.billing;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,12 @@ public class Inventory {
     Map<String,Purchase> mPurchaseMap = new HashMap<String,Purchase>();
 
     Inventory() { }
+
+    public List<Purchase> getSku(){
+        List<Purchase> result = new ArrayList<>();
+        result.addAll(mPurchaseMap.values());
+        return result;
+    }
 
     /** Returns the listing details for an in-app product. */
     public SkuDetails getSkuDetails(String sku) {
