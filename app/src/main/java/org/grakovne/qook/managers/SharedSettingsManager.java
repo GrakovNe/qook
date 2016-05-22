@@ -7,6 +7,7 @@ public class SharedSettingsManager {
     public static final String LAST_LEVEL = "current_level";
     public static final String MAX_LEVEL = "max_level";
     public static final String WAS_RAN_BEFORE = "was_ran_before";
+    public static final String IS_ANIMATION_NEED = "is_animation_need";
     private static final String APP_PREFS = "qook_prefs";
     public static Context context;
     public static SharedSettingsManager instance;
@@ -25,6 +26,16 @@ public class SharedSettingsManager {
             instance = new SharedSettingsManager();
         }
         return instance;
+    }
+
+    public boolean isAnimationNeed(){
+        return sharedPreferences.getBoolean(IS_ANIMATION_NEED, true);
+    }
+
+    public void setIsAnimationNeed(boolean state){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(IS_ANIMATION_NEED, state);
+        editor.apply();
     }
 
     public int getMaxLevel() {

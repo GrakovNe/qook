@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import org.grakovne.qook.engine.Level;
-import org.grakovne.qook.entity.elements.Ball;
-import org.grakovne.qook.entity.elements.Block;
-import org.grakovne.qook.entity.elements.Hole;
-import org.grakovne.qook.entity.elements.Item;
+import org.grakovne.qook.entity.Ball;
+import org.grakovne.qook.entity.Block;
+import org.grakovne.qook.entity.Hole;
+import org.grakovne.qook.entity.Item;
 import org.grakovne.qook.enums.Color;
 import org.grakovne.qook.enums.GameExceptionCodes;
 import org.grakovne.qook.exceptions.GameException;

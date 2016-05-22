@@ -17,6 +17,7 @@ import org.grakovne.qook.engine.listeners.FieldUpdatingListener;
 import org.grakovne.qook.engine.listeners.LevelCompleteListener;
 import org.grakovne.qook.exceptions.GameException;
 import org.grakovne.qook.managers.LevelManager;
+import org.grakovne.qook.managers.SharedSettingsManager;
 import org.grakovne.qook.ui.views.FieldView;
 
 import java.io.IOException;
@@ -57,7 +58,8 @@ public class LevelActivity extends BaseActivity {
     private Timer timer;
     private TimerTask task;
 
-    Animation animation;
+    private Animation animation;
+    private SharedSettingsManager sharedSettingsManager = SharedSettingsManager.build(this);
 
     private Runnable invalidateView = new Runnable() {
         @Override
@@ -184,7 +186,7 @@ public class LevelActivity extends BaseActivity {
     private void openLevel(int levelNumber) {
         try {
             level = levelManager.getLevel(levelNumber);
-            final Field field = new Field(level);
+            final Field field = new Field(level, sharedSettingsManager.isAnimationNeed());
 
             setListeners(field);
 
@@ -223,6 +225,10 @@ public class LevelActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
         overridePendingTransition(0, 0);
+
+        if (fieldView.getField() != null){
+            fieldView.getField().setIsAnimation(sharedSettingsManager.isAnimationNeed());
+        }
     }
 
     @Override

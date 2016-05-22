@@ -14,6 +14,8 @@
     <string name="author_name_about">(Maksim Grakov)</string>
     <string name="author_address_about">Omsk, Russia</string>
     <string name="app_year_about">2016</string>
+    <string name="off_animation">Turn off the animation</string>
+    <string name="on_animation">Turn on the animation</string>
     <string name="game_task">Your task is to throw all the chips on the field in their wells</string>
     <string name="game_description">Qook is extremely difficult puzzle game in which you have to clear the playing field from the colored chips, throwing them into the wells of the same color.</string>
     <string name="game_rules">Chips of different colors moving on the playing field. They can move up, down, left or right to the first obstacle. Once the chip falls into the hole of the same color, it disappears from the game board</string>

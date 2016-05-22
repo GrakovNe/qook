@@ -2,7 +2,6 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -15,18 +14,20 @@ import org.grakovne.qook.billing.IabResult;
 import org.grakovne.qook.billing.Inventory;
 import org.grakovne.qook.billing.Purchase;
 import org.grakovne.qook.managers.LevelManager;
+import org.grakovne.qook.managers.SharedSettingsManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class AdvancedActivity extends BaseActivity {
+    @InjectView(R.id.toggle_animation_button)
+    Button toggleAnimationButton;
     private IabHelper mHelper;
-    private boolean isBillingAvailable;
+    private SharedSettingsManager sharedSettingsManager = SharedSettingsManager.build(this);
     private static final int OPEN_LEVELS_RESPONSE = 200;
     private static final int BOUGHT_ALREADY_CODE = 7;
     private static final String OPEN_LEVEL_ITEM = "open_all_levels";
-
 
     String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAha7b6VWXKrV4nGLs3lP38s9NJqc7vumuRELyMrp0Qv/8wQuFGWXL36uYmULDCN4YGHW0/u4RC3i1tUQoH2AflDGM/nun4idmoozrswIHwjI1dKep3NFMjHLpvgXm+4PnNRTEmRXEG42GLAgABn/47eIie/ODgXOwfmNhyMlPaieKjxbX462jXQ9/EaqntMMkhomBlfb57xi/2Vc+yGlAKO52sBj0xCR8tQT/67kkP4LkDR++07V4lbLQroiRb9p/TECQbr/UiZEXvPmARbqw6WjAeJBguJtrdR8OvCKKJdA0F/Mj6tBXEZQmePSChp1fb91QixH9eO5atkZZL6ueKwIDAQAB";
     @InjectView(R.id.title_text)
@@ -59,12 +60,8 @@ public class AdvancedActivity extends BaseActivity {
             @Override
             public void onIabSetupFinished(IabResult result) {
                 if (!result.isSuccess()) {
-                    isBillingAvailable = false;
                     setOpenLevelsButtonClickable(false);
-                    return;
                 }
-
-                isBillingAvailable = true;
             }
         });
     }
@@ -73,8 +70,17 @@ public class AdvancedActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
+        overridePendingTransition(0, 0);
+
         if (manager.getMaximalLevelNumber() >= manager.getLevelsNumber()) {
             setOpenLevelsButtonClickable(false);
+        }
+
+        boolean isAnimationNeed = sharedSettingsManager.isAnimationNeed();
+        if (isAnimationNeed){
+            toggleAnimationButton.setText(getString(R.string.off_animation));
+        } else {
+            toggleAnimationButton.setText(getString(R.string.on_animation));
         }
     }
 
@@ -91,12 +97,15 @@ public class AdvancedActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mHelper != null) try {
-            mHelper.dispose();
-        } catch (IabHelper.IabAsyncInProgressException e) {
-            e.printStackTrace();
+        if (mHelper != null && mHelper.isSetupDone()) {
+            try {
+                mHelper.dispose();
+            } catch (IabHelper.IabAsyncInProgressException e) {
+                e.printStackTrace();
+            }
+
+            mHelper = null;
         }
-        mHelper = null;
     }
 
     @OnClick(R.id.help_button)
@@ -115,7 +124,7 @@ public class AdvancedActivity extends BaseActivity {
             mHelper.launchPurchaseFlow(this, OPEN_LEVEL_ITEM, OPEN_LEVELS_RESPONSE, new IabHelper.OnIabPurchaseFinishedListener() {
                 @Override
                 public void onIabPurchaseFinished(IabResult result, Purchase info) {
-                    if (result.getResponse() == BOUGHT_ALREADY_CODE){
+                    if (result.getResponse() == BOUGHT_ALREADY_CODE) {
                         premiumOpenLevels();
                     }
                 }
@@ -137,6 +146,18 @@ public class AdvancedActivity extends BaseActivity {
             } catch (IabException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @OnClick(R.id.toggle_animation_button)
+    public void onToggleAnimationButtonClick() {
+        boolean isAnimationNeed = sharedSettingsManager.isAnimationNeed();
+        if (isAnimationNeed){
+            sharedSettingsManager.setIsAnimationNeed(false);
+            toggleAnimationButton.setText(getString(R.string.on_animation));
+        } else {
+            sharedSettingsManager.setIsAnimationNeed(true);
+            toggleAnimationButton.setText(getString(R.string.off_animation));
         }
     }
 }

@@ -1,7 +1,7 @@
 package org.grakovne.qook.engine;
 
-import org.grakovne.qook.entity.elements.Ball;
-import org.grakovne.qook.entity.elements.Item;
+import org.grakovne.qook.entity.Ball;
+import org.grakovne.qook.entity.Item;
 
 import java.io.Serializable;
 import java.util.Arrays;

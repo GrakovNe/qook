@@ -14,6 +14,8 @@
     <string name="author_address_about">Omsk, Russia</string>
     <string name="app_year_about">2016</string>
     <string name="levels_hint">Уровни</string>
+    <string name="off_animation">Выключить анимацию</string>
+    <string name="on_animation">Включить анимацию</string>
     <string name="additional_button_text">Дополнительно</string>
     <string name="open_all_levels_button_text">Открыть все уровни</string>
     <string name="game_task">Ваша задача — забросить все фишки на поле в свои лунки</string>

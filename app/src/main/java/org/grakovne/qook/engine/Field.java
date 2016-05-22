@@ -3,9 +3,9 @@ package org.grakovne.qook.engine;
 import org.grakovne.qook.dimensionality.Coordinates;
 import org.grakovne.qook.engine.listeners.FieldUpdatingListener;
 import org.grakovne.qook.engine.listeners.LevelCompleteListener;
-import org.grakovne.qook.entity.elements.Ball;
-import org.grakovne.qook.entity.elements.Hole;
-import org.grakovne.qook.entity.elements.Item;
+import org.grakovne.qook.entity.Ball;
+import org.grakovne.qook.entity.Hole;
+import org.grakovne.qook.entity.Item;
 import org.grakovne.qook.enums.Direction;
 
 import java.io.Serializable;
@@ -15,14 +15,19 @@ public class Field implements Serializable {
     private int ballsCount;
 
     private static final int SLEEP_LATENCY = 35;
-    private static final boolean isAnimation = true;
+    private boolean isAnimation = true;
 
     transient private LevelCompleteListener completeListener;
     transient private FieldUpdatingListener updatingListener;
 
-    public Field(Level level) {
+    public Field(Level level, boolean isAnimation) {
         this.level = level;
         this.ballsCount = level.getBallsCount();
+        this.isAnimation = isAnimation;
+    }
+
+    public void setIsAnimation(boolean state){
+        isAnimation = state;
     }
 
     public Item[][] getField() {

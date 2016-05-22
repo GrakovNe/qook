@@ -1,4 +1,4 @@
-package org.grakovne.qook.entity.elements;
+package org.grakovne.qook.entity;
 
 import org.grakovne.qook.enums.Color;
 

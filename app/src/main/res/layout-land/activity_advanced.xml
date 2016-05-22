@@ -47,6 +47,13 @@
                 android:text="@string/open_all_levels_button_text" />
 
             <Button
+                android:id="@+id/toggle_animation_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_normal" />
+
+            <Button
                 android:id="@+id/turns_cancel_buy_button"
                 android:visibility="gone"
                 android:layout_width="match_parent"
