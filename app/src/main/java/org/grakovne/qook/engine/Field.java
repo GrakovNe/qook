@@ -20,10 +20,23 @@ public class Field implements Serializable {
     transient private LevelCompleteListener completeListener;
     transient private FieldUpdatingListener updatingListener;
 
+    public void loadFromHistory(Level level){
+        this.level = level;
+        this.ballsCount = level.getBallsCount();
+    }
+
     public Field(Level level, boolean isAnimation) {
         this.level = level;
         this.ballsCount = level.getBallsCount();
         this.isAnimation = isAnimation;
+    }
+
+    public void setLevel(Level level){
+        this.level = level;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     public void setIsAnimation(boolean state){

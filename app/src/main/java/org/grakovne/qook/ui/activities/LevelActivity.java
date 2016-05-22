@@ -1,26 +1,38 @@
 package org.grakovne.qook.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.grakovne.qook.R;
 import org.grakovne.qook.engine.Field;
 import org.grakovne.qook.engine.Level;
 import org.grakovne.qook.engine.listeners.FieldUpdatingListener;
+import org.grakovne.qook.engine.listeners.HistoryStatesListener;
 import org.grakovne.qook.engine.listeners.LevelCompleteListener;
+import org.grakovne.qook.entity.Item;
 import org.grakovne.qook.exceptions.GameException;
+import org.grakovne.qook.managers.HistoryManager;
 import org.grakovne.qook.managers.LevelManager;
 import org.grakovne.qook.managers.SharedSettingsManager;
 import org.grakovne.qook.ui.views.FieldView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +52,10 @@ public class LevelActivity extends BaseActivity {
     TextView levelCounter;
     @InjectView(R.id.back_level_button)
     ImageButton backLevelButton;
+    @InjectView(R.id.undo_step_button)
+    ImageButton undoStepButton;
+    @InjectView(R.id.game_activity)
+    LinearLayout gameActivity;
 
     private int currentLevelNumber;
 
@@ -60,6 +76,7 @@ public class LevelActivity extends BaseActivity {
 
     private Animation animation;
     private SharedSettingsManager sharedSettingsManager = SharedSettingsManager.build(this);
+    private HistoryManager historyManager;
 
     private Runnable invalidateView = new Runnable() {
         @Override
@@ -69,6 +86,8 @@ public class LevelActivity extends BaseActivity {
     };
 
     private static final int FRAME_DELAY = 1;
+
+    private static List<Item[][]> levels = new ArrayList<>();
 
     private OnTouchListener onFieldTouchListener = new OnTouchListener() {
         @Override
@@ -132,7 +151,7 @@ public class LevelActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private void setListeners(Field field) {
+    private void setListeners(final Field field) {
 
         field.setUpdatingListener(new FieldUpdatingListener() {
             @Override
@@ -146,6 +165,8 @@ public class LevelActivity extends BaseActivity {
                 };
 
                 timer.scheduleAtFixedRate(task, 0, FRAME_DELAY);
+
+                historyManager.saveToHistory(fieldView.getField().getLevel());
             }
 
             @Override
@@ -194,6 +215,10 @@ public class LevelActivity extends BaseActivity {
             setLevelCounterText(levelNumber);
             currentLevelNumber = levelNumber;
 
+            if (historyManager != null) {
+                historyManager.clearHistory();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -226,9 +251,34 @@ public class LevelActivity extends BaseActivity {
         super.onResume();
         overridePendingTransition(0, 0);
 
-        if (fieldView.getField() != null){
+        if (fieldView.getField() != null) {
             fieldView.getField().setIsAnimation(sharedSettingsManager.isAnimationNeed());
         }
+
+        historyManager = HistoryManager.build(new HistoryStatesListener() {
+            @Override
+            public void historyIsEmpty() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        undoStepButton.setEnabled(false);
+                        undoStepButton.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_button), PorterDuff.Mode.MULTIPLY);
+                    }
+                });
+
+            }
+
+            @Override
+            public void historyIsContainsSomething() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        undoStepButton.setEnabled(true);
+                        undoStepButton.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.normal_button), PorterDuff.Mode.MULTIPLY);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -257,5 +307,12 @@ public class LevelActivity extends BaseActivity {
         Intent intent = new Intent(this, MenuActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.undo_step_button)
+    public void onUndoStepClick() {
+        Level level = historyManager.getFromHistory();
+        fieldView.getField().loadFromHistory(level);
+        fieldView.invalidate();
     }
 }

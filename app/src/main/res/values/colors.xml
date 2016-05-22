@@ -11,4 +11,6 @@
     <color name="gray">#BDBDBD</color>
     <color name="red">#D81B60</color>
     <color name="background">#eeeeee</color>
+    <color name="normal_button">#E0E0E0</color>
+    <color name="dark_button">#BDBDBD</color>
 </resources>
