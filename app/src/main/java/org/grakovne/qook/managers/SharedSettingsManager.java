@@ -8,6 +8,7 @@ public class SharedSettingsManager {
     private static final String MAX_LEVEL = "max_level";
     private static final String WAS_RAN_BEFORE = "was_ran_before";
     private static final String IS_ANIMATION_NEED = "is_animation_need";
+    private static final String IS_UNDO_PURCHASED = "is_undo_purchased";
     private static final String APP_PREFS = "qook_prefs";
     private static Context context;
     private static SharedSettingsManager instance;
@@ -15,8 +16,6 @@ public class SharedSettingsManager {
 
     private SharedSettingsManager() {
         sharedPreferences = context.getSharedPreferences(APP_PREFS, Context.MODE_PRIVATE);
-        //// TODO: 07.05.2016 remove before release
-        //setMaxLevel(60);
     }
 
     public static SharedSettingsManager build(Context currentContext) {
@@ -30,6 +29,22 @@ public class SharedSettingsManager {
 
     public boolean isAnimationNeed(){
         return sharedPreferences.getBoolean(IS_ANIMATION_NEED, true);
+    }
+
+    public boolean isUndoPurchased(){
+        return sharedPreferences.getBoolean(IS_UNDO_PURCHASED, false);
+    }
+
+    public void dropUndo(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(IS_UNDO_PURCHASED, false);
+        editor.apply();
+    }
+
+    public void makeUndoPurchased(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(IS_UNDO_PURCHASED, true);
+        editor.apply();
     }
 
     public void setIsAnimationNeed(boolean state){

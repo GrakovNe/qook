@@ -255,6 +255,15 @@ public class LevelActivity extends BaseActivity {
             fieldView.getField().setIsAnimation(sharedSettingsManager.isAnimationNeed());
         }
 
+        boolean isUndoAvailable = sharedSettingsManager.isUndoPurchased();
+
+        if (!isUndoAvailable){
+            undoStepButton.setVisibility(View.GONE);
+        } else {
+            undoStepButton.setVisibility(View.VISIBLE);
+        }
+
+
         historyManager = HistoryManager.build(new HistoryStatesListener() {
             @Override
             public void historyIsEmpty() {
@@ -279,6 +288,7 @@ public class LevelActivity extends BaseActivity {
                 });
             }
         });
+
     }
 
     @Override
