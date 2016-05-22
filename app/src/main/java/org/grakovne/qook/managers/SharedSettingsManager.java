@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class SharedSettingsManager {
-    public static final String LAST_LEVEL = "current_level";
-    public static final String MAX_LEVEL = "max_level";
-    public static final String WAS_RAN_BEFORE = "was_ran_before";
-    public static final String IS_ANIMATION_NEED = "is_animation_need";
+    private static final String LAST_LEVEL = "current_level";
+    private static final String MAX_LEVEL = "max_level";
+    private static final String WAS_RAN_BEFORE = "was_ran_before";
+    private static final String IS_ANIMATION_NEED = "is_animation_need";
     private static final String APP_PREFS = "qook_prefs";
-    public static Context context;
-    public static SharedSettingsManager instance;
+    private static Context context;
+    private static SharedSettingsManager instance;
     SharedPreferences sharedPreferences;
 
     private SharedSettingsManager() {

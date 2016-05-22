@@ -29,7 +29,13 @@ public class AdvancedActivity extends BaseActivity {
     private static final int BOUGHT_ALREADY_CODE = 7;
     private static final String OPEN_LEVEL_ITEM = "open_all_levels";
 
-    String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAha7b6VWXKrV4nGLs3lP38s9NJqc7vumuRELyMrp0Qv/8wQuFGWXL36uYmULDCN4YGHW0/u4RC3i1tUQoH2AflDGM/nun4idmoozrswIHwjI1dKep3NFMjHLpvgXm+4PnNRTEmRXEG42GLAgABn/47eIie/ODgXOwfmNhyMlPaieKjxbX462jXQ9/EaqntMMkhomBlfb57xi/2Vc+yGlAKO52sBj0xCR8tQT/67kkP4LkDR++07V4lbLQroiRb9p/TECQbr/UiZEXvPmARbqw6WjAeJBguJtrdR8OvCKKJdA0F/Mj6tBXEZQmePSChp1fb91QixH9eO5atkZZL6ueKwIDAQAB";
+    String key1 = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAha7b6VWXKrV4nGLs3lP38s9NJqc7vumuRELyMrp0Qv";
+    String key2 = "/8wQuFGWXL36uYmULDCN4YGHW0/u4RC3i1tUQoH2AflDGM/nun4idmoozrswIHwjI1dKe";
+    String key3 = "p3NFMjHLpvgXm+4PnNRTEmRXEG42GLAgABn/47eIie/ODgXOwfmNhyMlPaieKjxbX462jXQ9/EaqntMMkhomBlfb57xi/2V";
+    String key4 = "c+yGlAKO52sBj0xCR8tQT/67kkP4LkDR++07V4lbLQroiRb9p/TECQbr/UiZEXvPmARbqw6WjAeJBguJtrdR8OvCKKJdA0F/Mj6tBXEZQmePSChp1fb9";
+    String key5 = "1QixH9eO5atkZZL6ueKwIDAQAB";
+    String base64EncodedPublicKey = key1 + key2 + key3 + key4 + key5;
+
     @InjectView(R.id.title_text)
     TextView titleText;
     @InjectView(R.id.open_all_levels_buy_button)
@@ -53,8 +59,6 @@ public class AdvancedActivity extends BaseActivity {
         manager = LevelManager.build(this);
 
         mHelper = new IabHelper(this, base64EncodedPublicKey);
-
-        mHelper.enableDebugLogging(true);
 
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             @Override
