@@ -27,27 +27,27 @@ public class SharedSettingsManager {
         return instance;
     }
 
-    public boolean isAnimationNeed(){
+    public boolean isAnimationNeed() {
         return sharedPreferences.getBoolean(IS_ANIMATION_NEED, true);
     }
 
-    public boolean isUndoPurchased(){
+    public boolean isUndoPurchased() {
         return sharedPreferences.getBoolean(IS_UNDO_PURCHASED, false);
     }
 
-    public void dropUndo(){
+    public void dropUndo() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(IS_UNDO_PURCHASED, false);
         editor.apply();
     }
 
-    public void makeUndoPurchased(){
+    public void makeUndoPurchased() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(IS_UNDO_PURCHASED, true);
         editor.apply();
     }
 
-    public void setIsAnimationNeed(boolean state){
+    public void setIsAnimationNeed(boolean state) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(IS_ANIMATION_NEED, state);
         editor.apply();

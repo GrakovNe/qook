@@ -63,12 +63,12 @@
 
             <Button
                 android:id="@+id/turns_cancel_buy_button"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/button_normal"
-                android:text="@string/cancel_turn_button_text" />
+                android:text="@string/cancel_turn_button_text"
+                android:visibility="gone" />
 
 
             <Button

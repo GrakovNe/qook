@@ -2,6 +2,7 @@ package org.grakovne.qook.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -31,15 +32,9 @@ public class AdvancedActivity extends BaseActivity {
     private static final int OPEN_UNDO_RESPONSE = 201;
     private static final int BOUGHT_ALREADY_CODE = 7;
     private static final String OPEN_LEVEL_ITEM = "open_all_levels";
-    private static final String OPEN_UNDO_ITEM = "open_undo";
+    private static final String OPEN_UNDO_ITEM = "open_undo_steps";
 
-    private String key1 = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAha7b6VWXKrV4nGLs3lP38s9NJqc7vumuRELyMrp0Qv";
-    private String key2 = "/8wQuFGWXL36uYmULDCN4YGHW0/u4RC3i1tUQoH2AflDGM/nun4idmoozrswIHwjI1dKe";
-    private String key3 = "p3NFMjHLpvgXm+4PnNRTEmRXEG42GLAgABn/47eIie/ODgXOwfmNhyMlPaieKjxbX462jXQ9/EaqntMMkhomBlfb57xi/2V";
-    private String key4 = "c+yGlAKO52sBj0xCR8tQT/67kkP4LkDR++07V4lbLQroiRb9p/TECQbr/UiZEXvPmARbqw6WjAeJBguJtrdR8OvCKKJdA0F/Mj6tBXEZQmePSChp1fb9";
-    private String key5 = "1QixH9eO5atkZZL6ueKwIDAQAB";
-    private String base64EncodedPublicKey = key1 + key2 + key3 + key4 + key5;
-
+    String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAha7b6VWXKrV4nGLs3lP38s9NJqc7vumuRELyMrp0Qv/8wQuFGWXL36uYmULDCN4YGHW0/u4RC3i1tUQoH2AflDGM/nun4idmoozrswIHwjI1dKep3NFMjHLpvgXm+4PnNRTEmRXEG42GLAgABn/47eIie/ODgXOwfmNhyMlPaieKjxbX462jXQ9/EaqntMMkhomBlfb57xi/2Vc+yGlAKO52sBj0xCR8tQT/67kkP4LkDR++07V4lbLQroiRb9p/TECQbr/UiZEXvPmARbqw6WjAeJBguJtrdR8OvCKKJdA0F/Mj6tBXEZQmePSChp1fb91QixH9eO5atkZZL6ueKwIDAQAB";
     @InjectView(R.id.title_text)
     TextView titleText;
     @InjectView(R.id.open_all_levels_buy_button)
@@ -80,7 +75,6 @@ public class AdvancedActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sharedSettingsManager.dropUndo();
 
         overridePendingTransition(0, 0);
 
@@ -174,6 +168,7 @@ public class AdvancedActivity extends BaseActivity {
                 public void onIabPurchaseFinished(IabResult result, Purchase info) {
                     if (result.getResponse() == BOUGHT_ALREADY_CODE) {
                         premiumOpenUndo();
+                        setUndoButtonClickable(false);
                     }
                 }
             });
@@ -185,6 +180,7 @@ public class AdvancedActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == OPEN_LEVELS_RESPONSE) {
             try {
                 Inventory inventory = mHelper.queryInventory();
@@ -192,15 +188,26 @@ public class AdvancedActivity extends BaseActivity {
                     premiumOpenLevels();
                     setOpenLevelsButtonClickable(false);
                 }
+            } catch (IabException e) {
+                e.printStackTrace();
+            }
+        }
 
+        if (requestCode == OPEN_UNDO_RESPONSE) {
+            Inventory inventory = null;
+            try {
+                inventory = mHelper.queryInventory();
                 if (inventory.hasPurchase(OPEN_UNDO_ITEM)) {
+                    Log.d("Qook", "premium");
                     premiumOpenUndo();
                     setUndoButtonClickable(false);
                 }
             } catch (IabException e) {
                 e.printStackTrace();
             }
+
         }
+
     }
 
     @OnClick(R.id.toggle_animation_button)

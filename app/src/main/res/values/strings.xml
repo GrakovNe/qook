@@ -21,7 +21,7 @@
     <string name="game_rules">Chips of different colors moving on the playing field. They can move up, down, left or right to the first obstacle. Once the chip falls into the hole of the same color, it disappears from the game board</string>
     <string name="additional_button_text">Additional</string>
     <string name="open_all_levels_button_text">open all levels</string>
-    <string name="cancel_turn_button_text">turns cancel</string>
+    <string name="cancel_turn_button_text">Undo moves</string>
     <string name="undo_purchased">Undo purchased!</string>
-    <string name="purchase_undo_buy_button_text">Turn back</string>
+    <string name="purchase_undo_buy_button_text">Undo moves</string>
 </resources>

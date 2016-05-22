@@ -29,34 +29,34 @@
             android:text="01 / 60"
             android:textSize="34sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:paddingBottom="10dp">
-
-        <ImageButton
-            android:id="@+id/back_level_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:src="@drawable/menu_icon" />
+            android:gravity="right"
+            android:paddingBottom="10dp">
 
-        <ImageButton
-            android:id="@+id/reset_level_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:src="@drawable/restore_level" />
+            <ImageButton
+                android:id="@+id/back_level_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@drawable/menu_icon" />
 
-        <ImageButton
-            android:id="@+id/undo_step_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:src="@drawable/undo_step_icon" />
+            <ImageButton
+                android:id="@+id/reset_level_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@drawable/restore_level" />
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/undo_step_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@drawable/undo_step_icon" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

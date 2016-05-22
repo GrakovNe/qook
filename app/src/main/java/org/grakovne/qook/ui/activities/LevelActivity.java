@@ -1,13 +1,10 @@
 package org.grakovne.qook.ui.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -31,7 +28,6 @@ import org.grakovne.qook.ui.views.FieldView;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -141,6 +137,7 @@ public class LevelActivity extends BaseActivity {
         }
 
         currentLevelNumber = levelNumber;
+
 
     }
 
@@ -257,7 +254,7 @@ public class LevelActivity extends BaseActivity {
 
         boolean isUndoAvailable = sharedSettingsManager.isUndoPurchased();
 
-        if (!isUndoAvailable){
+        if (!isUndoAvailable) {
             undoStepButton.setVisibility(View.GONE);
         } else {
             undoStepButton.setVisibility(View.VISIBLE);
