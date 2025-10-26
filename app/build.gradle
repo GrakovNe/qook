@@ -11,11 +11,11 @@ buildscript {
 apply plugin: 'com.android.application'
 
 android {
-    namespace 'org.grakovne.qook'
+    namespace 'org.grakovne.reqook'
     compileSdk 35
 
     defaultConfig {
-        applicationId "org.grakovne.qook"
+        applicationId "org.grakovne.reqook"
         minSdk 21
         targetSdk 35
         versionCode 7

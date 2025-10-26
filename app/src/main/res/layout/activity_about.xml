@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="org.grakovne.qook.ui.activities.AboutActivity">
+    tools:context="org.grakovne.reqook.ui.activities.AboutActivity">
 
     <LinearLayout
         android:id="@+id/author_text"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.grakovne.qook">
+    package="org.grakovne.reqook">
 
     <application
         android:allowBackup="true"

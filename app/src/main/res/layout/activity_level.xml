@@ -62,7 +62,7 @@
 
     </LinearLayout>
 
-    <org.grakovne.qook.ui.views.FieldView
+    <org.grakovne.reqook.ui.views.FieldView
         android:id="@+id/field"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
