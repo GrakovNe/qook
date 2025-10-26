@@ -9,10 +9,10 @@
     <string name="help_button_text">Help</string>
     <string name="exit_button_text">Quit</string>
     <string name="levels_hint">Levels</string>
-    <string name="app_name_about">Qook v1.3</string>
-    <string name="author_nick_about">Author: GrakovNe</string>
-    <string name="author_name_about">(Maksim Grakov)</string>
-    <string name="author_address_about">Omsk, Russia</string>
+    <string name="app_name_about" translatable="false">Qook v1.4</string>
+    <string name="author_nick_about" translatable="false">Author: GrakovNe</string>
+    <string name="author_name_about" translatable="false">(Maksim Grakov)</string>
+    <string name="author_address_about" translatable="false">Omsk, Russia</string>
     <string name="app_year_about">2016</string>
     <string name="off_animation">Turn off the animation</string>
     <string name="on_animation">Turn on the animation</string>

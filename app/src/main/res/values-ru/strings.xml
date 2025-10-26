@@ -8,10 +8,6 @@
     <string name="about_button_text">О нас</string>
     <string name="help_button_text">Помощь</string>
     <string name="exit_button_text">Выход</string>
-    <string name="app_name_about">Qook v1.3</string>
-    <string name="author_nick_about">Author: GrakovNe</string>
-    <string name="author_name_about">(Maksim Grakov)</string>
-    <string name="author_address_about">Omsk, Russia</string>
     <string name="app_year_about">2016</string>
     <string name="levels_hint">Уровни</string>
     <string name="off_animation">Выключить анимацию</string>

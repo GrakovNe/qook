@@ -47,7 +47,7 @@
             android:fontFamily="serif-monospace"
             android:gravity="center"
             android:text="@string/author_name_about"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
     <TextView
         android:id="@+id/address_text_about"
@@ -56,7 +56,7 @@
         android:fontFamily="serif-monospace"
         android:gravity="center"
         android:text="@string/author_address_about"
-        android:textSize="24dp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/year_text_about"
@@ -65,7 +65,19 @@
         android:fontFamily="serif-monospace"
         android:gravity="center"
         android:text="@string/app_year_about"
-        android:textSize="24dp" />
+        android:textSize="24sp" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/author_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/author_text"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14sp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/author_icon_web"/>
+
 
 </RelativeLayout>
