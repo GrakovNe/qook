@@ -39,37 +39,11 @@
             android:weightSum="1">
 
             <Button
-                android:id="@+id/purchase_undo_buy_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_normal"
-                android:text="@string/purchase_undo_buy_button_text" />
-
-            <Button
-                android:id="@+id/open_all_levels_buy_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_normal"
-                android:text="@string/open_all_levels_button_text" />
-
-            <Button
                 android:id="@+id/toggle_animation_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/button_normal" />
-
-            <Button
-                android:id="@+id/turns_cancel_buy_button"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/button_normal"
-                android:text="@string/cancel_turn_button_text" />
-
 
             <Button
                 android:id="@+id/help_button"
