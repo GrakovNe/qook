@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -19,8 +18,6 @@ import org.grakovne.qook.engine.Field;
 import org.grakovne.qook.engine.Level;
 import org.grakovne.qook.engine.listeners.FieldUpdatingListener;
 import org.grakovne.qook.engine.listeners.HistoryStatesListener;
-import org.grakovne.qook.engine.listeners.LevelCompleteListener;
-import org.grakovne.qook.entity.Item;
 import org.grakovne.qook.exceptions.GameException;
 import org.grakovne.qook.managers.HistoryManager;
 import org.grakovne.qook.managers.LevelManager;
@@ -28,8 +25,6 @@ import org.grakovne.qook.managers.SharedSettingsManager;
 import org.grakovne.qook.ui.views.FieldView;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,7 +36,6 @@ public class LevelActivity extends BaseActivity {
     private TextView levelCounter;
     private ImageButton backLevelButton;
     private ImageButton undoStepButton;
-    private LinearLayout gameActivity;
 
     private int currentLevelNumber;
     private Bundle savedData;
@@ -63,7 +57,6 @@ public class LevelActivity extends BaseActivity {
     private HistoryManager historyManager;
 
     private static final int FRAME_DELAY = 1;
-    private static List<Item[][]> levels = new ArrayList<>();
 
     private final Runnable invalidateView = () -> fieldView.invalidate();
 
@@ -100,7 +93,6 @@ public class LevelActivity extends BaseActivity {
         levelCounter = findViewById(R.id.level_counter);
         backLevelButton = findViewById(R.id.back_level_button);
         undoStepButton = findViewById(R.id.undo_step_button);
-        gameActivity = findViewById(R.id.game_activity);
 
         handler = new Handler();
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.field_changes_anim);
