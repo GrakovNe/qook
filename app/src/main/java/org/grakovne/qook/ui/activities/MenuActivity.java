@@ -5,20 +5,16 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import org.grakovne.qook.R;
 import org.grakovne.qook.managers.SharedSettingsManager;
 
 public class MenuActivity extends BaseActivity {
 
-    private TextView titleText;
     private Button continueGameButton;
     private Button selectLevelButton;
     private Button aboutButton;
-    private LinearLayout menuList;
     private ScrollView menuButtonsPanel;
     private Button additionalButton;
 
@@ -32,11 +28,9 @@ public class MenuActivity extends BaseActivity {
 
         setContentView(R.layout.activity_menu);
 
-        titleText = findViewById(R.id.title_text);
         continueGameButton = findViewById(R.id.continue_game_button);
         selectLevelButton = findViewById(R.id.select_level_button);
         aboutButton = findViewById(R.id.about_button);
-        menuList = findViewById(R.id.menu_list);
         menuButtonsPanel = findViewById(R.id.menu_buttons_panel);
         additionalButton = findViewById(R.id.additional_button);
 
