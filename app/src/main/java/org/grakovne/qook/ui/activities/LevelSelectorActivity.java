@@ -12,23 +12,18 @@ import org.grakovne.qook.managers.LevelManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
 public class LevelSelectorActivity extends BaseActivity {
 
-    @InjectView(R.id.level_grid)
-    GridView levelGrid;
-
+    private GridView levelGrid;
     private LevelManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_selector);
-        ButterKnife.inject(this);
-    }
 
+        levelGrid = findViewById(R.id.level_grid);
+    }
 
     @Override
     public void onResume() {
@@ -47,7 +42,14 @@ public class LevelSelectorActivity extends BaseActivity {
             }
         };
 
-        LevelGridAdapter adapter = new LevelGridAdapter(this, R.layout.level_item, getListOfLevelNumbers(), manager.getMaximalLevelNumber(), levelClick);
+        LevelGridAdapter adapter = new LevelGridAdapter(
+                this,
+                R.layout.level_item,
+                getListOfLevelNumbers(),
+                manager.getMaximalLevelNumber(),
+                levelClick
+        );
+
         adapter.setNotifyOnChange(false);
         levelGrid.setAdapter(adapter);
         levelGrid.setVerticalScrollBarEnabled(false);
@@ -55,11 +57,9 @@ public class LevelSelectorActivity extends BaseActivity {
 
     private List<Integer> getListOfLevelNumbers() {
         List<Integer> integers = new ArrayList<>();
+        int maximalLevel = manager.getLevelsNumber();
 
-        int maximalLevel = 0;
-        maximalLevel = manager.getLevelsNumber();
-
-        for (int i = 1; i < maximalLevel + 1; i++) {
+        for (int i = 1; i <= maximalLevel; i++) {
             integers.add(i);
         }
         return integers;

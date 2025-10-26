@@ -2,9 +2,8 @@ package org.grakovne.qook.adapters;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Button;
 
-public class LevelButton extends Button {
+public class LevelButton extends androidx.appcompat.widget.AppCompatButton {
 
     public LevelButton(Context context) {
         super(context);

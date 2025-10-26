@@ -1,6 +1,5 @@
 package org.grakovne.qook.ui.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
@@ -13,26 +12,16 @@ import android.widget.TextView;
 import org.grakovne.qook.R;
 import org.grakovne.qook.managers.SharedSettingsManager;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
-
 public class MenuActivity extends BaseActivity {
 
-    @InjectView(R.id.title_text)
-    TextView titleText;
-    @InjectView(R.id.continue_game_button)
-    Button continueGameButton;
-    @InjectView(R.id.select_level_button)
-    Button selectLevelButton;
-    @InjectView(R.id.about_button)
-    Button aboutButton;
-    @InjectView(R.id.menu_list)
-    LinearLayout menuList;
-    @InjectView(R.id.menu_buttons_panel)
-    ScrollView menuButtonsPanel;
-    @InjectView(R.id.additional_button)
-    Button additionalButton;
+    private TextView titleText;
+    private Button continueGameButton;
+    private Button selectLevelButton;
+    private Button aboutButton;
+    private LinearLayout menuList;
+    private ScrollView menuButtonsPanel;
+    private Button additionalButton;
+
     private SharedSettingsManager sharedSettingsManager;
 
     @Override
@@ -42,12 +31,24 @@ public class MenuActivity extends BaseActivity {
         sharedSettingsManager = SharedSettingsManager.build(this);
 
         setContentView(R.layout.activity_menu);
-        ButterKnife.inject(this);
+
+        titleText = findViewById(R.id.title_text);
+        continueGameButton = findViewById(R.id.continue_game_button);
+        selectLevelButton = findViewById(R.id.select_level_button);
+        aboutButton = findViewById(R.id.about_button);
+        menuList = findViewById(R.id.menu_list);
+        menuButtonsPanel = findViewById(R.id.menu_buttons_panel);
+        additionalButton = findViewById(R.id.additional_button);
 
         menuButtonsPanel.setVerticalScrollBarEnabled(false);
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.menu_coming_anim);
         animation.start();
+
+        continueGameButton.setOnClickListener(v -> onContinueClick());
+        selectLevelButton.setOnClickListener(v -> onSelectLevelButton());
+        aboutButton.setOnClickListener(v -> onAboutButton());
+        additionalButton.setOnClickListener(v -> onAdditionalButton());
     }
 
     @Override
@@ -69,8 +70,7 @@ public class MenuActivity extends BaseActivity {
         moveTaskToBack(true);
     }
 
-    @OnClick(R.id.continue_game_button)
-    public void onContinueClick() {
+    private void onContinueClick() {
         int currentLevel = sharedSettingsManager.getCurrentLevel();
         Intent intent = new Intent(this, LevelActivity.class);
         intent.putExtra(DESIRED_LEVEL, currentLevel);
@@ -79,18 +79,15 @@ public class MenuActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    @OnClick(R.id.select_level_button)
-    public void onSelectLevelButton() {
+    private void onSelectLevelButton() {
         switchActivity(LevelSelectorActivity.class);
     }
 
-    @OnClick(R.id.about_button)
-    public void onAboutButton() {
+    private void onAboutButton() {
         switchActivity(AboutActivity.class);
     }
 
-    @OnClick(R.id.additional_button)
-    public void onAdditionalButton() {
+    private void onAdditionalButton() {
         switchActivity(AdvancedActivity.class);
     }
 }

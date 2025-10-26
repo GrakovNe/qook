@@ -6,27 +6,24 @@ import android.widget.TextView;
 
 import org.grakovne.qook.R;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
 public class AboutActivity extends BaseActivity {
 
-    @InjectView(R.id.version_text_about)
-    TextView versionTextAbout;
-    @InjectView(R.id.author_text_about)
-    TextView authorTextAbout;
-    @InjectView(R.id.author_name_text_about)
-    TextView authorNameTextAbout;
-    @InjectView(R.id.address_text_about)
-    TextView addressTextAbout;
-    @InjectView(R.id.year_text_about)
-    TextView yearTextAbout;
+    private TextView versionTextAbout;
+    private TextView authorTextAbout;
+    private TextView authorNameTextAbout;
+    private TextView addressTextAbout;
+    private TextView yearTextAbout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        ButterKnife.inject(this);
+
+        versionTextAbout = findViewById(R.id.version_text_about);
+        authorTextAbout = findViewById(R.id.author_text_about);
+        authorNameTextAbout = findViewById(R.id.author_name_text_about);
+        addressTextAbout = findViewById(R.id.address_text_about);
+        yearTextAbout = findViewById(R.id.year_text_about);
 
         Typeface face = Typeface.create("serif-monospace", Typeface.NORMAL);
         yearTextAbout.setTypeface(face);
@@ -40,6 +37,5 @@ public class AboutActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
         overridePendingTransition(0, 0);
-
     }
 }

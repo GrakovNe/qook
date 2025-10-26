@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -12,6 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import org.grakovne.qook.R;
 import org.grakovne.qook.engine.Field;
@@ -33,28 +34,16 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
-
-import static android.view.View.OnTouchListener;
-
 public class LevelActivity extends BaseActivity {
-    @InjectView(R.id.field)
-    FieldView fieldView;
-    @InjectView(R.id.reset_level_button)
-    ImageButton resetLevelButton;
-    @InjectView(R.id.level_counter)
-    TextView levelCounter;
-    @InjectView(R.id.back_level_button)
-    ImageButton backLevelButton;
-    @InjectView(R.id.undo_step_button)
-    ImageButton undoStepButton;
-    @InjectView(R.id.game_activity)
-    LinearLayout gameActivity;
+
+    private FieldView fieldView;
+    private ImageButton resetLevelButton;
+    private TextView levelCounter;
+    private ImageButton backLevelButton;
+    private ImageButton undoStepButton;
+    private LinearLayout gameActivity;
 
     private int currentLevelNumber;
-
     private Bundle savedData;
 
     private LevelManager levelManager = null;
@@ -66,7 +55,6 @@ public class LevelActivity extends BaseActivity {
     private float upVertical;
 
     private Handler handler;
-
     private Timer timer;
     private TimerTask task;
 
@@ -74,60 +62,52 @@ public class LevelActivity extends BaseActivity {
     private SharedSettingsManager sharedSettingsManager = SharedSettingsManager.build(this);
     private HistoryManager historyManager;
 
-    private Runnable invalidateView = new Runnable() {
-        @Override
-        public void run() {
-            fieldView.invalidate();
-        }
-    };
-
     private static final int FRAME_DELAY = 1;
-
     private static List<Item[][]> levels = new ArrayList<>();
 
-    private OnTouchListener onFieldTouchListener = new OnTouchListener() {
+    private final Runnable invalidateView = () -> fieldView.invalidate();
+
+    private final View.OnTouchListener onFieldTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
-
                 case MotionEvent.ACTION_DOWN:
                     downHorizontal = event.getX();
                     downVertical = event.getY();
                     break;
-
                 case MotionEvent.ACTION_UP:
                     upHorizontal = event.getX();
                     upVertical = event.getY();
-
                     fieldView.setClickable(false);
-
                     fieldView.getField().makeTurn(
                             fieldView.getElementCoordinates(downHorizontal, downVertical),
                             fieldView.getSwipeDirection(downHorizontal, upHorizontal, downVertical, upVertical)
                     );
-
                     fieldView.setClickable(false);
-
+                    break;
             }
             return true;
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
-        ButterKnife.inject(this);
+
+        fieldView = findViewById(R.id.field);
+        resetLevelButton = findViewById(R.id.reset_level_button);
+        levelCounter = findViewById(R.id.level_counter);
+        backLevelButton = findViewById(R.id.back_level_button);
+        undoStepButton = findViewById(R.id.undo_step_button);
+        gameActivity = findViewById(R.id.game_activity);
 
         handler = new Handler();
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.field_changes_anim);
-
         levelManager = LevelManager.build(this);
         fieldView.setOnTouchListener(onFieldTouchListener);
 
         savedData = savedInstanceState;
-
         int levelNumber = getIntent().getIntExtra(DESIRED_LEVEL, 1);
 
         if (savedData != null && savedData.getInt(LEVEL_NUMBER) == levelNumber) {
@@ -138,18 +118,35 @@ public class LevelActivity extends BaseActivity {
 
         currentLevelNumber = levelNumber;
 
+        // Listeners for buttons
+        resetLevelButton.setOnClickListener(v -> {
+            fieldView.layout(0, 0, 0, 0);
+            openLevel(levelManager.getCurrentLevelNumber());
+        });
 
+        backLevelButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MenuActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        });
+
+        undoStepButton.setOnClickListener(v -> {
+            Level level = historyManager.getFromHistory();
+            fieldView.getField().loadFromHistory(level);
+            fieldView.invalidate();
+        });
     }
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
+
         Intent intent = new Intent(this, MenuActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 
     private void setListeners(final Field field) {
-
         field.setUpdatingListener(new FieldUpdatingListener() {
             @Override
             public void startUpdate() {
@@ -160,9 +157,7 @@ public class LevelActivity extends BaseActivity {
                         handler.post(invalidateView);
                     }
                 };
-
                 timer.scheduleAtFixedRate(task, 0, FRAME_DELAY);
-
                 historyManager.saveToHistory(fieldView.getField().getLevel());
             }
 
@@ -173,49 +168,34 @@ public class LevelActivity extends BaseActivity {
             }
         });
 
-        field.setCompleteListener(new LevelCompleteListener() {
-            @Override
-            public void levelComplete() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        fieldView.invalidate();
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        animateView(fieldView);
-
-                        try {
-                            levelManager.finishLevel();
-                            openLevel(levelManager.getCurrentLevelNumber());
-                            getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
-                            fieldView.layout(0, 0, 0, 0);
-                        } catch (GameException ex) {
-                            onMenuClick();
-                        }
-                    }
-                });
+        field.setCompleteListener(() -> handler.post(() -> {
+            fieldView.invalidate();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
+            animateView(fieldView);
+            try {
+                levelManager.finishLevel();
+                openLevel(levelManager.getCurrentLevelNumber());
+                getIntent().putExtra(DESIRED_LEVEL, levelManager.getCurrentLevelNumber());
+                fieldView.layout(0, 0, 0, 0);
+            } catch (GameException ex) {
+                onMenuClick();
+            }
+        }));
     }
 
     private void openLevel(int levelNumber) {
         try {
             level = levelManager.getLevel(levelNumber);
             final Field field = new Field(level, sharedSettingsManager.isAnimationNeed());
-
             setListeners(field);
-
             fieldView.setField(field);
             setLevelCounterText(levelNumber);
             currentLevelNumber = levelNumber;
-
-            if (historyManager != null) {
-                historyManager.clearHistory();
-            }
-
+            if (historyManager != null) historyManager.clearHistory();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -229,14 +209,9 @@ public class LevelActivity extends BaseActivity {
     }
 
     private void setLevelCounterText(int levelNumber) {
-        StringBuilder builder = new StringBuilder();
-
-        builder
-                .append(String.format(Locale.getDefault(), "%02d", levelNumber))
-                .append(" / ")
-                .append(String.format(Locale.getDefault(), "%02d", levelManager.getLevelsNumber()));
-
-        levelCounter.setText(builder.toString());
+        String text = String.format(Locale.getDefault(), "%02d / %02d",
+                levelNumber, levelManager.getLevelsNumber());
+        levelCounter.setText(text);
     }
 
     private void animateView(View view) {
@@ -253,39 +228,31 @@ public class LevelActivity extends BaseActivity {
         }
 
         boolean isUndoAvailable = sharedSettingsManager.isUndoPurchased();
-
-        if (!isUndoAvailable) {
-            undoStepButton.setVisibility(View.GONE);
-        } else {
-            undoStepButton.setVisibility(View.VISIBLE);
-        }
-
+        undoStepButton.setVisibility(isUndoAvailable ? View.VISIBLE : View.GONE);
 
         historyManager = HistoryManager.build(new HistoryStatesListener() {
             @Override
             public void historyIsEmpty() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        undoStepButton.setEnabled(false);
-                        undoStepButton.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_button), PorterDuff.Mode.MULTIPLY);
-                    }
+                handler.post(() -> {
+                    undoStepButton.setEnabled(false);
+                    undoStepButton.getBackground().setColorFilter(
+                            ContextCompat.getColor(getApplicationContext(), R.color.dark_button),
+                            PorterDuff.Mode.MULTIPLY
+                    );
                 });
-
             }
 
             @Override
             public void historyIsContainsSomething() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        undoStepButton.setEnabled(true);
-                        undoStepButton.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.normal_button), PorterDuff.Mode.MULTIPLY);
-                    }
+                handler.post(() -> {
+                    undoStepButton.setEnabled(true);
+                    undoStepButton.getBackground().setColorFilter(
+                            ContextCompat.getColor(getApplicationContext(), R.color.normal_button),
+                            PorterDuff.Mode.MULTIPLY
+                    );
                 });
             }
         });
-
     }
 
     @Override
@@ -293,7 +260,6 @@ public class LevelActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         outState.putSerializable(FIELD, fieldView.getField());
         outState.putInt(LEVEL_NUMBER, currentLevelNumber);
-
     }
 
     @Override
@@ -302,24 +268,9 @@ public class LevelActivity extends BaseActivity {
         setIntent(intent);
     }
 
-
-    @OnClick(R.id.reset_level_button)
-    public void onResetClick() {
-        fieldView.layout(0, 0, 0, 0);
-        openLevel(levelManager.getCurrentLevelNumber());
-    }
-
-    @OnClick(R.id.back_level_button)
-    public void onMenuClick() {
+    private void onMenuClick() {
         Intent intent = new Intent(this, MenuActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
-    }
-
-    @OnClick(R.id.undo_step_button)
-    public void onUndoStepClick() {
-        Level level = historyManager.getFromHistory();
-        fieldView.getField().loadFromHistory(level);
-        fieldView.invalidate();
     }
 }
