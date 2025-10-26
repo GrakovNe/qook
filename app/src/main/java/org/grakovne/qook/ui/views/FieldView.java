@@ -22,6 +22,7 @@ import org.grakovne.qook.enums.Direction;
 public class FieldView extends View {
     private final double ROUND_RECT_SIZE = 0.15;
     private final int PADDING_DIVIDER = 4;
+
     private int paddingSize = 0;
     private int elementSize;
     private Field field;
