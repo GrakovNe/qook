@@ -13,10 +13,6 @@ import org.grakovne.qook.managers.SharedSettingsManager;
 public class MenuActivity extends BaseActivity {
 
     private Button continueGameButton;
-    private Button selectLevelButton;
-    private Button aboutButton;
-    private ScrollView menuButtonsPanel;
-    private Button additionalButton;
 
     private SharedSettingsManager sharedSettingsManager;
 
@@ -29,10 +25,10 @@ public class MenuActivity extends BaseActivity {
         setContentView(R.layout.activity_menu);
 
         continueGameButton = findViewById(R.id.continue_game_button);
-        selectLevelButton = findViewById(R.id.select_level_button);
-        aboutButton = findViewById(R.id.about_button);
-        menuButtonsPanel = findViewById(R.id.menu_buttons_panel);
-        additionalButton = findViewById(R.id.additional_button);
+        Button selectLevelButton = findViewById(R.id.select_level_button);
+        Button aboutButton = findViewById(R.id.about_button);
+        ScrollView menuButtonsPanel = findViewById(R.id.menu_buttons_panel);
+        Button additionalButton = findViewById(R.id.additional_button);
 
         menuButtonsPanel.setVerticalScrollBarEnabled(false);
 

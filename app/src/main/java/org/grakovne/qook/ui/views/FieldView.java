@@ -142,7 +142,7 @@ public class FieldView extends View {
         float dx = Math.abs(upX - downX);
         float dy = Math.abs(upY - downY);
         double length = Math.sqrt(dx * dx + dy * dy);
-        if (length < elementSize / 2) return Direction.NOWHERE;
+        if (length < (double) elementSize / 2) return Direction.NOWHERE;
         if (dx >= dy) return (upX > downX) ? Direction.RIGHT : Direction.LEFT;
         else return (upY > downY) ? Direction.DOWN : Direction.UP;
     }
@@ -155,7 +155,7 @@ public class FieldView extends View {
 
     public void setField(Field field) {
         this.field = field;
-        requestLayout(); // пересчет размеров и центрирование
+        requestLayout();
         invalidate();
     }
 }

@@ -32,30 +32,25 @@ import java.util.TimerTask;
 public class LevelActivity extends BaseActivity {
 
     private FieldView fieldView;
-    private ImageButton resetLevelButton;
     private TextView levelCounter;
-    private ImageButton backLevelButton;
     private ImageButton undoStepButton;
 
     private int currentLevelNumber;
     private Bundle savedData;
 
     private LevelManager levelManager = null;
-    private Level level = null;
 
     private float downHorizontal;
     private float downVertical;
-    private float upHorizontal;
-    private float upVertical;
 
     private Handler handler;
     private Timer timer;
     private TimerTask task;
 
     private Animation animation;
-    private SharedSettingsManager sharedSettingsManager = SharedSettingsManager.build(this);
     private HistoryManager historyManager;
 
+    private final SharedSettingsManager sharedSettingsManager = SharedSettingsManager.build(this);
     private static final int FRAME_DELAY = 1;
 
     private final Runnable invalidateView = () -> fieldView.invalidate();
@@ -69,13 +64,16 @@ public class LevelActivity extends BaseActivity {
                     downVertical = event.getY();
                     break;
                 case MotionEvent.ACTION_UP:
-                    upHorizontal = event.getX();
-                    upVertical = event.getY();
+                    float upHorizontal = event.getX();
+                    float upVertical = event.getY();
+
                     fieldView.setClickable(false);
-                    fieldView.getField().makeTurn(
-                            fieldView.getElementCoordinates(downHorizontal, downVertical),
-                            fieldView.getSwipeDirection(downHorizontal, upHorizontal, downVertical, upVertical)
-                    );
+                    fieldView
+                            .getField()
+                            .makeTurn(
+                                    fieldView.getElementCoordinates(downHorizontal, downVertical),
+                                    fieldView.getSwipeDirection(downHorizontal, upHorizontal, downVertical, upVertical)
+                            );
                     fieldView.setClickable(false);
                     break;
             }
@@ -89,9 +87,9 @@ public class LevelActivity extends BaseActivity {
         setContentView(R.layout.activity_level);
 
         fieldView = findViewById(R.id.field);
-        resetLevelButton = findViewById(R.id.reset_level_button);
+        ImageButton resetLevelButton = findViewById(R.id.reset_level_button);
         levelCounter = findViewById(R.id.level_counter);
-        backLevelButton = findViewById(R.id.back_level_button);
+        ImageButton backLevelButton = findViewById(R.id.back_level_button);
         undoStepButton = findViewById(R.id.undo_step_button);
 
         handler = new Handler();
@@ -181,7 +179,7 @@ public class LevelActivity extends BaseActivity {
 
     private void openLevel(int levelNumber) {
         try {
-            level = levelManager.getLevel(levelNumber);
+            Level level = levelManager.getLevel(levelNumber);
             final Field field = new Field(level, sharedSettingsManager.isAnimationNeed());
             setListeners(field);
             fieldView.setField(field);

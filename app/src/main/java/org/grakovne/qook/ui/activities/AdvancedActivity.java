@@ -9,7 +9,6 @@ import org.grakovne.qook.managers.SharedSettingsManager;
 public class AdvancedActivity extends BaseActivity {
 
     private Button toggleAnimationButton;
-    private Button helpButton;
 
     private SharedSettingsManager sharedSettingsManager;
 
@@ -19,7 +18,7 @@ public class AdvancedActivity extends BaseActivity {
         setContentView(R.layout.activity_advanced);
 
         toggleAnimationButton = findViewById(R.id.toggle_animation_button);
-        helpButton = findViewById(R.id.help_button);
+        Button helpButton = findViewById(R.id.help_button);
 
         sharedSettingsManager = SharedSettingsManager.build(this);
 

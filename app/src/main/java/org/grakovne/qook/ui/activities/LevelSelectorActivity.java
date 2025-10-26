@@ -32,14 +32,11 @@ public class LevelSelectorActivity extends BaseActivity {
 
         manager = LevelManager.build(getBaseContext());
 
-        View.OnClickListener levelClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), LevelActivity.class);
-                intent.putExtra(DESIRED_LEVEL, v.getId());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
-            }
+        View.OnClickListener levelClick = v -> {
+            Intent intent = new Intent(getBaseContext(), LevelActivity.class);
+            intent.putExtra(DESIRED_LEVEL, v.getId());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
         };
 
         LevelGridAdapter adapter = new LevelGridAdapter(

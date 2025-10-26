@@ -12,16 +12,13 @@ import org.grakovne.qook.R;
 
 public class HelpActivity extends AppCompatActivity {
 
-    private JustifiedTextView helpText;
-    private TextView taskText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        helpText = findViewById(R.id.help_text);
-        taskText = findViewById(R.id.task_text);
+        JustifiedTextView helpText = findViewById(R.id.help_text);
+        TextView taskText = findViewById(R.id.task_text);
 
         Typeface fontFace = Typeface.SERIF;
         taskText.setTypeface(fontFace);

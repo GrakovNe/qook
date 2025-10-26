@@ -8,22 +8,16 @@ import org.grakovne.qook.R;
 
 public class AboutActivity extends BaseActivity {
 
-    private TextView versionTextAbout;
-    private TextView authorTextAbout;
-    private TextView authorNameTextAbout;
-    private TextView addressTextAbout;
-    private TextView yearTextAbout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        versionTextAbout = findViewById(R.id.version_text_about);
-        authorTextAbout = findViewById(R.id.author_text_about);
-        authorNameTextAbout = findViewById(R.id.author_name_text_about);
-        addressTextAbout = findViewById(R.id.address_text_about);
-        yearTextAbout = findViewById(R.id.year_text_about);
+        TextView versionTextAbout = findViewById(R.id.version_text_about);
+        TextView authorTextAbout = findViewById(R.id.author_text_about);
+        TextView authorNameTextAbout = findViewById(R.id.author_name_text_about);
+        TextView addressTextAbout = findViewById(R.id.address_text_about);
+        TextView yearTextAbout = findViewById(R.id.year_text_about);
 
         Typeface face = Typeface.create("serif-monospace", Typeface.NORMAL);
         yearTextAbout.setTypeface(face);
